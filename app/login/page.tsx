@@ -47,7 +47,7 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex justify-between items-center ml-1">
                 <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Password</label>
-                <Link href="/ForgotPassword" size="sm" className="text-[10px] font-bold uppercase tracking-widest text-blue-600 hover:text-blue-700">Forgot?</Link>
+                <Link href="/ForgotPassword"  className="text-[10px] font-bold uppercase tracking-widest text-blue-600 hover:text-blue-700">Forgot?</Link>
               </div>
               <input 
                 type="password" 
@@ -74,7 +74,7 @@ const Login = () => {
            <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
                     <LinkedinLogo  size={18} className="text-blue-600" />
                    <span className="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
-                    </button>
+                       </button>
             <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
               <Mail size={18} className="text-red-500" />
               <span className="text-[10px] font-bold uppercase tracking-widest">Google</span>

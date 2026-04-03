@@ -76,7 +76,7 @@ const ProductPage = () => {
               <div className="bg-white/40 backdrop-blur-2xl rounded-[48px] shadow-[0_80px_160px_-40px_rgba(0,0,0,0.1)] border border-white/60 p-6 relative z-10 overflow-hidden">
                 <div className="rounded-[32px] overflow-hidden border border-slate-100/50 shadow-inner">
                   <img 
-                    src="https://picsum.photos/seed/modern-ui/2000/1200" 
+                    src="https://storage.googleapis.com/website-production/uploads/2019/09/linkedin-automation.png" 
                     alt="NexusFlow Ultra UI" 
                     className="w-full h-auto scale-105 group-hover:scale-100 transition-transform duration-1000"
                     referrerPolicy="no-referrer"
@@ -260,7 +260,7 @@ const ProductPage = () => {
                     { icon: <Lock />, title: "Cloud-Native", desc: "Runs 24/7 on secure servers. No browser extensions needed." }
                   ].map((item, i) => (
                     <div key={i} className="space-y-4">
-                      <div className="text-blue-600">{React.cloneElement(item.icon as React.ReactElement, { size: 24 })}</div>
+                      <div className="text-blue-600">{React.cloneElement(item.icon as React.ReactElement,)}</div>
                       <h4 className="text-xl font-bold text-slate-900">{item.title}</h4>
                       <p className="text-slate-500 font-light leading-relaxed">{item.desc}</p>
                     </div>
