@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'motion/react';
 import { Command, ArrowRight, Mail } from 'lucide-react';
+import {LinkedinLogo } from '@phosphor-icons/react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
@@ -70,7 +71,10 @@ const Login = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-           
+           <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
+                    <LinkedinLogo  size={18} className="text-blue-600" />
+                   <span className="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
+                    </button>
             <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
               <Mail size={18} className="text-red-500" />
               <span className="text-[10px] font-bold uppercase tracking-widest">Google</span>

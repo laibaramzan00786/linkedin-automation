@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'motion/react';
-import { Command, ArrowRight, Linkedin, Mail } from 'lucide-react';
+import { Command, ArrowRight,  Mail } from 'lucide-react';
+import {LinkedinLogo } from '@phosphor-icons/react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
@@ -30,7 +31,7 @@ const Signup = () => {
             <span className="text-2xl font-bold tracking-tight text-zinc-950">NexusFlow</span>
           </Link>
           <h1 className="text-3xl font-bold tracking-tight mb-2 text-zinc-950">Create an account</h1>
-          <p className="text-zinc-500">Start your 14-day free trial today</p>
+          <p className="text-zinc-500">Start your 7-day free trial today</p>
         </div>
 
         <div className="bg-white border border-zinc-200 p-8 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
@@ -89,7 +90,7 @@ const Signup = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
-              <Linkedin size={18} className="text-blue-600" />
+              <LinkedinLogo  size={18} className="text-blue-600" />
               <span className="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
             </button>
             <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
