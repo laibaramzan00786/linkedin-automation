@@ -4,6 +4,7 @@ import { Command, ArrowRight, Mail } from 'lucide-react';
 import {LinkedinLogo } from '@phosphor-icons/react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
+import {signIn} from 'next-auth/react';
 
 const Login = () => {
  const navigate= useRouter();
@@ -12,7 +13,9 @@ const Login = () => {
     localStorage.setItem("token", "user");
     navigate.push("/dashboard");
   };
-
+   const handleLinkedinSignIn = ()=>{
+       signIn("linkedin");
+    }
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
@@ -71,7 +74,7 @@ const Login = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-           <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
+           <button type='button' onClick={handleLinkedinSignIn}  className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
                     <LinkedinLogo  size={18} className="text-blue-600" />
                    <span className="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
                        </button>
