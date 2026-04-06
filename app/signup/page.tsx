@@ -12,7 +12,7 @@ const Signup = () => {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem("token", "user");
-    navigate.push("/dashboard");
+    navigate.push("/connect-linkedin");
   };
  const handleLinkedinSignup = ()=>{
     signIn("linkedin");

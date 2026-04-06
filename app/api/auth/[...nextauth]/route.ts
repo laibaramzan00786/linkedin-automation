@@ -57,7 +57,7 @@ export const authOptions = {
 
   callbacks: {
     async redirect() {
-      return "/dashboard";
+      return "/connect-linkedin";
     },
   },
 };
