@@ -12,16 +12,16 @@ const blogPosts = [
     author: "Sarah Jenkins",
     date: "March 10, 2024",
     category: "Strategy",
-    image: "https://picsum.photos/seed/outreach/800/600"
+    image: "https://static.vecteezy.com/system/resources/thumbnails/046/883/730/small/professional-stock-image-of-a-young-businesswoman-posing-confidently-dressed-in-formal-attire-against-an-isolated-white-backdrop-perfect-for-corporate-branding-free-photo.jpg"
   },
   {
     id: 2,
     title: "The Future of AI in Sales Automation",
     excerpt: "AI is changing the sales landscape. Learn how to leverage new tools to stay ahead of the curve.",
-    author: "Michael Chen",
+    author: "Peter Sutherland",
     date: "March 05, 2024",
     category: "Technology",
-    image: "https://picsum.photos/seed/ai-sales/800/600"
+    image: "https://static.vecteezy.com/system/resources/thumbnails/033/129/417/small/a-business-man-stands-against-white-background-with-his-arms-crossed-ai-generative-photo.jpg"
   },
   {
     id: 3,

@@ -1,137 +1,197 @@
 'use client';
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import {LinkedinLogo} from '@phosphor-icons/react';
-import { CheckCircle2, ArrowRight, ShieldCheck, Zap, Users } from 'lucide-react';
-import {cn} from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-
-interface ConnectLinkedInProps {
-  onConnect: () => void;
-}
-
-export default function ConnectLinkedIn({ onConnect }: ConnectLinkedInProps) {
+import { 
+  ShieldCheck, 
+  Zap, 
+  Globe, 
+  ArrowRight, 
+  Loader2,
+  Users
+} from 'lucide-react';
+import { LinkedinLogoIcon,GoogleChromeLogoIcon } from '@phosphor-icons/react';
+const ConnectPage = () => {
   const [isConnecting, setIsConnecting] = useState(false);
-  const [step, setStep] = useState(1);
-    const router = useRouter();
+  const navigate = useRouter();
+
   const handleConnect = () => {
     setIsConnecting(true);
+   
     setTimeout(() => {
-      setStep(2);
-      setIsConnecting(false);
-    }, 2000);
+      navigate.push('/dashboard');
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-sans">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl w-full bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100"
-      >
-        <div className="p-8 md:p-12">
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200">
-              <LinkedinLogo className="text-white w-8 h-8" />
-            </div>
+    <div className="min-h-[calc(100vh-140px)] bg-white rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-zinc-100">
+      {/* Left Side - Content */}
+      <div className="flex-1 p-8 md:p-16 flex flex-col justify-center space-y-12 relative">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-12"
+        >
+          <div className="space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest"
+            >
+              <LinkedinLogoIcon size={14} />
+              Official Integration
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-display font-bold text-zinc-900 tracking-tight leading-[1.1]"
+            >
+              Connect your <br />
+              <span className="text-blue-600">LinkedIn Account.</span>
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg text-zinc-500 max-w-lg font-medium leading-relaxed"
+            >
+              Sync your LinkedIn profile to start automating your outreach, managing leads, and growing your network with NexusFlow.
+            </motion.p>
           </div>
 
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">
-              Connect your LinkedIn Profile
-            </h1>
-            <p className="text-slate-500 text-lg">
-              To start automating your outreach, we need to sync with your LinkedIn account securely.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { 
+                icon: ShieldCheck, 
+                title: "Safe & Secure", 
+                desc: "We use advanced encryption and safety limits to protect your account." 
+              },
+              { 
+                icon: Zap, 
+                title: "Smart Automation", 
+                desc: "Our AI mimics human behavior to keep your account safe." 
+              },
+              { 
+                icon: Globe, 
+                title: "Multi-Account", 
+                desc: "Manage multiple LinkedIn profiles from a single dashboard." 
+              },
+              { 
+                icon: Users, 
+                title: "Lead Generation", 
+                desc: "Find and connect with your ideal prospects automatically." 
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + (i * 0.1) }}
+                className="flex gap-4"
+              >
+                <div className="h-12 w-12 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-900 shrink-0 border border-zinc-100">
+                  <item.icon size={20} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="font-bold text-zinc-900 text-sm">{item.title}</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed font-medium">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
-          <div className="space-y-6 mb-10">
-            <FeatureItem 
-              icon={<ShieldCheck className="w-5 h-5 text-blue-600" />}
-              title="Secure Connection"
-              description="We use enterprise-grade encryption to protect your account data."
-            />
-            <FeatureItem 
-              icon={<Zap className="w-5 h-5 text-amber-500" />}
-              title="Smart Automation"
-              description="Our AI mimics human behavior to keep your account safe."
-            />
-            <FeatureItem 
-              icon={<Users className="w-5 h-5 text-emerald-500" />}
-              title="Lead Generation"
-              description="Find and connect with your ideal prospects automatically."
-            />
-          </div>
-
-          {step === 1 ? (
-            <button
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="flex flex-col sm:flex-row gap-4 pt-4"
+          >
+            <button 
               onClick={handleConnect}
               disabled={isConnecting}
-              className={cn(
-                "w-full py-4 px-6 rounded-2xl font-semibold text-white transition-all flex items-center justify-center gap-3",
-                isConnecting ? "bg-slate-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 active:scale-[0.98] shadow-lg shadow-blue-200"
-              )}
+              className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold text-sm hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3 group disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isConnecting ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <Loader2 size={18} className="animate-spin" />
                   Connecting...
                 </>
               ) : (
                 <>
-                  Connect LinkedIn Account
-                  <ArrowRight className="w-5 h-5" />
+                  Connect LinkedIn
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center"
-            >
-              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6 mb-8 flex items-center gap-4 text-left">
-                <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="text-white w-6 h-6" />
+            <button className="px-10 py-5 bg-zinc-50 text-zinc-900 border border-zinc-200 rounded-2xl font-bold text-sm hover:bg-zinc-100 transition-all flex items-center justify-center gap-3">
+              <GoogleChromeLogoIcon size={18} />
+              Install Extension
+            </button>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Right Side - Visual/Steps */}
+      <div className="w-full lg:w-[450px] bg-zinc-50 border-l border-zinc-100 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
+        {/* Abstract Background Pattern */}
+        <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none">
+          <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full border-[40px] border-blue-600" />
+          <div className="absolute bottom-[-5%] left-[-5%] w-[200px] h-[200px] rounded-full border-[20px] border-blue-600" />
+        </div>
+
+        <div className="relative z-10 space-y-10">
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold text-zinc-900 tracking-tight">How it works</h3>
+            <p className="text-xs text-zinc-500 font-medium">Follow these simple steps to get started</p>
+          </div>
+
+          <div className="space-y-8">
+            {[
+              { step: "01", title: "Install NexusFlow Extension", desc: "Add our secure browser extension to your Chrome or Edge browser." },
+              { step: "02", title: "Login to LinkedIn", desc: "Open LinkedIn in your browser and log in to the account you want to connect." },
+              { step: "03", title: "Sync & Automate", desc: "NexusFlow will automatically detect your account and start syncing data." }
+            ].map((item, i) => (
+              <div key={i} className="flex gap-6 relative">
+                {i !== 2 && <div className="absolute left-5 top-10 bottom-[-20px] w-px bg-zinc-200" />}
+                <div className="h-10 w-10 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-xs font-black text-zinc-900 shrink-0 shadow-sm">
+                  {item.step}
                 </div>
-                <div>
-                  <h3 className="font-bold text-emerald-900">Profile Connected!</h3>
-                  <p className="text-emerald-700 text-sm">Successfully linked with Laiba Ramzan's profile.</p>
+                <div className="space-y-1.5 pt-1">
+                  <h4 className="font-bold text-zinc-900 text-sm">{item.title}</h4>
+                  <p className="text-xs text-zinc-500 leading-relaxed font-medium">{item.desc}</p>
                 </div>
               </div>
-              <button
-                onClick={() => {
-  onConnect?.(); // optional callback
-  router.push('/dashboard');
-}} 
-                className="w-full py-4 px-6 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg shadow-slate-200"
-              >
-                Go to Dashboard
-              </button>
-            </motion.div>
-          )}
+            ))}
+          </div>
         </div>
-        
-        <div className="bg-slate-50 p-6 border-t border-slate-100 text-center">
-          <p className="text-slate-400 text-sm">
-            By connecting, you agree to our Terms of Service and Privacy Policy.
-          </p>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
 
-function FeatureItem({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
-  return (
-    <div className="flex gap-4">
-      <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center shrink-0">
-        {icon}
-      </div>
-      <div>
-        <h4 className="font-semibold text-slate-900">{title}</h4>
-        <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
+        <div className="relative z-10 pt-12">
+          <div className="p-6 bg-white rounded-3xl border border-zinc-200 shadow-xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <h5 className="text-[11px] font-black text-zinc-900 uppercase tracking-widest">Privacy First</h5>
+                <p className="text-[10px] text-zinc-500 font-medium">Your data is encrypted and never shared.</p>
+              </div>
+            </div>
+            <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+              <span className="text-[10px] font-bold text-zinc-400">Trusted by 10k+ users</span>
+              <div className="flex -space-x-2">
+                {[1,2,3].map(i => (
+                  <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-zinc-200" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default ConnectPage;

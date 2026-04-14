@@ -9,6 +9,7 @@ import {
   LogOut,
   LineChart,
   X,
+  Mail,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -71,7 +72,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             <BarChart3 size={16} />
             Analytics
           </Link>
-
+             <Link href="/dashboard/inbox" className={linkClass("/dashboard/inbox")}>
+               <Mail size={16} />
+               Inbox
+             </Link>
           <Link href="/dashboard/graphs" className={linkClass("/dashboard/graphs")}>
             <LineChart size={16} />
             Insights
@@ -93,3 +97,4 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 };
 
 export default Sidebar;
+
