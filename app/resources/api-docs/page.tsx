@@ -42,7 +42,7 @@ const ApiDocsPage = () => {
     },
     { 
       title: "Analytics & Reporting", 
-      icon: <BarChart3 className="text-rose-500" size={24} />, 
+      icon: <BarChart3 className="text-blue-500" size={24} />, 
       count: 18,
       desc: "Deep dive into performance metrics, lead tracking, and ROI analysis."
     }

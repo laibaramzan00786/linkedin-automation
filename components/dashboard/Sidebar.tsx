@@ -10,6 +10,7 @@ import {
   LineChart,
   X,
   Mail,
+  Users,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -76,6 +77,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                <Mail size={16} />
                Inbox
              </Link>
+             <Link href="/dashboard/network" className={linkClass("/dashboard/network")}>
+               <Users size={16} />
+                My Network
+             </Link>
           <Link href="/dashboard/graphs" className={linkClass("/dashboard/graphs")}>
             <LineChart size={16} />
             Insights
@@ -97,4 +102,3 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 };
 
 export default Sidebar;
-

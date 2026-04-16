@@ -15,7 +15,7 @@ const CommunityPage = () => {
       <main className="pt-32 pb-24">
         <div className="max-w-7xl mx-auto px-6">
 
-          {/* HEADER */}
+        
           <div className="text-center mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,7 @@ const CommunityPage = () => {
             </motion.p>
           </div>
 
-          {/* SOCIAL CARDS */}
+   
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
             {[
               { name: "Slack", members: "12k+", desc: "Real-time support and networking.", icon: <FaSlack size={32} />, color: "bg-[#4A154B]" },
@@ -74,7 +74,7 @@ const CommunityPage = () => {
             ))}
           </div>
 
-          {/* FEATURES */}
+ 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
             <div>
               <h2 className="text-4xl font-bold text-zinc-950 mb-8 leading-tight">
@@ -101,7 +101,7 @@ const CommunityPage = () => {
               </div>
             </div>
 
-            {/* TESTIMONIAL */}
+     
             <div className="relative">
               <div className="absolute inset-0 bg-blue-600/5 rounded-[40px] rotate-3" />
 
@@ -122,7 +122,7 @@ const CommunityPage = () => {
             </div>
           </div>
 
-          {/* CTA */}
+         
           <div className="p-16 bg-blue-600 rounded-[40px] text-center text-white">
             <h2 className="text-4xl font-bold mb-6">
               Don't miss out on the conversation.

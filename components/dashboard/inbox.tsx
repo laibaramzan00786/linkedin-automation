@@ -31,7 +31,7 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const InboxPage = () => {
+const Inbox = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -117,8 +117,7 @@ const InboxPage = () => {
 
   return (
     <div className="h-[calc(100vh-140px)] flex gap-0 overflow-hidden bg-[#0d0d0d] rounded-3xl border border-white/5 shadow-2xl">
-      {/* Conversations List */}
-      <div className={cn(
+         <div className={cn(
         "w-full lg:w-[280px] flex flex-col border-r border-white/5 bg-[#111111] transition-all duration-300 shrink-0",
         selectedId && "hidden lg:flex"
       )}>
@@ -216,14 +215,14 @@ const InboxPage = () => {
         </div>
       </div>
 
-      {/* Main Chat Area */}
+    
       <div className={cn(
         "flex-1 flex flex-col bg-[#0d0d0d] relative",
         !selectedId && "hidden lg:flex"
       )}>
         {selectedConversation ? (
           <>
-            {/* Chat Header */}
+         
             <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#111111]">
               <div className="flex items-center gap-3">
                 <button 
@@ -264,7 +263,6 @@ const InboxPage = () => {
             </div>
 
             <div className="flex-1 flex overflow-hidden">
-              {/* Messages Area */}
               <div className="flex-1 flex flex-col min-w-0 bg-[#0d0d0d]">
                 <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
                   {messagesLoading ? (
@@ -325,7 +323,7 @@ const InboxPage = () => {
                   )}
                 </div>
 
-                {/* Input Area */}
+          
                 <div className="p-4 border-t border-white/5 bg-[#111111]">
                   <form onSubmit={handleSendMessage} className="relative">
                     <textarea
@@ -374,7 +372,7 @@ const InboxPage = () => {
                 </div>
               </div>
 
-              {/* Lead Details Sidebar */}
+            
               <AnimatePresence>
                 {showDetails && (
                   <motion.div 
@@ -402,7 +400,7 @@ const InboxPage = () => {
                           <p className="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">{selectedConversation.participant.headline}</p>
                         </div>
                         <div className="flex gap-2">
-                          <button className="flex-1 py-2.5 bg-blue-500/60 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-all hover:bg-blue-500/60 shadow-lg shadow-rose-500/20">
+                          <button className="flex-1 py-2.5 bg-blue-500/60 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-all hover:bg-blue-500/60 shadow-lg shadow-blue-500/20">
                             Profile
                           </button>
                           <button className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg text-zinc-400">
@@ -466,7 +464,7 @@ const InboxPage = () => {
               <motion.div 
                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ repeat: Infinity, duration: 3 }}
-                className="absolute -top-4 -right-4 h-12 w-12 rounded-full bg-blue-500/60 border border-rose-500/20 flex items-center justify-center"
+                className="absolute -top-4 -right-4 h-12 w-12 rounded-full bg-blue-500/60 border border-blue-500/20 flex items-center justify-center"
               >
                 <div className="h-2 w-2 bg-blue-500/60 rounded-full" />
               </motion.div>
@@ -484,4 +482,4 @@ const InboxPage = () => {
   );
 };
 
-export default InboxPage;
+export default Inbox;

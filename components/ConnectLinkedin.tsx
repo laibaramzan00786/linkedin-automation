@@ -25,7 +25,7 @@ const ConnectPage = () => {
 
   return (
     <div className="min-h-[calc(100vh-140px)] bg-white rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-zinc-100">
-      {/* Left Side - Content */}
+    
       <div className="flex-1 p-8 md:p-16 flex flex-col justify-center space-y-12 relative">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -134,9 +134,9 @@ const ConnectPage = () => {
         </motion.div>
       </div>
 
-      {/* Right Side - Visual/Steps */}
+    
       <div className="w-full lg:w-[450px] bg-zinc-50 border-l border-zinc-100 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
-        {/* Abstract Background Pattern */}
+   
         <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none">
           <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full border-[40px] border-blue-600" />
           <div className="absolute bottom-[-5%] left-[-5%] w-[200px] h-[200px] rounded-full border-[20px] border-blue-600" />
