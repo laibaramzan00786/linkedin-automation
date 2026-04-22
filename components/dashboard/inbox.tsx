@@ -1,3 +1,4 @@
+
 'use client'
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -26,12 +27,11 @@ import { Conversation, Message } from '@/types/inbox';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const Inbox = () => {
+const InboxPage = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -41,13 +41,12 @@ const Inbox = () => {
   const [showDetails, setShowDetails] = useState(true);
   const [activeTab, setActiveTab] = useState<'all' | 'unread' | 'archived'>('all');
 
- 
+  // Fetch conversations
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         const data = await inboxService.getConversations();
         setConversations(data);
-
         setSelectedId(null);
       } catch (error) {
         console.error('Failed to fetch conversations', error);
@@ -58,7 +57,7 @@ const Inbox = () => {
     fetchConversations();
   }, []);
 
-
+  // Fetch messages when selection changes
   useEffect(() => {
     if (!selectedId) return;
 
@@ -110,48 +109,69 @@ const Inbox = () => {
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-blue-500/60 animate-spin" />
+        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="h-[calc(100vh-140px)] flex gap-0 overflow-hidden bg-[#0d0d0d] rounded-3xl border border-white/5 shadow-2xl">
-         <div className={cn(
-        "w-full lg:w-[280px] flex flex-col border-r border-white/5 bg-[#111111] transition-all duration-300 shrink-0",
+    <div 
+      className="h-[calc(100vh-140px)] flex gap-0 overflow-hidden rounded-[2rem] border shadow-2xl transition-all duration-300"
+      style={{
+        background: "var(--bg)",
+        borderColor: "var(--border)"
+      }}
+    >
+   
+      <div className={cn(
+        "w-full lg:w-[320px] flex flex-col border-r transition-all duration-300 shrink-0",
         selectedId && "hidden lg:flex"
-      )}>
-        <div className="p-4 space-y-4">
+      )}
+      style={{ borderColor: "var(--border)", background: "var(--bg)" }}
+      >
+        <div className="p-6 space-y-6">
           <div className="flex items-center gap-3">
             <div className="relative flex-1 group">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-white transition-colors" />
+              <Search 
+                size={16} 
+                className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors" 
+                style={{ color: "var(--text)", opacity: 0.4 }}
+              />
               <input 
-                placeholder="Search ..."
-                className="w-full bg-white/5 border border-white/5 rounded-lg py-2 pl-9 pr-3 text-[12px] font-medium focus:outline-none focus:ring-1 focus:ring-white/20 transition-all text-white placeholder:text-zinc-600"
+                placeholder="Search messages..."
+                className="w-full border rounded-xl py-3 pl-11 pr-4 text-[11px] font-bold uppercase tracking-wider outline-none transition-all placeholder:text-zinc-500"
+                style={{
+                  background: "var(--card)",
+                  borderColor: "var(--border)",
+                  color: "var(--text)"
+                }}
               />
             </div>
-            <button className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-zinc-400 transition-colors border border-white/5">
-              <Filter size={16} />
+            <button 
+              className="p-3 rounded-xl transition-all border group"
+              style={{ background: "var(--card)", borderColor: "var(--border)" }}
+            >
+              <Filter size={18} style={{ color: "var(--text)", opacity: 0.6 }} />
             </button>
           </div>
 
-          <div className="flex border-b border-white/5">
+          <div className="flex border-b" style={{ borderColor: "var(--border)" }}>
             {(['all', 'unread', 'archived'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  "flex-1 py-2 text-[10px] font-bold capitalize transition-all relative",
+                  "flex-1 py-3 text-[10px] font-black uppercase tracking-widest transition-all relative",
                   activeTab === tab 
-                    ? "text-blue-500/60" 
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "text-blue-500" 
+                    : "text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
                 )}
               >
-                {tab === 'all' ? 'All' : tab}
+                {tab}
                 {activeTab === tab && (
                   <motion.div 
                     layoutId="tab-underline"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500/60" 
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500" 
                   />
                 )}
               </button>
@@ -159,54 +179,59 @@ const Inbox = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-3 space-y-1">
           {conversations.map((conv) => (
             <button
               key={conv.id}
               onClick={() => setSelectedId(conv.id)}
               className={cn(
-                "w-full p-4 flex gap-3 transition-all text-left relative group border-b border-white/[0.03]",
-                selectedId === conv.id ? 'bg-white/[0.03]' : 'hover:bg-white/[0.01]'
+                "w-full p-4 flex gap-4 transition-all text-left relative group rounded-2xl",
+                selectedId === conv.id ? 'shadow-lg' : 'hover:bg-zinc-50 dark:hover:bg-white/5'
               )}
+              style={selectedId === conv.id ? { 
+                background: "var(--card)",
+                border: "1px solid var(--border)"
+              } : {}}
             >
               <div className="relative shrink-0">
-                <div className="h-10 w-10 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500 overflow-hidden border border-white/10 group-hover:border-white/30 transition-colors">
+                <div className="h-12 w-12 rounded-full flex items-center justify-center overflow-hidden border transition-all group-hover:scale-105"
+                  style={{ background: "var(--bg)", borderColor: "var(--border)" }}
+                >
                   {conv.participant.avatar ? (
                     <img src={conv.participant.avatar} alt={conv.participant.name} className="w-full h-full object-cover" />
                   ) : (
-                    <User size={20} />
+                    <User size={24} style={{ color: "var(--text)", opacity: 0.2 }} />
                   )}
                 </div>
                 <div className={cn(
-                  "absolute bottom-0 right-0 h-4 w-4 rounded-full border border-[#111111] flex items-center justify-center shadow-lg",
-                  conv.platform === 'linkedin' ? 'bg-[#0077b5]' : 'bg-zinc-600'
-                )}>
+                  "absolute bottom-0 right-0 h-5 w-5 rounded-full border-2 flex items-center justify-center shadow-lg",
+                  conv.platform === 'linkedin' ? 'bg-[#0077b5]' : 'bg-blue-600'
+                )}
+                  style={{ borderColor: "var(--bg)" }}
+                >
                   {conv.platform === 'linkedin' ? (
-                    <span className="text-[7px] font-black italic text-white">in</span>
+                    <span className="text-[8px] font-black italic text-white">in</span>
                   ) : (
-                    <Mail size={8} className="text-white" />
+                    <Mail size={10} className="text-white" />
                   )}
                 </div>
               </div>
 
-              <div className="flex-1 min-w-0 space-y-0.5">
+              <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-center justify-between">
-                  <h3 className={cn(
-                    "text-[11px] font-bold truncate transition-colors",
-                    conv.unreadCount > 0 ? 'text-white' : 'text-zinc-300',
-                    selectedId === conv.id && 'text-white'
-                  )}>
+                  <h3 className="text-[12px] font-bold truncate tracking-tight"
+                    style={{ color: "var(--text)" }}
+                  >
                     {conv.participant.name}
                   </h3>
-                  <span className="text-[8px] font-medium text-zinc-500 tabular-nums">
+                  <span className="text-[9px] font-bold tabular-nums uppercase" style={{ color: "var(--muted)" }}>
                     {formatTime(conv.updatedAt)}
                   </span>
                 </div>
                 
-                <p className={cn(
-                  "text-[10px] truncate leading-relaxed",
-                  conv.unreadCount > 0 ? 'text-zinc-200 font-semibold' : 'text-zinc-500'
-                )}>
+                <p className="text-[11px] truncate leading-relaxed font-medium"
+                  style={{ color: "var(--muted)" }}
+                >
                   {conv.lastMessage?.content}
                 </p>
               </div>
@@ -215,64 +240,78 @@ const Inbox = () => {
         </div>
       </div>
 
-    
+ 
       <div className={cn(
-        "flex-1 flex flex-col bg-[#0d0d0d] relative",
+        "flex-1 flex flex-col bg-white dark:bg-[#0d0d0d] relative",
         !selectedId && "hidden lg:flex"
-      )}>
+      )}
+      style={{ background: "var(--card)" }}
+      >
         {selectedConversation ? (
           <>
-         
-            <div className="p-4 border-b border-white/5 flex items-center justify-between bg-[#111111]">
-              <div className="flex items-center gap-3">
+      
+            <div className="p-6 border-b flex items-center justify-between bg-white dark:bg-[#111111]"
+              style={{ background: "var(--bg)", borderColor: "var(--border)" }}
+            >
+              <div className="flex items-center gap-4">
                 <button 
                   onClick={() => setSelectedId(null)}
-                  className="lg:hidden p-2 -ml-2 hover:bg-white/5 rounded-xl text-zinc-500"
+                  className="lg:hidden p-2 -ml-2 rounded-xl"
+                  style={{ color: "var(--text)" }}
                 >
-                  <ChevronLeft size={20} />
+                  <ChevronLeft size={24} />
                 </button>
-                <div className="h-9 w-9 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500 overflow-hidden border border-white/10">
+                <div className="h-11 w-11 rounded-full flex items-center justify-center overflow-hidden border shadow-sm"
+                  style={{ background: "var(--card)", borderColor: "var(--border)" }}
+                >
                   {selectedConversation.participant.avatar ? (
                     <img src={selectedConversation.participant.avatar} alt={selectedConversation.participant.name} className="w-full h-full object-cover" />
                   ) : (
-                    <User size={18} />
+                    <User size={20} style={{ color: "var(--text)", opacity: 0.3 }} />
                   )}
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white">{selectedConversation.participant.name}</h3>
+                  <h3 className="text-sm font-bold tracking-tight" style={{ color: "var(--text)" }}>{selectedConversation.participant.name}</h3>
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                    <span className="text-[10px] font-medium text-zinc-500">Active now</span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--muted)" }}>Active now</span>
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <button 
                   onClick={() => setShowDetails(!showDetails)}
                   className={cn(
-                    "p-2 rounded-lg transition-all",
-                    showDetails ? "bg-blue-500/60 text-white" : "hover:bg-white/5 text-zinc-500"
+                    "p-3 rounded-xl transition-all border",
+                    showDetails ? "bg-blue-600 text-white border-blue-600" : ""
                   )}
+                  style={!showDetails ? { background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" } : {}}
                 >
-                  <Info size={18} />
+                  <Info size={20} />
                 </button>
-                <button className="p-2 hover:bg-white/5 rounded-lg text-zinc-500 transition-colors">
-                  <MoreVertical size={18} />
+                <button 
+                  className="p-3 rounded-xl transition-all border"
+                  style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
+                >
+                  <MoreVertical size={20} />
                 </button>
               </div>
             </div>
 
             <div className="flex-1 flex overflow-hidden">
-              <div className="flex-1 flex flex-col min-w-0 bg-[#0d0d0d]">
-                <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
+       
+              <div className="flex-1 flex flex-col min-w-0" style={{ background: "var(--bg)" }}>
+                <div className="flex-1 overflow-y-auto p-6 md:p-10 space-y-8 custom-scrollbar">
                   {messagesLoading ? (
                     <div className="h-full flex items-center justify-center">
-                      <Loader2 className="w-6 h-6 text-white animate-spin" />
+                      <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
                     </div>
                   ) : (
                     <>
                       <div className="flex justify-center">
-                        <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-[0.2em] bg-white/5 px-4 py-1.5 rounded-full border border-white/5">
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] border px-5 py-2 rounded-full"
+                         style={{ color: "var(--text)" }}
+                        >
                           April 13, 2024
                         </span>
                       </div>
@@ -291,27 +330,33 @@ const Inbox = () => {
                             )}
                           >
                             <div className={cn(
-                              "max-w-[90%] md:max-w-[85%] space-y-1.5",
+                              "max-w-[85%] md:max-w-[75%] space-y-2",
                               isMe ? 'items-end' : 'items-start'
                             )}>
                               <div className={cn(
-                                "p-3.5 rounded-2xl text-[13px] leading-relaxed shadow-sm",
+                                "p-5 rounded-[1.5rem] text-[13px] leading-relaxed shadow-xl",
                                 isMe 
-                                  ? 'bg-blue-500/60 text-white rounded-tr-none' 
-                                  : 'bg-white text-black rounded-tl-none font-medium'
-                              )}>
+                                  ? 'bg-blue-600 text-white rounded-tr-none' 
+                                  : 'border rounded-tl-none font-medium'
+                              )}
+                              style={!isMe ? { 
+                                background: "var(--card)",
+                                borderColor: "var(--border)", 
+                                color: "var(--text)" 
+                              } : {}}
+                              >
                                 {msg.content}
                               </div>
                               <div className={cn(
                                 "flex items-center gap-2 px-1",
                                 isMe ? 'flex-row-reverse' : ''
                               )}>
-                                <span className="text-[9px] font-medium text-zinc-600 tabular-nums">
+                                <span className="text-[9px] font-bold tabular-nums uppercase" style={{ color: "var(--muted)" }}>
                                   {formatTime(msg.timestamp)}
                                 </span>
                                 {isMe && (
-                                  <CheckCheck size={12} className={cn(
-                                    msg.status === 'read' ? 'text-blue-500/60' : 'text-zinc-600'
+                                  <CheckCheck size={14} className={cn(
+                                    msg.status === 'read' ? 'text-blue-500' : 'text-zinc-500'
                                   )} />
                                 )}
                               </div>
@@ -323,8 +368,7 @@ const Inbox = () => {
                   )}
                 </div>
 
-          
-                <div className="p-4 border-t border-white/5 bg-[#111111]">
+                <div className="p-6 border-t" style={{ background: "var(--card)", borderColor: "var(--border)" }}>
                   <form onSubmit={handleSendMessage} className="relative">
                     <textarea
                       value={messageText}
@@ -336,116 +380,129 @@ const Inbox = () => {
                         }
                       }}
                       placeholder="Write your message..."
-                      className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-5 pr-28 text-[13px] font-medium focus:outline-none focus:border-white/20 transition-all resize-none h-20 custom-scrollbar text-white"
+                      className="w-full border rounded-2xl py-4 pl-6 pr-32 text-[13px] font-medium outline-none transition-all resize-none h-24 custom-scrollbar"
+                      style={{ background: "var(--bg)", borderColor: "var(--border)", color: "var(--text)" }}
                     />
-                    <div className="absolute right-3 bottom-3 flex items-center gap-1.5">
-                      <button type="button" className="p-1.5 hover:bg-white/10 rounded-lg text-zinc-500 transition-colors">
-                        <Smile size={18} />
+                    <div className="absolute right-4 bottom-4 flex items-center gap-2">
+                      <button type="button" className="p-2 hover:bg-zinc-100 dark:hover:bg-white/5 rounded-xl transition-colors" style={{ color: "var(--muted)" }}>
+                        <Smile size={20} />
                       </button>
-                      <button type="button" className="p-1.5 hover:bg-white/10 rounded-lg text-zinc-500 transition-colors">
-                        <Paperclip size={18} />
+                      <button type="button" className="p-2 hover:bg-zinc-100 dark:hover:bg-white/5 rounded-xl transition-colors" style={{ color: "var(--muted)" }}>
+                        <Paperclip size={20} />
                       </button>
                       <button 
                         type="submit"
                         disabled={!messageText.trim()}
-                        className="bg-blue-500/60 hover:bg-blue-600/60 disabled:opacity-50 text-white p-2.5 rounded-lg transition-all shadow-xl ml-1"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white p-3 rounded-xl transition-all shadow-xl shadow-blue-600/20"
                       >
-                        <Send size={18} />
+                        <Send size={20} />
                       </button>
                     </div>
                   </form>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex gap-4">
-                      <button className="flex items-center gap-1.5 text-[9px] font-bold text-zinc-500 hover:text-white transition-colors">
-                        <ImageIcon size={12} />
+                  <div className="flex items-center justify-between mt-4 px-2">
+                    <div className="flex gap-6">
+                      <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors hover:text-blue-500" style={{ color: "var(--text)" }}>
+                        <ImageIcon size={14} />
                         Image
                       </button>
-                      <button className="flex items-center gap-1.5 text-[9px] font-bold text-zinc-500 hover:text-white transition-colors">
-                        <Zap size={12} />
+                      <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors hover:text-blue-500" style={{ color: "var(--text)" }}>
+                        <Zap size={14} />
                         Template
                       </button>
                     </div>
-                    <span className="text-[8px] font-medium text-zinc-600 uppercase tracking-widest">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em]" style={{ color: "var(--text)" }}>
                       Press Enter to send
                     </span>
                   </div>
                 </div>
               </div>
 
-            
+           
               <AnimatePresence>
                 {showDetails && (
                   <motion.div 
                     initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: 280, opacity: 1 }}
+                    animate={{ width: 320, opacity: 1 }}
                     exit={{ width: 0, opacity: 0 }}
-                    className="hidden xl:flex flex-col border-l border-white/5 bg-[#111111] overflow-hidden"
+                    className="hidden xl:flex flex-col border-l overflow-hidden"
+                    style={{ background: "var(--bg)", borderColor: "var(--border)" }}
                   >
-                    <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar">
-                      <div className="text-center space-y-4">
+                    <div className="p-8 space-y-8 overflow-y-auto custom-scrollbar">
+                      <div className="text-center space-y-6">
                         <div className="relative inline-block">
-                          <div className="h-24 w-24 rounded-full bg-zinc-800 mx-auto overflow-hidden border-2 border-white/10 shadow-2xl">
+                          <div className="h-28 w-28 rounded-full flex items-center justify-center overflow-hidden border-2 shadow-2xl mx-auto"
+                            style={{ background: "var(--card)", borderColor: "var(--border)" }}
+                          >
                             {selectedConversation.participant.avatar ? (
                               <img src={selectedConversation.participant.avatar} alt={selectedConversation.participant.name} className="w-full h-full object-cover" />
                             ) : (
-                              <User size={40} className="m-auto h-full text-zinc-700" />
+                              <User size={48} style={{ color: "var(--text)", opacity: 0.1 }} />
                             )}
                           </div>
-                          <div className="absolute bottom-0 right-0 h-7 w-7 rounded-full bg-[#0077b5] border-4 border-[#111111] flex items-center justify-center">
-                            <span className="text-[9px] font-black italic text-white">in</span>
+                          <div className="absolute bottom-1 right-1 h-8 w-8 rounded-full bg-[#0077b5] border-4 flex items-center justify-center"
+                            style={{ borderColor: "var(--bg)" }}
+                          >
+                            <span className="text-[10px] font-black italic text-white">in</span>
                           </div>
                         </div>
-                        <div>
-                          <h4 className="text-lg font-display font-bold text-white">{selectedConversation.participant.name}</h4>
-                          <p className="text-[10px] font-semibold text-zinc-500 mt-1 leading-relaxed">{selectedConversation.participant.headline}</p>
+                        <div className="space-y-2">
+                          <h4 className="text-xl font-display font-bold" style={{ color: "var(--text)" }}>{selectedConversation.participant.name}</h4>
+                          <p className="text-[11px] font-bold leading-relaxed px-4" style={{ color: "var(--muted)" }}>{selectedConversation.participant.headline}</p>
                         </div>
                         <div className="flex gap-2">
-                          <button className="flex-1 py-2.5 bg-blue-500/60 text-white rounded-lg text-[9px] font-black uppercase tracking-widest transition-all hover:bg-blue-500/60 shadow-lg shadow-blue-500/20">
-                            Profile
+                          <button className="flex-1 py-3 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/20">
+                            View Profile
                           </button>
-                          <button className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg text-zinc-400">
-                            <ExternalLink size={14} />
+                          <button className="p-3 rounded-xl border transition-all"
+                             style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
+                          >
+                            <ExternalLink size={16} />
                           </button>
                         </div>
                       </div>
 
-                      <div className="space-y-6 pt-2">
-                        <div className="grid grid-cols-1 gap-3">
-                          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                            <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Company</span>
-                            <div className="flex items-center gap-2 text-white">
-                              <Building2 size={12} className="text-zinc-500" />
-                              <span className="text-[11px] font-bold">{selectedConversation.participant.company}</span>
+                      <div className="space-y-8">
+                        <div className="grid grid-cols-1 gap-4">
+                          <div className="p-4 rounded-2xl border space-y-2" style={{ background: "var(--card)", borderColor: "var(--border)" }}>
+                            <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: "var(--text)" }}>Current Role</span>
+                            <div className="flex items-center gap-3">
+                              <Building2 size={16} style={{ color: "var(--text)", opacity: 0.4 }} />
+                              <span className="text-[12px] font-bold" style={{ color: "var(--text)" }}>{selectedConversation.participant.company}</span>
                             </div>
                           </div>
-                          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                            <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Location</span>
-                            <div className="flex items-center gap-2 text-white">
-                              <MapPin size={12} className="text-zinc-500" />
-                              <span className="text-[11px] font-bold">{selectedConversation.participant.location}</span>
+                          <div className="p-4 rounded-2xl border space-y-2" style={{ background: "var(--card)", borderColor: "var(--border)" }}>
+                            <span className="text-[9px] font-black uppercase tracking-widest" >Location</span>
+                            <div className="flex items-center gap-3">
+                              <MapPin size={16} style={{ color: "var(--text)", opacity: 0.4 }} />
+                              <span className="text-[12px] font-bold" style={{ color: "var(--text)" }}>{selectedConversation.participant.location}</span>
                             </div>
                           </div>
                         </div>
 
-                        <div className="space-y-3">
-                          <h5 className="text-[9px] font-black text-white uppercase tracking-widest">Tags</h5>
-                          <div className="flex flex-wrap gap-1.5">
+                        <div className="space-y-4">
+                          <h5 className="text-[10px] font-black uppercase tracking-widest" style={{ color: "var(--text)" }}>Tags</h5>
+                          <div className="flex flex-wrap gap-2">
                             {selectedConversation.tags?.map(tag => (
-                              <span key={tag} className="px-2 py-1 rounded-md bg-white/5 text-zinc-300 border border-white/10 text-[8px] font-bold">
+                              <span key={tag} className="px-3 py-1.5 rounded-lg border text-[9px] font-bold uppercase transition-all hover:border-blue-500"
+                                style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
+                              >
                                 {tag}
                               </span>
                             ))}
-                            <button className="px-2 py-1 rounded-md border border-dashed border-white/10 text-zinc-600 text-[8px] font-bold hover:text-white hover:border-white/30 transition-all">
-                              + Add
+                            <button className="px-3 py-1.5 rounded-lg border border-dashed text-[9px] font-black uppercase tracking-widest transition-all hover:text-blue-500 hover:border-blue-500"
+                              style={{ borderColor: "var(--border)", color: "var(--muted)" }}
+                            >
+                              + New Tag
                             </button>
                           </div>
                         </div>
 
-                        <div className="space-y-3">
-                          <h5 className="text-[9px] font-black text-white uppercase tracking-widest">Notes</h5>
+                        <div className="space-y-4">
+                          <h5 className="text-[10px] font-black uppercase tracking-widest" style={{ color: "var(--text)" }}>Private Notes</h5>
                           <textarea 
-                            placeholder="Add a private note..."
-                            className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-[10px] font-medium focus:outline-none focus:border-white/20 min-h-[100px] resize-none text-white"
+                            placeholder="Add interaction notes..."
+                            className="w-full border rounded-2xl p-4 text-[11px] font-medium outline-none min-h-[120px] resize-none transition-all"
+                            style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
                           />
                         </div>
                       </div>
@@ -456,23 +513,25 @@ const Inbox = () => {
             </div>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-center p-12 space-y-8">
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-12 space-y-10" style={{ background: "var(--bg)" }}>
             <div className="relative">
-              <div className="h-32 w-32 rounded-[2.5rem] bg-white/[0.02] flex items-center justify-center text-blue-500/60 border border-white/5">
-                <MessageSquare size={64} />
+              <div className="h-40 w-40 rounded-[3rem] flex items-center justify-center border shadow-inner"
+                style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
+              >
+                <div className="opacity-10"><MessageSquare size={80} /></div>
               </div>
               <motion.div 
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                transition={{ repeat: Infinity, duration: 3 }}
-                className="absolute -top-4 -right-4 h-12 w-12 rounded-full bg-blue-500/60 border border-blue-500/20 flex items-center justify-center"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ repeat: Infinity, duration: 4 }}
+                className="absolute -top-6 -right-6 h-16 w-16 rounded-full bg-blue-500/20 border border-blue-500/20 flex items-center justify-center"
               >
-                <div className="h-2 w-2 bg-blue-500/60 rounded-full" />
+                <div className="h-3 w-3 bg-blue-500 rounded-full" />
               </motion.div>
             </div>
-            <div className="space-y-3">
-              <h3 className="text-2xl font-display font-bold text-white">Choose a contact on the left</h3>
-              <p className="text-sm text-zinc-500 max-w-xs mx-auto font-medium leading-relaxed">
-                Select a conversation to start messaging and managing your LinkedIn outreach.
+            <div className="space-y-4">
+              <h3 className="text-3xl font-display font-bold uppercase tracking-tight" style={{ color: "var(--text)" }}>Inbox Overview</h3>
+              <p className="text-[13px] max-w-sm mx-auto font-medium leading-relaxed" style={{ color: "var(--text)" }}>
+                Manage all your LinkedIn conversations in one central hub. Select a contact to view full details and start chatting.
               </p>
             </div>
           </div>
@@ -482,4 +541,4 @@ const Inbox = () => {
   );
 };
 
-export default Inbox;
+export default InboxPage;

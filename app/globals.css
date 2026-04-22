@@ -1,34 +1,64 @@
-@import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
-  --color-brand-blue: #2563eb;
-  --color-brand-dark: #09090b;
-}
+ @import "tailwindcss";
 
 @layer base {
+  :root {
+    --bg: #ffffff;
+    --text: #09090b;
+    --card: #f4f4f5;
+    --border: #e4e4e7;
+  }
+
+  .dark {
+    --bg: #09090b;
+    --text: #ffffff;
+    --card: #18181b;
+    --border: #27272a;
+  }
+
   body {
-    @apply bg-white text-zinc-950 antialiased selection:bg-blue-500/30;
+    background: var(--bg);
+    color: var(--text);
+    @apply antialiased selection:bg-blue-500/30;
   }
 }
 
+/* ✅ OLD STYLES BACK (but improved with theme support) */
+
 .glass-pill {
-  @apply bg-zinc-100/50 border border-zinc-200/50 backdrop-blur-md rounded-full;
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  border-radius: 9999px;
 }
 
 .bento-card {
-  @apply bg-zinc-50 border border-zinc-200 rounded-3xl p-8 transition-all duration-500 hover:border-blue-500/30 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: all 0.5s;
+}
+
+.bento-card:hover {
+  border-color: #3b82f6;
+  background: var(--bg);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
 }
 
 .light-section {
-  @apply bg-white text-zinc-950 py-32;
+  background: var(--bg);
+  color: var(--text);
+  padding: 8rem 0;
 }
 
 .gradient-heading {
-  @apply bg-clip-text text-transparent bg-gradient-to-b from-zinc-950 to-zinc-500;
+  background: linear-gradient(to bottom, var(--text), #6b7280);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* animations */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }

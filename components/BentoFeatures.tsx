@@ -75,7 +75,7 @@ const BentoFeatures = () => {
             transition={{ delay: 0.1 }}
             className="md:col-span-4 bento-card flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-600 to-indigo-700 border-none relative overflow-hidden group"
           >
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10" />
+            <div className="absolute inset-0 bg-[url('https://img.freepik.com/free-vector/dark-blue-gradient-background_78370-2078.jpg?semt=ais_hybrid&w=740&q=80')] opacity-80" />
             <div className="relative z-10 flex flex-col items-center">
               <div className="w-20 h-20 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center mb-8 shadow-2xl group-hover:scale-110 transition-transform duration-500">
                 <Zap className="text-white w-10 h-10" fill="currentColor" />

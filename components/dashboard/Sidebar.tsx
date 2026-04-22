@@ -1,17 +1,21 @@
 
-"use client"
- import Link from "next/link";
- import { useRouter, usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Megaphone,
-  BarChart3,
-  LogOut,
-  LineChart,
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { 
+  Megaphone, 
+  BarChart3, 
+  Mail, 
+  LogOut, 
   X,
-  Mail,
-  Users,
-} from "lucide-react";
+  Users
+} from 'lucide-react';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface SidebarProps {
   isOpen: boolean;
@@ -19,23 +23,26 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
-  const navigate = useRouter();
   const pathname = usePathname();
 
-  const linkClass = (path: string) =>
-    `flex items-center gap-4 px-6 py-4 text-[10px] uppercase tracking-[0.2em] font-bold transition-all ${
-      pathname === path
-        ? "bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)]"
-        : "text-zinc-500 hover:text-blue-400 hover:bg-blue-500/5"
-    }`;
+  const links = [
+    { path: '/dashboard/campaigns', icon: Megaphone, label: 'Campaigns' },
+    { path: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
+    { path: '/dashboard/inbox', icon: Mail, label: 'Inbox'},
+    { path: '/dashboard/network', icon: Users, label: 'My Network' },
+    { path: '/dashboard/graphs', icon: BarChart3, label: 'Graphs' },
+  ];
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate.push("/");
-  };
+  const linkClass = (path: string) =>
+    `flex items-center justify-between px-6 py-3.5 text-[11px] font-bold transition-all rounded-xl mx-3 ${
+      pathname === path
+        ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+        : "hover:bg-blue-600/5"
+    }`;
 
   return (
     <>
+   
       <div 
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[50] lg:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -43,55 +50,54 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         onClick={onClose}
       />
 
-      <aside className={`fixed lg:sticky top-0 left-0 w-72 bg-zinc-950 text-white flex flex-col border-r border-white/5 min-h-screen z-[60] transition-transform duration-300 lg:translate-x-0 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      }`}>
-        <div className="h-20 flex items-center justify-between px-8 text-lg font-display uppercase tracking-widest border-b border-white/5">
-          <div>
-            Nexus<span className="text-blue-500 italic">Flow</span>
+      <aside 
+        className={`fixed lg:sticky top-0 left-0 w-64 flex flex-col border-r min-h-screen z-[60] transition-all duration-300 lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+        style={{
+          background: "var(--bg)",
+          borderColor: "var(--border)",
+          color: "var(--text)"
+        }}
+      >
+        <div className="h-20 flex items-center justify-between px-6 border-b" style={{ borderColor: "var(--border)" }}>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
+              <Megaphone size={20} className="text-white" />
+            </div>
+            <span className="font-display font-bold text-lg tracking-tight">Nexus Flow</span>
           </div>
-          <button 
-            onClick={onClose}
-            className="lg:hidden p-2 text-zinc-500 hover:text-white transition-colors"
-          >
+          <button onClick={onClose} className="lg:hidden p-2 opacity-50 hover:opacity-100 transition-opacity">
             <X size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 py-8 space-y-1" onClick={() => { if (window.innerWidth < 1024) onClose(); }}>
-          <Link href="/dashboard" className={linkClass("/dashboard")}>
-            <LayoutDashboard size={16} />
-            Overview
-          </Link>
+        <div className="px-6 pt-8 pb-4">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em]" style={{ color: "var(--muted)" }}>LinkedIn Outreach</span>
+        </div>
 
-          <Link href="/dashboard/campaigns" className={linkClass("/dashboard/campaigns")}>
-            <Megaphone size={16} />
-            Campaigns
-          </Link>
-
-          <Link href="/dashboard/analytics" className={linkClass("/dashboard/analytics")}>
-            <BarChart3 size={16} />
-            Analytics
-          </Link>
-             <Link href="/dashboard/inbox" className={linkClass("/dashboard/inbox")}>
-               <Mail size={16} />
-               Inbox
-             </Link>
-             <Link href="/dashboard/network" className={linkClass("/dashboard/network")}>
-               <Users size={16} />
-                My Network
-             </Link>
-          <Link href="/dashboard/graphs" className={linkClass("/dashboard/graphs")}>
-            <LineChart size={16} />
-            Insights
-          </Link>
+        <nav className="flex-1 space-y-1 overflow-y-auto custom-scrollbar">
+          {links.map((link) => (
+            <Link 
+              key={link.path} 
+              href={link.path} 
+              className={linkClass(link.path)}
+              style={pathname !== link.path ? { color: "var(--muted)" } : {}}
+              onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+            >
+              <div className="flex items-center gap-3">
+                <link.icon size={18} />
+                {link.label}
+              </div>
+            
+            </Link>
+          ))}
         </nav>
 
-        <div className="p-6 border-t border-white/5">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-4 px-6 py-4 text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500 hover:text-red-400 transition-all rounded-xl hover:bg-red-500/5"
-          >
+        
+
+        <div className="p-6 border-t" style={{ borderColor: "var(--border)" }}>
+          <button className="w-full flex items-center gap-4 px-6 py-4 text-[10px] uppercase tracking-[0.2em] font-black hover:text-red-500 transition-all rounded-xl hover:bg-rose-500/5" style={{ color: "var(--muted)" }}>
             <LogOut size={16} />
             Logout
           </button>

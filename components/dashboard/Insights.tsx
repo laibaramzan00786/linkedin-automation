@@ -1,5 +1,5 @@
-"use client"
-import React from 'react';
+
+'use client';
 import {
   LineChart,
   Line,
@@ -15,6 +15,7 @@ import {
   Cell,
 } from "recharts";
 import { motion } from "motion/react";
+import { useTheme } from "next-themes";
 
 
 interface LineData {
@@ -48,16 +49,20 @@ const barData: BarData[] = [
 ];
 
 
-const Insights = () => {
+const InsightsPage = () => {
+  const { theme } = useTheme();
+  const axisColor = theme === 'dark' ? '#94a3b8' : '#64748b';
+  const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+
   return (
     <div className="space-y-8 md:space-y-12">
       <div className="flex flex-col gap-2">
         <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-blue-500/60">
           Insights / 2026
         </span>
-        <h2 className="text-3xl md:text-5xl font-display uppercase tracking-tighter text-white">
+        <h2 className="text-3xl md:text-5xl font-display uppercase tracking-tighter" style={{ color: "var(--text)" }}>
           Data <br />
-          <span className="text-zinc-600">Visualized.</span>
+          <span style={{ color: "var(--muted)" }}>Visualized.</span>
         </h2>
       </div>
 
@@ -66,9 +71,10 @@ const Insights = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-zinc-900/50 backdrop-blur-2xl p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl"
+          className="backdrop-blur-2xl p-6 md:p-8 rounded-2xl border shadow-2xl transition-all duration-300"
+          style={{ background: "var(--card)", borderColor: "var(--border)" }}
         >
-          <h3 className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-6 md:mb-8">
+          <h3 className="text-[10px] uppercase tracking-widest font-bold mb-6 md:mb-8" style={{ color: "var(--muted)" }}>
             Outreach Velocity
           </h3>
 
@@ -82,30 +88,31 @@ const Insights = () => {
                   </linearGradient>
                 </defs>
 
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff05" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
                 <XAxis
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                  tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
                   dy={10}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                  tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#09090b",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    backgroundColor: "var(--card)",
+                    border: "1px solid var(--border)",
                     borderRadius: "12px",
-                    color: "#fff",
+                    color: "var(--text)",
                     fontSize: "10px",
                     fontWeight: "700",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                   }}
+                  itemStyle={{ color: "var(--text)" }}
                 />
                 <Area
                   type="monotone"
@@ -124,40 +131,42 @@ const Insights = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-zinc-900/50 backdrop-blur-2xl p-6 md:p-8 rounded-2xl border border-white/5 shadow-2xl"
+          className="backdrop-blur-2xl p-6 md:p-8 rounded-2xl border shadow-2xl transition-all duration-300"
+          style={{ background: "var(--card)", borderColor: "var(--border)" }}
         >
-          <h3 className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-6 md:mb-8">
+          <h3 className="text-[10px] uppercase tracking-widest font-bold mb-6 md:mb-8" style={{ color: "var(--muted)" }}>
             Campaign Conversion
           </h3>
 
           <div className="h-[250px] md:h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff05" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
                 <XAxis
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                  tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
                   dy={10}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                  tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
                 />
                 <Tooltip
                   cursor={{ fill: "rgba(255,255,255,0.05)" }}
                   contentStyle={{
-                    backgroundColor: "#09090b",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    backgroundColor: "var(--card)",
+                    border: "1px solid var(--border)",
                     borderRadius: "12px",
-                    color: "#fff",
+                    color: "var(--text)",
                     fontSize: "10px",
                     fontWeight: "700",
                     textTransform: "uppercase",
                     letterSpacing: "0.1em",
                   }}
+                  itemStyle={{ color: "var(--text)" }}
                 />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                   {barData.map((_, index) => (
@@ -178,46 +187,48 @@ const Insights = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-zinc-900/50 backdrop-blur-2xl p-6 md:p-10 rounded-2xl border border-white/5 shadow-2xl"
+        className="backdrop-blur-2xl p-6 md:p-10 rounded-2xl border shadow-2xl transition-all duration-300"
+        style={{ background: "var(--card)", borderColor: "var(--border)" }}
       >
-        <h3 className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-8 md:mb-10">
+        <h3 className="text-[10px] uppercase tracking-widest font-bold mb-8 md:mb-10" style={{ color: "var(--muted)" }}>
           Weekly Reply Rate
         </h3>
 
         <div className="h-[300px] md:h-[400px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff05" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
               <XAxis
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
                 dy={10}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 10, fontWeight: 700, fill: "#52525b" }}
+                tick={{ fontSize: 10, fontWeight: 700, fill: axisColor }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#09090b",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  backgroundColor: "var(--card)",
+                  border: "1px solid var(--border)",
                   borderRadius: "12px",
-                  color: "#fff",
+                  color: "var(--text)",
                   fontSize: "10px",
                   fontWeight: "700",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                 }}
+                itemStyle={{ color: "var(--text)" }}
               />
               <Line
                 type="stepAfter"
                 dataKey="replies"
                 stroke="#3b82f6"
                 strokeWidth={4}
-                dot={{ r: 4, fill: "#3b82f6", strokeWidth: 2, stroke: "#fff" }}
+                dot={{ r: 4, fill: "#3b82f6", strokeWidth: 2, stroke: "var(--card)" }}
                 activeDot={{ r: 6 }}
               />
             </LineChart>
@@ -228,4 +239,4 @@ const Insights = () => {
   );
 };
 
-export default Insights;
+export default InsightsPage;

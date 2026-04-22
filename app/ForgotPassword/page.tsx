@@ -35,7 +35,7 @@ const ForgotPassword = () => {
                 required
               />
             </div>
-            <button type="submit" className="w-full bg-zinc-950 text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-blue-600 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-zinc-950/10">
+            <button type="submit" className="w-full bg-white dark:bg-zinc-950 text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-blue-600 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-zinc-950/10">
               Send Reset Link <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
