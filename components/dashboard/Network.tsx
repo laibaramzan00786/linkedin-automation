@@ -118,8 +118,7 @@ const NetworkPage = () => {
 
   return (
     <div className="flex flex-col gap-8 pb-20">
-      
-      {/* 🏙️ MINIMALIST HEADER */}
+ 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">Network Directory</h1>
@@ -138,8 +137,7 @@ const NetworkPage = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
-        
-        {/* 🔍 COMPACT FILTER BAR */}
+       
         <div className="w-full lg:w-72 shrink-0 space-y-6">
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] group-focus-within:text-blue-500 transition-colors" size={16} />
@@ -200,7 +198,7 @@ const NetworkPage = () => {
           </div>
         </div>
 
-        {/* 📋 MODERN REFINED DIRECTORY */}
+       
         <div className="flex-1 w-full bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -276,7 +274,6 @@ const NetworkPage = () => {
             </table>
           </div>
 
-          {/* 📄 REFINED PAGINATION */}
           <div className="px-6 py-4 bg-[var(--bg)]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
               <span className="font-medium">1 - 25 of 1,802 people</span>
