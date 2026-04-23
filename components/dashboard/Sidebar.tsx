@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname ,useRouter} from "next/navigation";
 import { 
   Megaphone, 
   BarChart3, 
@@ -24,7 +24,11 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const pathname = usePathname();
+ const router = useRouter();
 
+  const handleLogout = () => {
+    router.push('/');
+  };
   const links = [
     { path: '/dashboard/campaigns', icon: Megaphone, label: 'Campaigns' },
     { path: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
@@ -97,7 +101,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         
 
         <div className="p-6 border-t" style={{ borderColor: "var(--border)" }}>
-          <button className="w-full flex items-center gap-4 px-6 py-4 text-[10px] uppercase tracking-[0.2em] font-black hover:text-red-500 transition-all rounded-xl hover:bg-rose-500/5" style={{ color: "var(--muted)" }}>
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-4 px-6 py-4 text-[10px] uppercase tracking-[0.2em] font-black hover:text-red-500 transition-all rounded-xl hover:bg-rose-500/5" 
+            style={{ color: "var(--muted)" }}
+          >
             <LogOut size={16} />
             Logout
           </button>
