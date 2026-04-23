@@ -99,7 +99,19 @@ const initialCampaigns: Campaign[] = [
   },
 ];
 
-const ActionDropdown = ({ isOpen, onClose, campaign }: { isOpen: boolean; onClose: () => void; campaign: Campaign }) => {
+const ActionDropdown = ({ 
+  isOpen, 
+  onClose, 
+  campaign,
+  onDuplicate,
+  onDelete
+}: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  campaign: Campaign;
+  onDuplicate?: (c: Campaign) => void;
+  onDelete?: (id: string) => void;
+}) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -125,11 +137,7 @@ const ActionDropdown = ({ isOpen, onClose, campaign }: { isOpen: boolean; onClos
           <div className="px-4 py-2 mb-2 border-b border-[var(--border)]">
              <p className="text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Actions</p>
           </div>
-          
-          <button className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]">
-             <Play size={14} className="text-emerald-500" />
-             Start Campaign
-          </button>
+        
           
           <Link href={`/dashboard/campaigns/edit/${campaign.id}`} className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]">
              <Pencil size={14} className="text-[var(--muted)]" />
@@ -141,14 +149,26 @@ const ActionDropdown = ({ isOpen, onClose, campaign }: { isOpen: boolean; onClos
              Export Data
           </button>
 
-          <button className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]">
+          <button 
+            onClick={() => {
+              onDuplicate?.(campaign);
+              onClose();
+            }}
+            className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]"
+          >
              <Copy size={14} className="text-[var(--muted)]" />
              Duplicate
           </button>
 
           <div className="h-px mx-4 my-2 bg-[var(--border)]" />
 
-          <button className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold text-rose-500 hover:bg-rose-500/10 transition-all">
+          <button 
+            onClick={() => {
+              onDelete?.(campaign.id);
+              onClose();
+            }}
+            className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold text-rose-500 hover:bg-rose-500/10 transition-all"
+          >
              <Trash2 size={14} />
              Delete Permanently
           </button>
@@ -159,11 +179,12 @@ const ActionDropdown = ({ isOpen, onClose, campaign }: { isOpen: boolean; onClos
 };
 
 const CampaignsPage = () => {
+  const [campaigns, setCampaigns] = useState<Campaign[]>(initialCampaigns);
   const [activeTab, setActiveTab] = useState<"all" | "active" | "drafts">("all");
   const [openActionId, setOpenActionId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
-  const filteredCampaigns = initialCampaigns.filter(c => {
+  const filteredCampaigns = campaigns.filter(c => {
     if (activeTab === "all") return true;
     if (activeTab === "active") return c.status === "Active" || c.status === "Finished";
     return c.status === "Paused";
@@ -177,29 +198,52 @@ const CampaignsPage = () => {
     setSelectedIds(prev => prev.length === filteredCampaigns.length ? [] : filteredCampaigns.map(c => c.id));
   };
 
+  const handleDelete = (id: string) => {
+    setCampaigns(prev => prev.filter(c => c.id !== id));
+    setSelectedIds(prev => prev.filter(i => i !== id));
+  };
+
+  const handleDuplicate = (campaign: Campaign) => {
+    const newCampaign = {
+      ...campaign,
+      id: Math.random().toString(36).substring(7),
+      name: `${campaign.name} (Copy)`,
+      createdAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+    };
+    setCampaigns(prev => [newCampaign, ...prev]);
+  };
+
   return (
     <div className="flex flex-col gap-8 pb-20">
       
-   
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 mb-2">
-            <Activity size={16} className="text-blue-600" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600/60">Outreach Manager</span>
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--text)] uppercase">Campaign Dashboard</h1>
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="h-11 px-5 rounded-xl border border-[var(--border)] text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center gap-2">
-            <Download size={16} />
-            Export Stats
-          </button>
-          <Link href="/dashboard/campaigns/new" className="h-11 px-6 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
+
+       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
+    
+        <div className="flex flex-col gap-2">
+         <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-blue-500/60">
+           Outreach Manager
+         </span>
+
+        <h2
+           className="text-3xl md:text-5xl font-display uppercase tracking-tighter text-white"
+           style={{ color: "var(--text)" }}
+        >
+          Our Campaign  <br />
+          <span style={{ opacity: 0.5 }}>Dashboard.</span>
+        </h2>
+      </div>
+         <div className="flex items-center gap-3">
+           <button className="h-11 px-5 rounded-xl border border-[var(--border)] text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center gap-2">
+             <Download size={16} />
+             Export Stats
+           </button>
+           <Link href="/dashboard/campaigns/new" className="h-11 px-6 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
             <Plus size={18} />
             Create Campaign
           </Link>
         </div>
       </div>
+
 
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {[
@@ -222,7 +266,6 @@ const CampaignsPage = () => {
       </div>
 
       <div className="space-y-4">
-
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-[var(--card)] border border-[var(--border)] rounded-2xl">
           <div className="flex p-1 bg-[var(--bg)] border border-[var(--border)] rounded-xl">
              {(['all', 'active', 'drafts'] as const).map((tab) => (
@@ -310,7 +353,7 @@ const CampaignsPage = () => {
                     <td className="px-4 py-6">
                       <div className="flex items-center gap-8">
                          {[
-                           { label: 'Connections', val: camp.connections },
+                           { label: 'Conn', val: camp.connections },
                            { label: 'Sent', val: camp.messages },
                            { label: 'Reply', val: camp.replied, accent: true }
                          ].map(m => (
@@ -336,19 +379,20 @@ const CampaignsPage = () => {
                            <Link href={`/dashboard/campaigns/edit/${camp.id}`} className="h-9 w-9 rounded-xl flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all">
                               <Pencil size={16} />
                            </Link>
-                           <div className="relative">
-                              <button 
-                                onClick={() => setOpenActionId(openActionId === camp.id ? null : camp.id)}
-                                className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${openActionId === camp.id ? 'bg-zinc-950 text-white' : 'text-[var(--muted)] hover:bg-[var(--bg)]'}`}
-                              >
-                                <MoreVertical size={16} />
-                              </button>
-                              <ActionDropdown 
-                                isOpen={openActionId === camp.id} 
-                                onClose={() => setOpenActionId(null)} 
-                                campaign={camp} 
-                              />
-                           </div>
+                         <div className="relative" onMouseEnter={() => setOpenActionId(camp.id)} onMouseLeave={() => setOpenActionId(null)}>
+                            <button 
+                              className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${openActionId === camp.id ? 'bg-zinc-950 text-white' : 'text-[var(--muted)] hover:bg-[var(--bg)]'}`}
+                            >
+                              <MoreVertical size={16} />
+                            </button>
+                            <ActionDropdown 
+                              isOpen={openActionId === camp.id} 
+                              onClose={() => setOpenActionId(null)} 
+                              campaign={camp} 
+                              onDuplicate={handleDuplicate}
+                              onDelete={handleDelete}
+                            />
+                         </div>
                          </div>
                       </div>
                     </td>

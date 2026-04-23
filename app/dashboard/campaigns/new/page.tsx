@@ -167,7 +167,7 @@ const NewCampaignPage = () => {
       </div>
 
       <AnimatePresence mode="wait">
-      // CHOOSE AUDIENCE --- 
+    
         {wizardView === 'choose-audience' && (
           <motion.div
             key="step-audience"
@@ -450,7 +450,7 @@ const NewCampaignPage = () => {
           </motion.div>
         )}
 
-        // REVIEW & PUBLISH 
+      
         {wizardView === 'review' && (
           <motion.div
             key="step-review"
