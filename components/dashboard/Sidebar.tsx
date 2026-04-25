@@ -7,7 +7,8 @@ import {
   Mail, 
   LogOut, 
   X,
-  Users
+  Users,
+  Command
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -66,9 +67,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       >
         <div className="h-20 flex items-center justify-between px-6 border-b" style={{ borderColor: "var(--border)" }}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/20">
-              <Megaphone size={20} className="text-white" />
-            </div>
+           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_4px_12px_rgba(37,99,235,0.3)]">
+                       <Command className="text-white w-5 h-5" />
+                     </div>
+           
             <span className="font-display font-bold text-lg tracking-tight">Nexus Flow</span>
           </div>
           <button onClick={onClose} className="lg:hidden p-2 opacity-50 hover:opacity-100 transition-opacity">

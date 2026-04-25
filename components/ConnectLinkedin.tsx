@@ -168,27 +168,7 @@ const ConnectPage = () => {
           </div>
         </div>
 
-        <div className="relative z-10 pt-12">
-          <div className="p-6 bg-white rounded-3xl border border-zinc-200 shadow-xl space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <ShieldCheck size={20} />
-              </div>
-              <div>
-                <h5 className="text-[11px] font-black text-zinc-900 uppercase tracking-widest">Privacy First</h5>
-                <p className="text-[10px] text-zinc-500 font-medium">Your data is encrypted and never shared.</p>
-              </div>
-            </div>
-            <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-zinc-400">Trusted by 10k+ users</span>
-              <div className="flex -space-x-2">
-                {[1,2,3].map(i => (
-                  <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-zinc-200" />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

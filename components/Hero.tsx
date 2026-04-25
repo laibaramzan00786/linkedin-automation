@@ -26,7 +26,7 @@ const Hero = () => {
             Next-Gen AI Automation
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.9] gradient-heading">
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-[0.9] text-zinc-800">
             Automate Your LinkedIn <br /> Growth <span className="text-blue-600 italic">Effortlessly.</span>
           </h1>
           

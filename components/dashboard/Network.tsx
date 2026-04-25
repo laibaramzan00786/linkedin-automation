@@ -15,8 +15,10 @@ import {
   CheckCircle2,
   MoreHorizontal,
   Mail,
+  Filter,
 } from "lucide-react";
-import {LinkedinLogoIcon as Linkedin} from "@phosphor-icons/react";
+import { LinkedinLogoIcon as Linkedin } from "@phosphor-icons/react";
+
 interface Contact {
   id: string;
   name: string;
@@ -95,6 +97,7 @@ const NetworkPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const toggleFilter = (label: string) => {
     setActiveFilter(activeFilter === label ? null : label);
@@ -117,28 +120,38 @@ const NetworkPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 pb-20">
+    <div className="flex flex-col gap-6 md:gap-8 pb-20 px-4 md:px-0">
  
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">Network Directory</h1>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[var(--text)]">Network Directory</h1>
           <p className="text-sm text-[var(--muted)]">Manage and expand your professional outreach list.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="h-11 px-5 rounded-xl border border-[var(--border)] text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center gap-2">
+        <div className="flex items-center gap-2 md:gap-3">
+          <button className="flex-1 md:flex-none h-11 px-4 md:px-5 rounded-xl border border-[var(--border)] text-[10px] md:text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center justify-center gap-2">
             <Download size={16} />
-            Export CSV
+            <span className="hidden sm:inline">Export CSV</span>
+            <span className="sm:hidden">Export</span>
           </button>
-          <button className="h-11 px-6 bg-blue-600 text-white text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
+          <button className="flex-1 md:flex-none h-11 px-5 md:px-6 bg-blue-600 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
             <UserPlus size={18} />
             Add Contact
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 items-start relative">
        
-        <div className="w-full lg:w-72 shrink-0 space-y-6">
+        {/* Mobile Filter Toggle */}
+        <button 
+          onClick={() => setShowMobileFilters(!showMobileFilters)}
+          className="lg:hidden w-full h-12 flex items-center justify-center gap-2 bg-[var(--card)] border border-[var(--border)] rounded-xl text-xs font-bold uppercase tracking-widest text-[var(--text)]"
+        >
+          <Filter size={16} />
+          {showMobileFilters ? "Hide Filters" : "Show Filters"}
+        </button>
+
+        <div className={`w-full lg:w-72 shrink-0 space-y-6 ${showMobileFilters ? "block" : "hidden lg:block"}`}>
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] group-focus-within:text-blue-500 transition-colors" size={16} />
             <input 
@@ -200,8 +213,8 @@ const NetworkPage = () => {
 
        
         <div className="flex-1 w-full bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left border-collapse min-w-[700px] lg:min-w-0">
               <thead>
                 <tr className="bg-[var(--bg)]/50 border-b border-[var(--border)]">
                   <th className="w-14 pl-6 py-4">
@@ -240,23 +253,23 @@ const NetworkPage = () => {
                         <div className="w-9 h-9 rounded-full overflow-hidden border border-[var(--border)] shrink-0">
                           <img src={contact.avatar} alt={contact.name} className="w-full h-full object-cover" />
                         </div>
-                        <span className="text-sm font-semibold text-[var(--text)]">{contact.name}</span>
+                        <span className="text-sm font-semibold text-[var(--text)] whitespace-nowrap">{contact.name}</span>
                       </div>
                     </td>
                     <td className="px-4 py-4">
-                      <div className="space-y-0.5">
+                      <div className="space-y-0.5 max-w-[200px]">
                         <p className="text-xs font-medium text-[var(--text)] line-clamp-1">{contact.title}</p>
-                        <p className="text-[10px] font-bold text-blue-600 group-hover:underline cursor-pointer tracking-wider uppercase">{contact.company}</p>
+                        <p className="text-[10px] font-bold text-blue-600 group-hover:underline cursor-pointer tracking-wider uppercase line-clamp-1">{contact.company}</p>
                       </div>
                     </td>
                     <td className="px-4 py-4">
-                      <div className="flex items-center gap-1.5 text-[var(--muted)]">
-                        <MapPin size={12} className="text-rose-400" />
+                      <div className="flex items-center gap-1.5 text-[var(--muted)] whitespace-nowrap">
+                        <MapPin size={12} className="text-rose-400 shrink-0" />
                         <span className="text-[11px] font-medium">{contact.location}</span>
                       </div>
                     </td>
                     <td className="px-4 py-4 pr-6">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-1 md:gap-2">
                         <button className="h-8 w-8 rounded-lg flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all" title="Email">
                           <Mail size={14} />
                         </button>
@@ -276,19 +289,21 @@ const NetworkPage = () => {
 
           <div className="px-6 py-4 bg-[var(--bg)]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
-              <span className="font-medium">1 - 25 of 1,802 people</span>
+              <span className="font-medium whitespace-nowrap">1 - 25 of 1,802 people</span>
               <div className="flex items-center gap-2 font-bold text-[var(--text)] cursor-pointer hover:text-blue-600 transition-colors">
                 Show 25 <ChevronDown size={14} />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[var(--muted)] font-medium mr-2">Page 1 of 73</span>
-              <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:bg-[var(--card)] transition-all disabled:opacity-30" disabled>
-                <ChevronLeft size={16} />
-              </button>
-              <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--text)] hover:bg-[var(--card)] transition-all shadow-sm">
-                <ChevronRight size={16} />
-              </button>
+              <span className="text-xs text-[var(--muted)] font-medium mr-2 whitespace-nowrap">Page 1 of 73</span>
+              <div className="flex items-center gap-2">
+                <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:bg-[var(--card)] transition-all disabled:opacity-30" disabled>
+                  <ChevronLeft size={16} />
+                </button>
+                <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--text)] hover:bg-[var(--card)] transition-all shadow-sm">
+                  <ChevronRight size={16} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
