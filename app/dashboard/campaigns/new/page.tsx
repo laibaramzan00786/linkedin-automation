@@ -56,7 +56,7 @@ interface Step {
 const EditCampaignPage = () => {
   const router = useRouter();
   const { id } = useParams();
-  const [wizardStep, setWizardStep] = useState<WizardStep>('sequence');
+  const [wizardStep, setWizardStep] = useState<WizardStep>('audience');
   
   // Campaign State
   const [campaignName, setCampaignName] = useState("");
@@ -569,7 +569,7 @@ const EditCampaignPage = () => {
          </AnimatePresence>
       </main>
 
-   
+      {/* --- ADD STEP DRAWER --- */}
       <AnimatePresence>
          {isAddingStep && (
             <>
