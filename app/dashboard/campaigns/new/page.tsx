@@ -121,25 +121,42 @@ const EditCampaignPage = () => {
     }
   }, [id]);
 
-  const handleSave = () => {
-    const existing = JSON.parse(localStorage.getItem('custom_campaigns') || '[]');
-    const updated = existing.map((c: any) => {
-      if (c.id === id) {
-        return {
-          ...c,
-          name: campaignName,
-          leads: maxLeads,
-          searchUrl: searchUrl,
-          options: options,
-          steps: steps,
-          mainSequence: mainSequence
-        };
-      }
-      return c;
-    });
-    localStorage.setItem('custom_campaigns', JSON.stringify(updated));
-    router.push('/dashboard/campaigns');
-  };
+ const handleSave = () => {
+  const existing = JSON.parse(localStorage.getItem('custom_campaigns') || '[]');
+
+  const updated = existing.map((c: any) => {
+    if (c.id === id) {
+      return {
+        ...c,
+        id,
+        name: campaignName,
+        leads: maxLeads,
+        searchUrl,
+        options,
+        steps,
+        mainSequence,
+
+        // 👇 ye add karo (warna dashboard break hoga)
+        status: c.status || "Active",
+        createdAt: c.createdAt || new Date().toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'short'
+        }),
+        connections: c.connections || 0,
+        accepted: c.accepted || 0,
+        messages: c.messages || 0,
+        replied: c.replied || 0,
+        visits: c.visits || 0,
+        likes: c.likes || 0,
+        endorse: c.endorse || 0,
+      };
+    }
+    return c;
+  });
+
+  localStorage.setItem('custom_campaigns', JSON.stringify(updated));
+  router.push('/dashboard/campaigns');
+};
 
   const activeStep = editingStepId ? steps[editingStepId] : null;
 
