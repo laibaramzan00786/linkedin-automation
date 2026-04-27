@@ -318,7 +318,7 @@ const CampaignsPage = () => {
           </div>
         </div>
 
-        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-sm">
           <div className="overflow-x-auto custom-scrollbar">
             <table className="w-full text-left border-collapse min-w-[900px] lg:min-w-0">
               <thead>
@@ -399,9 +399,16 @@ const CampaignsPage = () => {
                            <Link href={`/dashboard/campaigns/edit/${camp.id}`} className="h-9 w-9 rounded-xl flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all">
                               <Pencil size={16} />
                            </Link>
-                         <div className="relative" onMouseEnter={() => setOpenActionId(camp.id)} onMouseLeave={() => setOpenActionId(null)}>
+                         <div className="relative" >
                             <button 
-                              className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${openActionId === camp.id ? 'bg-zinc-950 text-white shadow-xl' : 'text-[var(--muted)] hover:bg-[var(--bg)]'}`}
+                               onClick={() => 
+    setOpenActionId(prev => prev === camp.id ? null : camp.id)
+  }
+  className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${
+    openActionId === camp.id 
+      ? 'bg-zinc-950 text-white shadow-xl' 
+      : 'text-[var(--muted)] hover:bg-[var(--bg)]'
+  }`}
                             >
                               <MoreVertical size={16} />
                             </button>
