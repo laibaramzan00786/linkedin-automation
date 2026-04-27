@@ -178,22 +178,27 @@ const ActionDropdown = ({
 
 const CampaignsPage = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-
-useEffect(() => {
-  const stored = JSON.parse(localStorage.getItem('custom_campaigns') || '[]');
-
-  // agar kuch bhi saved nahi hai to fallback initialCampaigns
-  if (stored.length === 0) {
-    setCampaigns(initialCampaigns);
-  } else {
-    setCampaigns(stored);
-  }
-}, []);
   const [activeTab, setActiveTab] = useState<"all" | "active" | "drafts">("all");
   const [openActionId, setOpenActionId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("custom_campaigns");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Merge with initial if not already present or just use stored
+      setCampaigns(parsed.length > 0 ? parsed : initialCampaigns);
+    } else {
+      setCampaigns(initialCampaigns);
+      localStorage.setItem("custom_campaigns", JSON.stringify(initialCampaigns));
+    }
+  }, []);
 
   const filteredCampaigns = campaigns.filter(c => {
+    const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
+    if (!matchesSearch) return false;
+
     if (activeTab === "all") return true;
     if (activeTab === "active") return c.status === "Active" || c.status === "Finished";
     return c.status === "Paused";
@@ -208,7 +213,9 @@ useEffect(() => {
   };
 
   const handleDelete = (id: string) => {
-    setCampaigns(prev => prev.filter(c => c.id !== id));
+    const newCampaigns = campaigns.filter(c => c.id !== id);
+    setCampaigns(newCampaigns);
+    localStorage.setItem("custom_campaigns", JSON.stringify(newCampaigns));
     setSelectedIds(prev => prev.filter(i => i !== id));
   };
 
@@ -219,13 +226,14 @@ useEffect(() => {
       name: `${campaign.name} (Copy)`,
       createdAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
     };
-    setCampaigns(prev => [newCampaign, ...prev]);
+    const updated = [newCampaign, ...campaigns];
+    setCampaigns(updated);
+    localStorage.setItem("custom_campaigns", JSON.stringify(updated));
   };
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 pb-20 px-4 md:px-0">
+    <div className="flex flex-col gap-6 md:gap-8 pb-20 px-4 md:px-0 bg-[var(--bg)] min-h-screen">
       
-
        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
     
         <div className="flex flex-col gap-2">
@@ -255,7 +263,7 @@ useEffect(() => {
       </div>
 
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
         {[
           { label: "Targeting", val: "2,840", icon: Users, color: "text-blue-600", bg: "bg-blue-600/5" },
           { label: "Outreach", val: "1,150", icon: Send, color: "text-purple-600", bg: "bg-purple-600/5" },
@@ -263,12 +271,12 @@ useEffect(() => {
           { label: "Pipeline", val: "92", icon: MessageSquare, color: "text-amber-500", bg: "bg-amber-500/5" },
           { label: "Revenue", val: "$12.4k", icon: ArrowUpRight, color: "text-blue-500", bg: "bg-blue-500/5" },
         ].map((kpi, i) => (
-          <div key={i} className="p-4 md:p-5 bg-[var(--card)] border border-[var(--border)] rounded-2xl space-y-3">
+          <div key={i} className={`p-4 md:p-5 bg-[var(--card)] border border-[var(--border)] rounded-2xl space-y-3 ${i === 4 ? 'col-span-2 lg:col-span-1' : ''}`}>
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${kpi.bg} ${kpi.color}`}>
               <kpi.icon size={16} />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">{kpi.label}</p>
+              <p className="text-[9px] md:text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">{kpi.label}</p>
               <h3 className="text-lg md:text-xl font-bold text-[var(--text)] tracking-tight">{kpi.val}</h3>
             </div>
           </div>
@@ -298,6 +306,8 @@ useEffect(() => {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={14} />
                 <input 
                   type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="SEARCH CAMPAIGNS..."
                   className="w-full h-10 bg-[var(--bg)] border border-[var(--border)] pl-10 pr-4 rounded-xl text-[10px] font-bold focus:outline-none focus:border-blue-500 transition-all uppercase"
                 />
@@ -379,7 +389,7 @@ useEffect(() => {
                          <div className="flex flex-col items-end pr-4 md:pr-6 border-r border-[var(--border)] whitespace-nowrap">
                             <span className="text-[9px] font-bold text-[var(--muted)] uppercase tracking-widest">Conversion</span>
                             <span className="text-sm font-black text-blue-600 tabular-nums">
-                               {((camp.accepted / camp.connections) * 100).toFixed(0)}%
+                               {((camp.accepted / (camp.connections || 1)) * 100).toFixed(0)}%
                             </span>
                          </div>
                          <div className="flex items-center gap-1 md:gap-2">
@@ -391,7 +401,7 @@ useEffect(() => {
                            </Link>
                          <div className="relative" onMouseEnter={() => setOpenActionId(camp.id)} onMouseLeave={() => setOpenActionId(null)}>
                             <button 
-                              className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${openActionId === camp.id ? 'bg-zinc-950 text-white' : 'text-[var(--muted)] hover:bg-[var(--bg)]'}`}
+                              className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${openActionId === camp.id ? 'bg-zinc-950 text-white shadow-xl' : 'text-[var(--muted)] hover:bg-[var(--bg)]'}`}
                             >
                               <MoreVertical size={16} />
                             </button>

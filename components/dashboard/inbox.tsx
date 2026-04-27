@@ -272,10 +272,7 @@ const InboxPage = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold tracking-tight" style={{ color: "var(--text)" }}>{selectedConversation.participant.name}</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "var(--muted)" }}>Active now</span>
-                  </div>
+                 
                 </div>
               </div>
               <div className="flex gap-3">
