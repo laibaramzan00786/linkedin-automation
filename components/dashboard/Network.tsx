@@ -2,20 +2,10 @@
 'use client';
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Search, 
-  Download, 
-  Briefcase, 
-  Building2, 
-  ChevronDown, 
-  ChevronLeft, 
-  ChevronRight,
-  MapPin,
-  UserPlus,
-  CheckCircle2,
-  MoreHorizontal,
-  Mail,
-  Filter,
+import {
+  Search, Download, Briefcase, Building2, ChevronDown,
+  ChevronLeft, ChevronRight, MapPin, UserPlus, CheckCircle2,
+  MoreHorizontal, Mail, Filter,
 } from "lucide-react";
 import { LinkedinLogoIcon as Linkedin } from "@phosphor-icons/react";
 
@@ -24,176 +14,144 @@ interface Contact {
   name: string;
   title: string;
   company: string;
-  website: string;
   location: string;
   avatar: string;
-  contactInfo: string;
 }
 
 const rawContacts: Contact[] = [
- {
-    id: "1",
-    name: "Hassan Raza",
-    title: "Senior Talent Acquisition Manager",
-    company: "TechNova Solutions",
-    website: "https://www.technovasolutions.com",
-    location: "Islamabad, Pakistan",
-    avatar: "https://images.unsplash.com/photo-1615109398623-88346a601842?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFufGVufDB8fDB8fHww",
-    contactInfo: "h@technova.com"
-  },
-  {
-    id: "2",
-    name: "Ayesha Malik",
-    title: "HR Business Partner",
-    company: "InnovateX Pvt Ltd",
-    website: "https://www.innovatex.com",
-    location: "Lahore, Pakistan",
-    avatar: "https://www.headshotphoto.io/images/blogs/classic-suit.png",
-    contactInfo: "ayesha@innovate.com"
-  },
-  {
-    id: "3",
-    name: "Usman Tariq",
-    title: "Recruitment Specialist",
-    company: "AlphaByte Technologies",
-    website: "https://www.alphabyte.io",
-    location: "Karachi, Pakistan",
-    avatar: "https://static.vecteezy.com/system/resources/thumbnails/005/346/410/small/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg",
-    contactInfo: "u.tariq@alpha.io"
-  },
-  {
-    id: "4",
-    name: "Fatima Noor",
-    title: "HR Operations Manager",
-    company: "CloudCore Systems",
-    website: "https://www.cloudcore.io",
-    location: "Rawalpindi, Pakistan",
-    avatar: "https://i.pinimg.com/736x/f6/ee/13/f6ee1311d121ea0cef159ff502d21720.jpg",
-    contactInfo: "fatima@cloudcore.io"
-  },
-  {
-    id: "5",
-    name: "Ali Hamza",
-    title: "People & Culture Lead",
-    company: "NextGen Labs",
-    website: "https://www.nextgenlabs.co",
-    location: "Faisalabad, Pakistan",
-    avatar: "https://market-resized.envatousercontent.com/photodune.net/EVA/TRX/b4/06/80/53/a4/v1_E11/E1139EUA.jpeg?auto=format&q=94&mark=https%3A%2F%2Fassets.market-storefront.envato-static.com%2Fwatermarks%2Fphoto-260724.png&opacity=0.2&cf_fit=contain&w=590&h=884&s=ade8cb2e5494eaec7be4aec07992678588d92aac7b5fa40a4c5398593972fa6a",
-    contactInfo: "ali@nextgen.co"
-  },
-  {
-    id: "6",
-    name: "Zainab Sheikh",
-    title: "Senior HR Executive",
-    company: "BrightPath Solutions",
-    website: "https://www.brightpathsol.com",
-    location: "Multan, Pakistan",
-    avatar: "https://media.easy-peasy.ai/fd0c6de9-b0a0-4378-9479-d596ce64bbd4/51860b5d-8fd6-41ce-b107-6fb783ff7837_medium.webp",
-    contactInfo: "zainab@bright.com"
-  }
+  { id:"1", name:"Hassan Raza",    title:"Senior Talent Acquisition Manager", company:"TechNova Solutions",  location:"Islamabad, Pakistan", avatar:"https://images.unsplash.com/photo-1615109398623-88346a601842?fm=jpg&q=60&w=300&auto=format&fit=crop" },
+  { id:"2", name:"Ayesha Malik",   title:"HR Business Partner",               company:"InnovateX Pvt Ltd",   location:"Lahore, Pakistan",    avatar:"https://www.headshotphoto.io/images/blogs/classic-suit.png" },
+  { id:"3", name:"Usman Tariq",    title:"Recruitment Specialist",            company:"AlphaByte Technologies",location:"Karachi, Pakistan",  avatar:"https://static.vecteezy.com/system/resources/thumbnails/005/346/410/small/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg" },
+  { id:"4", name:"Fatima Noor",    title:"HR Operations Manager",             company:"CloudCore Systems",    location:"Rawalpindi, Pakistan", avatar:"https://i.pinimg.com/736x/f6/ee/13/f6ee1311d121ea0cef159ff502d21720.jpg" },
+  { id:"5", name:"Ali Hamza",      title:"People & Culture Lead",             company:"NextGen Labs",         location:"Faisalabad, Pakistan", avatar:"https://market-resized.envatousercontent.com/photodune.net/EVA/TRX/b4/06/80/53/a4/v1_E11/E1139EUA.jpeg?auto=format&q=94&w=200" },
+  { id:"6", name:"Zainab Sheikh",  title:"Senior HR Executive",               company:"BrightPath Solutions", location:"Multan, Pakistan",    avatar:"https://media.easy-peasy.ai/fd0c6de9-b0a0-4378-9479-d596ce64bbd4/51860b5d-8fd6-41ce-b107-6fb783ff7837_medium.webp" },
 ];
 
 const NetworkPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [searchTerm,        setSearchTerm]        = useState("");
+  const [selectedContacts,  setSelectedContacts]  = useState<string[]>([]);
+  const [activeFilter,      setActiveFilter]      = useState<string | null>(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  const toggleFilter = (label: string) => {
+  const filtered = rawContacts.filter(c =>
+    c.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const toggleFilter = (label: string) =>
     setActiveFilter(activeFilter === label ? null : label);
-  };
 
-  const toggleSelectAll = () => {
-    if (selectedContacts.length === rawContacts.length) {
-      setSelectedContacts([]);
-    } else {
-      setSelectedContacts(rawContacts.map(c => c.id));
-    }
-  };
+  const toggleSelectAll = () =>
+    setSelectedContacts(selectedContacts.length === rawContacts.length ? [] : rawContacts.map(c => c.id));
 
-  const toggleSelect = (id: string) => {
-    if (selectedContacts.includes(id)) {
-      setSelectedContacts(selectedContacts.filter(c => c !== id));
-    } else {
-      setSelectedContacts([...selectedContacts, id]);
-    }
-  };
+  const toggleSelect = (id: string) =>
+    setSelectedContacts(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 pb-20 px-4 md:px-0">
- 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
-        <div className="space-y-1">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[var(--text)]">Network Directory</h1>
-          <p className="text-sm text-[var(--muted)]">Manage and expand your professional outreach list.</p>
+    <div
+      className="flex flex-col gap-6 pb-20"
+      style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
+    >
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b"
+        style={{ borderColor: "var(--border)" }}>
+        <div>
+          <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: "#e8836a" }}>
+            My Network
+          </p>
+          <h1 className="text-2xl font-bold" style={{ color: "var(--text)" }}>Network Directory</h1>
+          <p className="text-sm mt-0.5" style={{ color: "var(--muted)" }}>
+            Manage and expand your professional outreach list.
+          </p>
         </div>
-        <div className="flex items-center gap-2 md:gap-3">
-          <button className="flex-1 md:flex-none h-11 px-4 md:px-5 rounded-xl border border-[var(--border)] text-[10px] md:text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center justify-center gap-2">
-            <Download size={16} />
-            <span className="hidden sm:inline">Export CSV</span>
-            <span className="sm:hidden">Export</span>
+
+        <div className="flex items-center gap-3">
+          <button
+            className="h-10 px-4 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all hover:shadow-sm"
+            style={{ borderColor: "var(--border)", color: "var(--text)", background: "var(--card)" }}
+          >
+            <Download size={14} />
+            Export CSV
           </button>
-          <button className="flex-1 md:flex-none h-11 px-5 md:px-6 bg-blue-600 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
-            <UserPlus size={18} />
+          <button
+            className="h-10 px-5 text-white text-xs font-semibold rounded-xl flex items-center gap-2 transition-all active:scale-95"
+            style={{ background: "#e8836a", boxShadow: "0 4px 14px rgba(232,131,106,0.35)" }}
+          >
+            <UserPlus size={15} />
             Add Contact
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start relative">
-       
-        {/* Mobile Filter Toggle */}
-        <button 
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+
+        <button
           onClick={() => setShowMobileFilters(!showMobileFilters)}
-          className="lg:hidden w-full h-12 flex items-center justify-center gap-2 bg-[var(--card)] border border-[var(--border)] rounded-xl text-xs font-bold uppercase tracking-widest text-[var(--text)]"
+          className="lg:hidden w-full h-11 flex items-center justify-center gap-2 rounded-xl border text-xs font-semibold"
+          style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}
         >
-          <Filter size={16} />
+          <Filter size={14} />
           {showMobileFilters ? "Hide Filters" : "Show Filters"}
         </button>
 
-        <div className={`w-full lg:w-72 shrink-0 space-y-6 ${showMobileFilters ? "block" : "hidden lg:block"}`}>
-          <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] group-focus-within:text-blue-500 transition-colors" size={16} />
-            <input 
-              type="text" 
-              placeholder="Search by name..." 
+        <div className={`w-full lg:w-64 shrink-0 space-y-4 ${showMobileFilters ? "block" : "hidden lg:block"}`}>
+
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2" size={14}
+              style={{ color: "var(--muted)" }} />
+            <input
+              type="text"
+              placeholder="Search by name..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-12 w-full bg-[var(--card)] border border-[var(--border)] rounded-xl pl-11 pr-4 text-xs font-medium focus:outline-none focus:border-blue-500 transition-all"
+              onChange={e => setSearchTerm(e.target.value)}
+              className="h-10 w-full rounded-xl pl-10 pr-4 text-sm font-medium focus:outline-none transition-all"
+              style={{
+                background: "var(--card)", border: "1px solid var(--border)",
+                color: "var(--text)",
+              }}
             />
           </div>
 
-          <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden divide-y divide-[var(--border)]">
+          <div
+            className="rounded-2xl overflow-hidden divide-y"
+            style={{ background: "var(--card)", border: "1px solid var(--border)" } as React.CSSProperties}
+          >
             {[
               { label: "Job Title", icon: Briefcase },
-              { label: "Company", icon: Building2 },
-              { label: "Location", icon: MapPin },
-            ].map((filter, i) => (
-              <div key={i} className="p-1">
-                <button 
-                  onClick={() => toggleFilter(filter.label)}
-                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[var(--bg)] transition-all group"
+              { label: "Company",   icon: Building2 },
+              { label: "Location",  icon: MapPin },
+            ].map((f, i) => (
+              <div key={i}>
+                <button
+                  onClick={() => toggleFilter(f.label)}
+                  className="w-full flex items-center justify-between px-4 py-3 transition-all hover:bg-[var(--bg)] text-sm font-medium"
+                  style={{ color: "var(--text)" }}
                 >
-                  <div className="flex items-center gap-3">
-                    <filter.icon size={14} className="text-[var(--muted)] group-hover:text-blue-600 transition-colors" />
-                    <span className="text-xs font-semibold text-[var(--text)]">{filter.label}</span>
+                  <div className="flex items-center gap-2.5">
+                    <f.icon size={13} style={{ color: "var(--muted)" }} />
+                    {f.label}
                   </div>
-                  <ChevronDown size={14} className={`text-[var(--muted)] transition-transform duration-300 ${activeFilter === filter.label ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={13} style={{ color: "var(--muted)" }}
+                    className={`transition-transform duration-200 ${activeFilter === f.label ? "rotate-180" : ""}`} />
                 </button>
-                
                 <AnimatePresence>
-                  {activeFilter === filter.label && (
-                    <motion.div 
+                  {activeFilter === f.label && (
+                    <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden px-3 pb-3"
                     >
-                      <input 
-                        type="text" 
-                        placeholder={`Filter by ${filter.label.toLowerCase()}...`} 
-                        className="w-full h-10 bg-[var(--bg)] border border-[var(--border)] rounded-lg px-4 text-xs focus:outline-none focus:border-blue-500 transition-all font-medium"
+                      <input
+                        type="text"
+                        placeholder={`Filter by ${f.label.toLowerCase()}...`}
                         autoFocus
+                        className="w-full h-9 rounded-lg px-3 text-xs font-medium focus:outline-none"
+                        style={{
+                          background: "var(--bg)", border: "1px solid var(--border)",
+                          color: "var(--text)",
+                        }}
                       />
                     </motion.div>
                   )}
@@ -202,114 +160,171 @@ const NetworkPage = () => {
             ))}
           </div>
 
-          <div className="p-6 bg-blue-600/5 border border-blue-600/10 rounded-2xl space-y-3">
-            <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Network Score</h4>
+          <div
+            className="rounded-2xl p-5 space-y-2"
+            style={{ background: "rgba(232,131,106,0.06)", border: "1px solid rgba(232,131,106,0.18)" }}
+          >
+            <p className="text-xs font-semibold" style={{ color: "#e8836a" }}>Total Network</p>
             <div className="flex items-end justify-between">
-              <span className="text-2xl font-bold text-[var(--text)]">842</span>
-              <span className="text-[10px] font-bold text-emerald-500 mb-1">+12% vs last month</span>
+              <span className="text-2xl font-bold" style={{ color: "var(--text)" }}>842</span>
+              <span className="text-xs font-semibold mb-1" style={{ color: "#10b981" }}>+12% this month</span>
             </div>
           </div>
         </div>
 
-       
-        <div className="flex-1 w-full bg-[var(--card)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm">
-          <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left border-collapse min-w-[700px] lg:min-w-0">
+        <div
+          className="flex-1 w-full rounded-2xl overflow-hidden"
+          style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+        >
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse" style={{ minWidth: 640 }}>
               <thead>
-                <tr className="bg-[var(--bg)]/50 border-b border-[var(--border)]">
-                  <th className="w-14 pl-6 py-4">
-                    <button 
+                <tr style={{ borderBottom: "1px solid var(--border)", background: "var(--bg)" }}>
+                  <th className="pl-5 py-3 w-12">
+                    <button
                       onClick={toggleSelectAll}
-                      className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${selectedContacts.length === rawContacts.length ? 'bg-blue-600 border-blue-600 text-white' : 'border-[var(--border)] bg-white text-transparent'}`}
+                      className="w-5 h-5 rounded border flex items-center justify-center transition-all"
+                      style={{
+                        background: selectedContacts.length === rawContacts.length ? "#e8836a" : "transparent",
+                        borderColor: selectedContacts.length === rawContacts.length ? "#e8836a" : "var(--border)",
+                        color: selectedContacts.length === rawContacts.length ? "#fff" : "transparent",
+                      }}
                     >
-                      <CheckCircle2 size={12} strokeWidth={3} />
+                      <CheckCircle2 size={11} strokeWidth={3} />
                     </button>
                   </th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Profile</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Title / Company</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Location</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)] text-right pr-6">Contact</th>
+                  {["Profile", "Title / Company", "Location", "Contact"].map((h, i) => (
+                    <th key={h} className={`px-4 py-3 text-xs font-semibold ${i === 3 ? "text-right pr-5" : ""}`}
+                      style={{ color: "var(--muted)" }}>
+                      {h}
+                    </th>
+                  ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--border)]">
-                {rawContacts.map((contact, i) => (
-                  <motion.tr 
+              <tbody>
+                {filtered.map((contact, i) => (
+                  <motion.tr
                     key={contact.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: i * 0.03 }}
-                    className={`group hover:bg-[var(--bg)] transition-colors ${selectedContacts.includes(contact.id) ? 'bg-blue-600/[0.02]' : ''}`}
+                    transition={{ delay: i * 0.04 }}
+                    className="group transition-colors"
+                    style={{
+                      borderBottom: i < filtered.length - 1 ? "1px solid var(--border)" : "none",
+                      background: selectedContacts.includes(contact.id) ? "rgba(232,131,106,0.04)" : "transparent",
+                    }}
+                    onMouseEnter={e => { if (!selectedContacts.includes(contact.id)) (e.currentTarget as HTMLElement).style.background = "var(--bg)"; }}
+                    onMouseLeave={e => { if (!selectedContacts.includes(contact.id)) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                   >
-                    <td className="pl-6 py-4">
-                      <button 
+                    <td className="pl-5 py-3.5">
+                      <button
                         onClick={() => toggleSelect(contact.id)}
-                        className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${selectedContacts.includes(contact.id) ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-600/20' : 'border-[var(--border)] bg-[var(--bg)] text-transparent group-hover:border-zinc-400'}`}
+                        className="w-5 h-5 rounded border flex items-center justify-center transition-all"
+                        style={{
+                          background: selectedContacts.includes(contact.id) ? "#e8836a" : "transparent",
+                          borderColor: selectedContacts.includes(contact.id) ? "#e8836a" : "var(--border)",
+                          color: selectedContacts.includes(contact.id) ? "#fff" : "transparent",
+                        }}
                       >
-                        <CheckCircle2 size={12} strokeWidth={3} />
+                        <CheckCircle2 size={11} strokeWidth={3} />
                       </button>
                     </td>
-                    <td className="px-4 py-4">
+
+                    <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full overflow-hidden border border-[var(--border)] shrink-0">
+                        <div className="w-8 h-8 rounded-full overflow-hidden shrink-0"
+                          style={{ border: "1px solid var(--border)" }}>
                           <img src={contact.avatar} alt={contact.name} className="w-full h-full object-cover" />
                         </div>
-                        <span className="text-sm font-semibold text-[var(--text)] whitespace-nowrap">{contact.name}</span>
+                        <span className="text-sm font-semibold whitespace-nowrap" style={{ color: "var(--text)" }}>
+                          {contact.name}
+                        </span>
                       </div>
                     </td>
-                    <td className="px-4 py-4">
-                      <div className="space-y-0.5 max-w-[200px]">
-                        <p className="text-xs font-medium text-[var(--text)] line-clamp-1">{contact.title}</p>
-                        <p className="text-[10px] font-bold text-blue-600 group-hover:underline cursor-pointer tracking-wider uppercase line-clamp-1">{contact.company}</p>
+
+                    <td className="px-4 py-3.5">
+                      <p className="text-xs font-medium" style={{ color: "var(--text)" }}>{contact.title}</p>
+                      <p className="text-xs font-semibold mt-0.5" style={{ color: "#e8836a" }}>{contact.company}</p>
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin size={11} style={{ color: "#e8836a" }} className="shrink-0" />
+                        <span className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--muted)" }}>
+                          {contact.location}
+                        </span>
                       </div>
                     </td>
-                    <td className="px-4 py-4">
-                      <div className="flex items-center gap-1.5 text-[var(--muted)] whitespace-nowrap">
-                        <MapPin size={12} className="text-rose-400 shrink-0" />
-                        <span className="text-[11px] font-medium">{contact.location}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 pr-6">
-                      <div className="flex items-center justify-end gap-1 md:gap-2">
-                        <button className="h-8 w-8 rounded-lg flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all" title="Email">
-                          <Mail size={14} />
-                        </button>
-                        <button className="h-8 w-8 rounded-lg flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all" title="LinkedIn">
-                          <Linkedin size={14} />
-                        </button>
-                        <button className="h-8 w-8 rounded-lg flex items-center justify-center text-[var(--muted)] hover:bg-[var(--bg)] transition-all">
-                          <MoreHorizontal size={14} />
-                        </button>
+
+                    <td className="px-4 py-3.5 pr-5">
+                      <div className="flex items-center justify-end gap-1">
+                        {[
+                          { icon: Mail, title: "Email" },
+                          { icon: Linkedin, title: "LinkedIn" },
+                          { icon: MoreHorizontal, title: "More" },
+                        ].map(({ icon: Icon, title }) => (
+                          <button
+                            key={title}
+                            title={title}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center transition-all"
+                            style={{ color: "var(--muted)" }}
+                            onMouseEnter={e => {
+                              (e.currentTarget as HTMLElement).style.background = "rgba(232,131,106,0.1)";
+                              (e.currentTarget as HTMLElement).style.color = "#e8836a";
+                            }}
+                            onMouseLeave={e => {
+                              (e.currentTarget as HTMLElement).style.background = "transparent";
+                              (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+                            }}
+                          >
+                            <Icon size={14} />
+                          </button>
+                        ))}
                       </div>
                     </td>
                   </motion.tr>
                 ))}
+                {filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="py-16 text-center text-sm" style={{ color: "var(--muted)" }}>
+                      No contacts found.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
 
-          <div className="px-6 py-4 bg-[var(--bg)]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
-              <span className="font-medium whitespace-nowrap">1 - 25 of 1,802 people</span>
-              <div className="flex items-center gap-2 font-bold text-[var(--text)] cursor-pointer hover:text-blue-600 transition-colors">
-                Show 25 <ChevronDown size={14} />
+          <div
+            className="px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3"
+            style={{ borderTop: "1px solid var(--border)", background: "var(--bg)" }}
+          >
+            <div className="flex items-center gap-4 text-xs" style={{ color: "var(--muted)" }}>
+              <span className="font-medium">1 – 25 of 1,802 people</span>
+              <div className="flex items-center gap-1 font-semibold cursor-pointer"
+                style={{ color: "var(--text)" }}>
+                Show 25 <ChevronDown size={12} />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[var(--muted)] font-medium mr-2 whitespace-nowrap">Page 1 of 73</span>
-              <div className="flex items-center gap-2">
-                <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--muted)] hover:bg-[var(--card)] transition-all disabled:opacity-30" disabled>
-                  <ChevronLeft size={16} />
-                </button>
-                <button className="w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--text)] hover:bg-[var(--card)] transition-all shadow-sm">
-                  <ChevronRight size={16} />
-                </button>
-              </div>
+              <span className="text-xs font-medium mr-1" style={{ color: "var(--muted)" }}>Page 1 of 73</span>
+              <button
+                disabled
+                className="w-8 h-8 rounded-lg border flex items-center justify-center opacity-30"
+                style={{ borderColor: "var(--border)", color: "var(--muted)" }}
+              >
+                <ChevronLeft size={15} />
+              </button>
+              <button
+                className="w-8 h-8 rounded-lg border flex items-center justify-center transition-all hover:shadow-sm"
+                style={{ borderColor: "var(--border)", color: "var(--text)", background: "var(--card)" }}
+              >
+                <ChevronRight size={15} />
+              </button>
             </div>
           </div>
         </div>
 
       </div>
-
     </div>
   );
 };

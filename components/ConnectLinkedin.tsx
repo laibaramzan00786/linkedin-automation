@@ -1,118 +1,94 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { useRouter } from 'next/navigation';
+import {useRouter} from "next/navigation";
 import { 
   ShieldCheck, 
   Zap, 
   Globe, 
   ArrowRight, 
   Loader2,
-  Users
+  Command,
+  CheckCircle2
 } from 'lucide-react';
-import { LinkedinLogoIcon,GoogleChromeLogoIcon } from '@phosphor-icons/react';
+import { LinkedinLogo } from "@phosphor-icons/react";
+
 const ConnectPage = () => {
   const [isConnecting, setIsConnecting] = useState(false);
-  const navigate = useRouter();
+  const router = useRouter();
 
   const handleConnect = () => {
     setIsConnecting(true);
-   
+    // Simulate a brief connection process then navigate
     setTimeout(() => {
-      navigate.push('/dashboard');
+      setIsConnecting(false);
+      router.push('/dashboard');
     }, 1500);
   };
 
   return (
-    <div className="min-h-[calc(100vh-140px)] bg-white rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-zinc-100">
-    
-      <div className="flex-1 p-8 md:p-16 flex flex-col justify-center space-y-12 relative">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="space-y-12"
-        >
+    <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans selection:bg-[#e8836a]/30">
+     
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(#e8836a_1px,transparent_1px)] [background-size:32px_32px]" />
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-[1000px] bg-white border border-zinc-200 rounded-[32px] shadow-sm relative z-10 flex flex-col lg:flex-row overflow-hidden"
+      >
+       
+        <div className="flex-1 p-8 md:p-12 lg:p-16 space-y-10">
           <div className="space-y-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest"
-            >
-              <LinkedinLogoIcon size={14} />
-              Official Integration
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-display font-bold text-zinc-900 tracking-tight leading-[1.1]"
-            >
-              Connect your <br />
-              <span className="text-blue-600">LinkedIn Account.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-zinc-500 max-w-lg font-medium leading-relaxed"
-            >
-              Sync your LinkedIn profile to start automating your outreach, managing leads, and growing your network with NexusFlow.
-            </motion.p>
+            <div className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center">
+                <Command className="text-[#e8836a] w-5 h-5" />
+              </div>
+              <span className="text-lg font-bold tracking-tight text-zinc-950">NexusFlow</span>
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="text-3xl md:text-5xl font-bold text-zinc-950 tracking-tight leading-tight">
+                Connect your <span className="text-[#e8836a]">LinkedIn</span>
+              </h1>
+              <p className="text-lg text-zinc-500 max-w-lg font-medium leading-relaxed">
+                Sync your profile to activate AI-powered outreach and lead management.
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
             {[
               { 
                 icon: ShieldCheck, 
                 title: "Safe & Secure", 
-                desc: "We use advanced encryption and safety limits to protect your account." 
+                desc: "Bank-grade encryption for your credentials." 
               },
               { 
                 icon: Zap, 
-                title: "Smart Automation", 
-                desc: "Our AI mimics human behavior to keep your account safe." 
-              },
-              { 
-                icon: Globe, 
-                title: "Multi-Account", 
-                desc: "Manage multiple LinkedIn profiles from a single dashboard." 
-              },
-              { 
-                icon: Users, 
-                title: "Lead Generation", 
-                desc: "Find and connect with your ideal prospects automatically." 
+                title: "Smart Sync", 
+                desc: "Real-time updates across all your devices." 
               }
             ].map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + (i * 0.1) }}
-                className="flex gap-4"
-              >
-                <div className="h-12 w-12 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-900 shrink-0 border border-zinc-100">
-                  <item.icon size={20} />
+              <div key={i} className="flex gap-4">
+                <div className="h-10 w-10 rounded-xl bg-zinc-50 flex items-center justify-center text-zinc-900 shrink-0 border border-zinc-100">
+                  <item.icon size={18} />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-bold text-zinc-900 text-sm">{item.title}</h4>
+                  <h4 className="font-semibold text-zinc-900 text-sm">{item.title}</h4>
                   <p className="text-xs text-zinc-500 leading-relaxed font-medium">{item.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-col sm:flex-row gap-4 pt-4"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <button 
               onClick={handleConnect}
               disabled={isConnecting}
-              className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold text-sm hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+              className="px-8 py-4 bg-[#e8836a] text-white rounded-xl font-semibold text-sm hover:bg-[#d8735a] transition-all flex items-center justify-center gap-2.5 group shadow-lg shadow-[#e8836a]/10 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isConnecting ? (
                 <>
@@ -121,54 +97,58 @@ const ConnectPage = () => {
                 </>
               ) : (
                 <>
+                  <LinkedinLogo size={20} weight="bold" />
                   Connect LinkedIn
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
-            <button className="px-10 py-5 bg-zinc-50 text-zinc-900 border border-zinc-200 rounded-2xl font-bold text-sm hover:bg-zinc-100 transition-all flex items-center justify-center gap-3">
-              <GoogleChromeLogoIcon size={18} />
-              Install Extension
-            </button>
-          </motion.div>
-        </motion.div>
-      </div>
-
-    
-      <div className="w-full lg:w-[450px] bg-zinc-50 border-l border-zinc-100 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
-   
-        <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none">
-          <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full border-[40px] border-blue-600" />
-          <div className="absolute bottom-[-5%] left-[-5%] w-[200px] h-[200px] rounded-full border-[20px] border-blue-600" />
+          
+          </div>
         </div>
 
-        <div className="relative z-10 space-y-10">
-          <div className="space-y-2">
-            <h3 className="text-xl font-bold text-zinc-900 tracking-tight">How it works</h3>
-            <p className="text-xs text-zinc-500 font-medium">Follow these simple steps to get started</p>
+     
+        <div className="w-full lg:w-[380px] bg-zinc-50 border-l border-zinc-200 p-8 md:p-12 space-y-10">
+          <div className="space-y-1.5">
+            <h3 className="text-lg font-bold text-zinc-950">How it works</h3>
+            <p className="text-xs text-zinc-500 font-medium">Simple 3-step synchronization</p>
           </div>
 
           <div className="space-y-8">
             {[
-              { step: "01", title: "Install NexusFlow Extension", desc: "Add our secure browser extension to your Chrome or Edge browser." },
-              { step: "02", title: "Login to LinkedIn", desc: "Open LinkedIn in your browser and log in to the account you want to connect." },
-              { step: "03", title: "Sync & Automate", desc: "NexusFlow will automatically detect your account and start syncing data." }
+              { title: "Authenticate", desc: "Link your verified LinkedIn account." },
+              { title: "Configure", desc: "Set your target audience parameters." },
+              { title: "Launch", desc: "Start generating leads automatically." }
             ].map((item, i) => (
-              <div key={i} className="flex gap-6 relative">
-                {i !== 2 && <div className="absolute left-5 top-10 bottom-[-20px] w-px bg-zinc-200" />}
-                <div className="h-10 w-10 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-xs font-black text-zinc-900 shrink-0 shadow-sm">
-                  {item.step}
+              <div key={i} className="flex gap-5 relative">
+                {i !== 2 && <div className="absolute left-4 top-8 bottom-[-24px] w-[2px] bg-zinc-200" />}
+                <div className="h-8 w-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-[11px] font-bold text-zinc-900 shrink-0 shadow-sm relative z-10">
+                  {i + 1}
                 </div>
-                <div className="space-y-1.5 pt-1">
-                  <h4 className="font-bold text-zinc-900 text-sm">{item.title}</h4>
-                  <p className="text-xs text-zinc-500 leading-relaxed font-medium">{item.desc}</p>
+                <div className="space-y-1 pt-1">
+                  <h4 className="font-semibold text-zinc-900 text-sm">{item.title}</h4>
+                  <p className="text-[12px] text-zinc-500 font-medium leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
 
-        
+          <div className="p-5 bg-white rounded-2xl border border-zinc-200 shadow-sm mt-auto">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <CheckCircle2 size={18} />
+              </div>
+              <div>
+                <h5 className="text-[11px] font-bold text-zinc-950 uppercase tracking-wider">Enterprise Security</h5>
+                <p className="text-[10px] text-zinc-500 font-medium tracking-tight">SOC2 Type II Compliant</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="mt-8 text-center text-[11px] text-zinc-400 font-medium">
+        Need assistance? View our <span className="text-zinc-600 underline cursor-pointer">Connection Guide</span> or <span className="text-zinc-600 underline cursor-pointer">Contact Support</span>.
       </div>
     </div>
   );

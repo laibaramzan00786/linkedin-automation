@@ -1,42 +1,70 @@
 'use client'
 import { motion } from 'motion/react';
+import Link from 'next/link';
 
 const CTA = () => {
   return (
-    <section className="py-40 px-6 bg-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(37,99,235,0.08),transparent_70%)]" />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
-      
-      <div className="max-w-5xl mx-auto text-center relative z-10">
+    <section
+      id="cta"
+      className="py-32 px-6 relative overflow-hidden"
+      style={{ background: '#fff', fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
+    >
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,131,106,0.07), transparent)' }} />
+
+      <div className="max-w-4xl mx-auto text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
-          <h2 className="text-6xl md:text-8xl font-bold tracking-tighter mb-12 gradient-heading leading-[0.9]">
-            Ready to elevate <br /> your <span className="text-blue-600 italic">workflow?</span>
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#e8836a' }}>
+            Get Started Today
+          </span>
+          <h2
+            className="text-5xl md:text-7xl font-bold tracking-tight mt-4 mb-6 leading-tight"
+            style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
+          >
+            Ready to elevate<br />
+            your{' '}
+            <span style={{ color: '#e8836a', fontStyle: 'italic' }}>workflow?</span>
           </h2>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-16">
-            <button className="group relative bg-zinc-950 text-white px-14 py-7 rounded-full font-bold text-xl uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              <span className="relative z-10">Join the Waitlist</span>
-            </button>
-            <button className="px-14 py-7 rounded-full border border-zinc-200 bg-white font-bold text-xl uppercase tracking-widest hover:bg-zinc-50 transition-all hover:border-zinc-300 text-zinc-950">
+          <p className="text-lg mb-12 max-w-lg mx-auto" style={{ color: '#888' }}>
+            Join 2,000+ companies scaling their outreach with NexusFlow. No credit card required.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <Link
+              href="/signup"
+              className="px-10 py-4 rounded-2xl text-base font-semibold text-white transition-all active:scale-95"
+              style={{ background: '#111', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e8836a'}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#111'}
+            >
+              Join the Waitlist
+            </Link>
+            <button
+              className="px-10 py-4 rounded-2xl text-base font-semibold border transition-all"
+              style={{ background: '#fff', borderColor: '#e5e5e5', color: '#333' }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#fafafa'}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#fff'}
+            >
               Contact Sales
             </button>
           </div>
-          
+
           <div className="flex flex-col items-center gap-6">
-            <p className="text-zinc-400 text-xs font-bold uppercase tracking-[0.4em]">Trusted by 2,000+ companies worldwide</p>
-        <div className="flex gap-8  ">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROp-tVE-R6e5Uw_LRnOl1kC5MMXciei-j0VQ&s" className="h-8 w-auto" />
-  <img src="https://logos-world.net/wp-content/uploads/2022/01/HubSpot-Logo.jpg" className="h-8 w-auto" />
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaAx4OMNKDO78w1GtSY9IKw8zy3RPjRMbWyg&s" className="h-8 w-auto" />
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWYFONIKNwGKdK-j0dMK8C7bMnoqz8cc-SYQ&s" className="h-8 w-auto" />
-</div>
+            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#ccc' }}>
+              Trusted by 2,000+ companies worldwide
+            </p>
+            <div className="flex flex-wrap justify-center gap-10 opacity-30 grayscale">
+              {['HubSpot', 'Google', 'LinkedIn', 'Microsoft'].map(name => (
+                <span key={name} className="text-lg font-bold tracking-tight" style={{ color: '#333' }}>
+                  {name}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

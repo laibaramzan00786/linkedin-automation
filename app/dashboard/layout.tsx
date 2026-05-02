@@ -10,11 +10,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
+
       <div
-        className="flex min-h-screen relative overflow-hidden transition-colors duration-300"
+        className="flex min-h-screen relative transition-colors duration-300"
         style={{
-          background: "var(--bg)",
+         background: "#f0f0f0",
           color: "var(--text)"
         }}
       >
@@ -37,7 +37,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </main>
         </div>
       </div>
-    </ThemeProvider>
+ 
   );
 };
 

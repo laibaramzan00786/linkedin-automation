@@ -1,25 +1,16 @@
 
+  
+
+
 'use client';
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Plus, 
-  Users, 
-  Send, 
-  CheckCircle2, 
-  MessageSquare, 
-  BarChart2,
-  Pencil,
-  Download,
-  Copy,
-  Trash2,
-  MoreVertical,
-  ArrowUpRight,
-  Search,
-  Filter,
-  CheckSquare
+import {
+  Plus, Users, Send, CheckCircle2, MessageSquare, BarChart2,
+  Pencil, Download, Copy, Trash2, Settings, Play, Check, Clock,
 } from "lucide-react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 type CampaignStatus = "Active" | "Paused" | "Completed" | "Finished";
 
@@ -39,73 +30,17 @@ type Campaign = {
 };
 
 const initialCampaigns: Campaign[] = [
-  { 
-    id: "1",
-    name: "Recruiters", 
-    status: "Active", 
-    createdAt: "1 Feb",
-    leads: 889, 
-    connections: 321, 
-    accepted: 143,
-    visits: 493,
-    likes: 160,
-    endorse: 78,
-    messages: 115,
-    replied: 34,
-  },
-  { 
-    id: "2",
-    name: "S&B Outreach", 
-    status: "Finished", 
-    createdAt: "13 Feb",
-    leads: 62, 
-    connections: 60, 
-    accepted: 27,
-    visits: 59,
-    likes: 51,
-    endorse: 13,
-    messages: 23,
-    replied: 5,
-  },
-  { 
-    id: "3",
-    name: "Talent Acquisition", 
-    status: "Finished", 
-    createdAt: "18 Jan",
-    leads: 73, 
-    connections: 72, 
-    accepted: 38,
-    visits: 38,
-    likes: 35,
-    endorse: 24,
-    messages: 36,
-    replied: 16,
-  },
-  { 
-    id: "4",
-    name: "Growth Strategy", 
-    status: "Active", 
-    createdAt: "5 Mar",
-    leads: 1250, 
-    connections: 450, 
-    accepted: 310,
-    visits: 900,
-    likes: 240,
-    endorse: 112,
-    messages: 180,
-    replied: 65,
-  },
+  { id:"1", name:"Recruiters",        status:"Active",   createdAt:"1 Feb",  leads:889,  connections:321, accepted:143, visits:493, likes:160, endorse:78,  messages:115, replied:34 },
+  { id:"2", name:"S&B Outreach",      status:"Finished", createdAt:"13 Feb", leads:62,   connections:60,  accepted:27,  visits:59,  likes:51,  endorse:13,  messages:23,  replied:5  },
+  { id:"3", name:"Talent Acquisition",status:"Finished", createdAt:"18 Jan", leads:73,   connections:72,  accepted:38,  visits:38,  likes:35,  endorse:24,  messages:36,  replied:16 },
+  { id:"4", name:"Growth Strategy",   status:"Active",   createdAt:"5 Mar",  leads:1250, connections:450, accepted:310, visits:900, likes:240, endorse:112, messages:180, replied:65 },
 ];
 
-const ActionDropdown = ({ 
-  isOpen, 
-  onClose, 
-  campaign,
-  onDuplicate,
-  onDelete
-}: { 
-  isOpen: boolean; 
-  onClose: () => void; 
+const ActionDropdown = ({
+  isOpen, onClose, campaign, onDuplicate, onDelete,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
   campaign: Campaign;
   onDuplicate?: (c: Campaign) => void;
   onDelete?: (id: string) => void;
@@ -113,62 +48,49 @@ const ActionDropdown = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        onClose();
-      }
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) onClose();
     };
-    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (isOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-           ref={dropdownRef}
-           initial={{ opacity: 0, scale: 0.95, y: 10 }}
-           animate={{ opacity: 1, scale: 1, y: 0 }}
-           exit={{ opacity: 0, scale: 0.95, y: 10 }}
-           className="absolute right-0 top-full mt-2 w-56 rounded-2xl shadow-2xl border bg-[var(--card)] border-[var(--border)] py-3 z-[60] overflow-hidden"
+          ref={dropdownRef}
+          initial={{ opacity:0, scale:0.95, y:6 }}
+          animate={{ opacity:1, scale:1, y:0 }}
+          exit={{ opacity:0, scale:0.95, y:6 }}
+          transition={{ duration:0.15 }}
+          className="absolute right-0 top-full mt-1 w-48 rounded-lg shadow-xl border bg-white border-gray-200 py-1 z-[60] overflow-hidden"
         >
-          <div className="px-4 py-2 mb-2 border-b border-[var(--border)]">
-             <p className="text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Actions</p>
-          </div>
-        
-          
-          <Link href={`/dashboard/campaigns/edit/${campaign.id}`} className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]">
-             <Pencil size={14} className="text-[var(--muted)]" />
-             Edit Workflow
+          <Link
+            href={`/dashboard/campaigns/edit/${campaign.id}`}
+            className="w-full px-4 py-2 flex items-center gap-3 text-xs font-medium hover:bg-gray-50 text-gray-700"
+          >
+            <Pencil size={13} className="text-gray-400" />
+            Edit Workflow
           </Link>
-
-          <button className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]">
-             <Download size={14} className="text-[var(--muted)]" />
-             Export Data
+          <button className="w-full px-4 py-2 flex items-center gap-3 text-xs font-medium hover:bg-gray-50 text-gray-700">
+            <Download size={13} className="text-gray-400" />
+            Export Data
           </button>
-
-          <button 
-            onClick={() => {
-              onDuplicate?.(campaign);
-              onClose();
-            }}
-            className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold transition-all hover:bg-blue-600/5 text-[var(--text)]"
+          <button
+            onClick={() => { onDuplicate?.(campaign); onClose(); }}
+            className="w-full px-4 py-2 flex items-center gap-3 text-xs font-medium hover:bg-gray-50 text-gray-700"
           >
-             <Copy size={14} className="text-[var(--muted)]" />
-             Duplicate
+            <Copy size={13} className="text-gray-400" />
+            Duplicate
           </button>
-
-          <div className="h-px mx-4 my-2 bg-[var(--border)]" />
-
-          <button 
-            onClick={() => {
-              onDelete?.(campaign.id);
-              onClose();
-            }}
-            className="w-full px-4 py-2.5 flex items-center gap-3 text-[11px] font-bold text-blue-500 hover:bg-blue-500/10 transition-all"
+          <div className="h-px mx-3 my-1 bg-gray-100" />
+          <button
+            onClick={() => { onDelete?.(campaign.id); onClose(); }}
+            className="w-full px-4 py-2 flex items-center gap-3 text-xs font-medium text-red-500 hover:bg-red-50"
           >
-             <Trash2 size={14} />
-             Delete Permanently
+            <Trash2 size={13} />
+            Delete
           </button>
         </motion.div>
       )}
@@ -177,17 +99,19 @@ const ActionDropdown = ({
 };
 
 const CampaignsPage = () => {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [activeTab, setActiveTab] = useState<"all" | "active" | "drafts">("all");
-  const [openActionId, setOpenActionId] = useState<string | null>(null);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+ 
+  const { displayName, initials, user } = useCurrentUser();
 
+  const [campaigns,    setCampaigns]    = useState<Campaign[]>([]);
+  const [activeTab,    setActiveTab]    = useState<"active" | "drafts">("active");
+  const [openActionId, setOpenActionId] = useState<string | null>(null);
+  const [selectedIds,  setSelectedIds]  = useState<string[]>([]);
+
+  // Load campaigns
   useEffect(() => {
     const stored = localStorage.getItem("custom_campaigns");
     if (stored) {
       const parsed = JSON.parse(stored);
-      // Merge with initial if not already present or just use stored
       setCampaigns(parsed.length > 0 ? parsed : initialCampaigns);
     } else {
       setCampaigns(initialCampaigns);
@@ -196,241 +120,263 @@ const CampaignsPage = () => {
   }, []);
 
   const filteredCampaigns = campaigns.filter(c => {
-    const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
-    if (!matchesSearch) return false;
-
-    if (activeTab === "all") return true;
     if (activeTab === "active") return c.status === "Active" || c.status === "Finished";
     return c.status === "Paused";
   });
 
-  const toggleSelect = (id: string) => {
+  const toggleSelect = (id: string) =>
     setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
-  };
-
-  const toggleSelectAll = () => {
-    setSelectedIds(prev => prev.length === filteredCampaigns.length ? [] : filteredCampaigns.map(c => c.id));
-  };
 
   const handleDelete = (id: string) => {
-    const newCampaigns = campaigns.filter(c => c.id !== id);
-    setCampaigns(newCampaigns);
-    localStorage.setItem("custom_campaigns", JSON.stringify(newCampaigns));
+    const next = campaigns.filter(c => c.id !== id);
+    setCampaigns(next);
+    localStorage.setItem("custom_campaigns", JSON.stringify(next));
     setSelectedIds(prev => prev.filter(i => i !== id));
   };
 
   const handleDuplicate = (campaign: Campaign) => {
-    const newCampaign = {
+    const dup = {
       ...campaign,
       id: Math.random().toString(36).substring(7),
       name: `${campaign.name} (Copy)`,
-      createdAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+      createdAt: new Date().toLocaleDateString("en-GB", { day:"numeric", month:"short" }),
     };
-    const updated = [newCampaign, ...campaigns];
-    setCampaigns(updated);
-    localStorage.setItem("custom_campaigns", JSON.stringify(updated));
+    const next = [dup, ...campaigns];
+    setCampaigns(next);
+    localStorage.setItem("custom_campaigns", JSON.stringify(next));
   };
 
+  const totalProspects   = campaigns.reduce((s,c) => s + c.leads, 0);
+  const totalConnections = campaigns.reduce((s,c) => s + c.connections, 0);
+  const totalAccepted    = campaigns.reduce((s,c) => s + c.accepted, 0);
+  const totalMessages    = campaigns.reduce((s,c) => s + c.messages, 0);
+  const totalReplied     = campaigns.reduce((s,c) => s + c.replied, 0);
+  const activeCount      = campaigns.filter(c => c.status === "Active").length;
+  const draftCount       = campaigns.filter(c => c.status === "Paused").length;
+
   return (
-    <div className="flex flex-col gap-6 md:gap-8 pb-20 px-4 md:px-0 bg-[var(--bg)] min-h-screen">
-      
-       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[var(--border)]">
+    <div className="min-h-screen" style={{ background:"#f0f0f0", fontFamily:"'DM Sans','Segoe UI',sans-serif" }}>
+
     
-        <div className="flex flex-col gap-2">
-         <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-blue-500/60">
-           Outreach Manager
-         </span>
+      <div className="flex items-center justify-between px-6 py-3 border-b"
+        style={{ background:"#f0f0f0", borderColor:"#ddd" }}>
+        <div className="flex items-center gap-3">
 
-        <h2
-           className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-[var(--text)]"
-        >
-          Our Campaign  <br className="hidden md:block" />
-          <span style={{ opacity: 0.5 }}>Dashboard.</span>
-        </h2>
-      </div>
-         <div className="flex items-center gap-2 md:gap-3">
-           <button className="flex-1 md:flex-none h-11 px-4 md:px-5 rounded-xl border border-[var(--border)] text-[10px] md:text-xs font-bold uppercase tracking-widest text-[var(--text)] hover:bg-[var(--card)] transition-all flex items-center justify-center gap-2">
-             <Download size={16} />
-             <span className="hidden sm:inline">Export Stats</span>
-             <span className="sm:hidden">Export</span>
-           </button>
-           <Link href="/dashboard/campaigns/new" className="flex-1 md:flex-none h-11 px-6 bg-blue-600 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95">
-            <Plus size={18} />
-            <span className="hidden sm:inline">Create Campaign</span>
-            <span className="sm:hidden">Create</span>
-          </Link>
+
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-medium"
+            style={{ background:"#fff", borderColor:"#ccc", color:"#333" }}>
+
+            
+            {user.avatar || user.linkedinAvatar ? (
+              <div className="w-6 h-6 rounded-full overflow-hidden">
+                <img src={user.avatar ?? user.linkedinAvatar} alt="" className="w-full h-full object-cover" />
+              </div>
+            ) : (
+              <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold"
+                style={{ background:"#e8836a" }}>
+                {initials}
+              </div>
+            )}
+
+            <span className="text-xs font-semibold">{displayName}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </div>
+
+          <button className="px-4 py-1.5 rounded-full border text-xs font-semibold"
+            style={{ borderColor:"#e8836a", color:"#e8836a", background:"transparent" }}>
+            + Add email account
+          </button>
+          <span className="text-sm font-semibold" style={{ color:"#333" }}>Campaigns</span>
         </div>
       </div>
 
-
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
-        {[
-          { label: "Targeting", val: "2,840", icon: Users, color: "text-blue-600", bg: "bg-blue-600/5" },
-          { label: "Outreach", val: "1,150", icon: Send, color: "text-purple-600", bg: "bg-purple-600/5" },
-          { label: "Success", val: "24.2%", icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-600/5" },
-          { label: "Pipeline", val: "92", icon: MessageSquare, color: "text-amber-500", bg: "bg-amber-500/5" },
-          { label: "Revenue", val: "$12.4k", icon: ArrowUpRight, color: "text-blue-500", bg: "bg-blue-500/5" },
-        ].map((kpi, i) => (
-          <div key={i} className={`p-4 md:p-5 bg-[var(--card)] border border-[var(--border)] rounded-2xl space-y-3 ${i === 4 ? 'col-span-2 lg:col-span-1' : ''}`}>
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${kpi.bg} ${kpi.color}`}>
-              <kpi.icon size={16} />
-            </div>
-            <div>
-              <p className="text-[9px] md:text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">{kpi.label}</p>
-              <h3 className="text-lg md:text-xl font-bold text-[var(--text)] tracking-tight">{kpi.val}</h3>
-            </div>
+      <div className="px-6 pt-5 pb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-1">
+            {(["active","drafts"] as const).map(tab => (
+              <button key={tab} onClick={() => setActiveTab(tab)}
+                className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all"
+                style={{
+                  background: activeTab === tab ? "#fff" : "transparent",
+                  color:      activeTab === tab ? "#333" : "#888",
+                  border:     activeTab === tab ? "1px solid #ddd" : "1px solid transparent",
+                  boxShadow:  activeTab === tab ? "0 1px 4px rgba(0,0,0,0.08)" : "none",
+                }}>
+                {tab === "active" ? "Active" : "Drafts"}
+                <span className="w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center"
+                  style={{ background: tab === "active" ? "#e8836a" : "#bbb", color:"#fff" }}>
+                  {tab === "active" ? activeCount : draftCount}
+                </span>
+              </button>
+            ))}
+            <button className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium ml-2"
+              style={{ background:"#fff", border:"1px solid #ddd", color:"#555" }}>
+              <Clock size={13} />
+              For all time
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
           </div>
-        ))}
-      </div>
 
-      <div className="space-y-4">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 p-4 bg-[var(--card)] border border-[var(--border)] rounded-2xl">
-          <div className="flex overflow-x-auto p-1 bg-[var(--bg)] border border-[var(--border)] rounded-xl w-full lg:w-auto overflow-hidden">
-             {(['all', 'active', 'drafts'] as const).map((tab) => (
-               <button
-                 key={tab}
-                 onClick={() => setActiveTab(tab)}
-                 className={`flex-1 lg:flex-none px-6 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all whitespace-nowrap ${
-                   activeTab === tab 
-                     ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-md" 
-                     : "text-[var(--muted)] hover:text-[var(--text)]"
-                 }`}
-               >
-                 {tab}
-               </button>
-             ))}
-          </div>
-          
-          <div className="flex items-center gap-3 w-full lg:w-auto">
-             <div className="relative flex-1 lg:w-64">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={14} />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="SEARCH CAMPAIGNS..."
-                  className="w-full h-10 bg-[var(--bg)] border border-[var(--border)] pl-10 pr-4 rounded-xl text-[10px] font-bold focus:outline-none focus:border-blue-500 transition-all uppercase"
-                />
-             </div>
-             <button className="h-10 w-10 bg-[var(--bg)] border border-[var(--border)] rounded-xl flex items-center justify-center text-[var(--muted)] hover:border-blue-500 transition-all">
-                <Filter size={14} />
-             </button>
+          <div className="flex items-center gap-2">
+            <button className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
+              style={{ background:"#fff", border:"1px solid #ddd", color:"#555" }}>
+              <Download size={13} />
+              Export
+            </button>
+            <Link href="/dashboard/campaigns/new"
+              className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold text-white"
+              style={{ background:"#f86d4a" }}>
+              <Plus size={14} />
+              New campaign
+            </Link>
           </div>
         </div>
 
-        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-sm">
-          <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left border-collapse min-w-[900px] lg:min-w-0">
+        <div className="grid grid-cols-5 rounded-2xl mb-4 overflow-hidden"
+          style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
+          {[
+            { icon:<Users size={18} style={{ color:"#e8836a" }}/>,         bg:"#fce8e3", label:"Total prospects",  value:totalProspects },
+            { icon:<Send size={18} style={{ color:"#e8836a" }}/>,           bg:"#fce8e3", label:"Connection sent",  value:totalConnections },
+            { icon:<CheckCircle2 size={18} style={{ color:"#4caf82" }}/>,   bg:"#e3f5ec", label:"Accepted",         value:totalAccepted },
+            { icon:<Send size={18} style={{ color:"#e8836a" }} strokeWidth={1.5}/>, bg:"#fce8e3", label:"Messages", value:totalMessages },
+            { icon:<MessageSquare size={18} style={{ color:"#4caf82" }}/>,  bg:"#e3f5ec", label:"Replied",          value:totalReplied },
+          ].map((stat, i) => (
+            <div key={i} className="flex items-center gap-4 px-6 py-5"
+              style={{ borderRight: i < 4 ? "1px solid #eee" : "none" }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                style={{ background: stat.bg }}>
+                {stat.icon}
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 font-medium mb-0.5">{stat.label} ⓘ</p>
+                <p className="text-2xl font-bold" style={{ color:"#222", lineHeight:1 }}>{stat.value.toLocaleString()}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl overflow-hidden" style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse" style={{ minWidth:860 }}>
               <thead>
-                <tr className="bg-[var(--bg)]/50 border-b border-[var(--border)]">
-                  <th className="w-14 pl-6 py-4">
-                    <button 
-                      onClick={toggleSelectAll}
-                      className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${selectedIds.length === filteredCampaigns.length && filteredCampaigns.length > 0 ? 'bg-blue-600 border-blue-600 text-white' : 'border-[var(--border)] bg-white text-transparent'}`}
-                    >
-                      <CheckCircle2 size={12} strokeWidth={3} />
-                    </button>
-                  </th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Status</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Campaign Name</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">Metrics</th>
-                  <th className="px-4 py-4 text-[10px] font-black uppercase tracking-widest text-[var(--muted)] text-right pr-6">Performance & Actions</th>
+                <tr style={{ borderBottom:"1px solid #eee" }}>
+                  <th className="px-5 py-3 text-xs font-semibold text-gray-400 w-28">On/Off</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400">Campaign name</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400">LinkedIn account</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Connections</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Accepted</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Visits</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Likes</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Endorse</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Messages</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center">Replied</th>
+                  <th className="px-4 py-3 text-xs font-semibold text-gray-400 text-center w-20"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[var(--border)]">
+              <tbody>
                 {filteredCampaigns.map((camp, i) => (
-                  <motion.tr 
-                    key={camp.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: i * 0.03 }}
-                    className={`group hover:bg-[var(--bg)] transition-colors ${selectedIds.includes(camp.id) ? 'bg-blue-600/[0.02]' : ''}`}
-                  >
-                    <td className="pl-6 py-6 text-center">
-                      <button 
-                        onClick={() => toggleSelect(camp.id)}
-                        className={`w-5 h-5 rounded border flex items-center justify-center transition-all mx-auto ${selectedIds.includes(camp.id) ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-600/20' : 'border-[var(--border)] bg-[var(--bg)] text-transparent group-hover:border-zinc-400'}`}
-                      >
-                        <CheckSquare size={12} strokeWidth={2.5} />
-                      </button>
-                    </td>
-                    <td className="px-4 py-6">
-                      <div className="flex items-center gap-3">
-                         <button className={`w-10 h-5 rounded-full relative transition-all duration-500 shrink-0 ${camp.status === 'Active' ? 'bg-blue-600' : 'bg-[var(--border)]'}`}>
-                           <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-500 ${camp.status === 'Active' ? 'left-[22px]' : 'left-0.5'}`} />
-                         </button>
-                         <span className={`text-[10px] font-black uppercase tracking-widest whitespace-nowrap ${camp.status === 'Active' ? 'text-blue-600' : 'text-[var(--muted)]'}`}>
-                            {camp.status}
-                         </span>
+                  <motion.tr key={camp.id}
+                    initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay: i * 0.04 }}
+                    className="group"
+                    style={{
+                      borderBottom: i < filteredCampaigns.length - 1 ? "1px solid #f0f0f0" : "none",
+                      background: selectedIds.includes(camp.id) ? "#fff8f6" : "#fff",
+                    }}>
+
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-2">
+                        {camp.status === "Finished" ? (
+                          <div className="w-5 h-5 rounded flex items-center justify-center" style={{ background:"#e8836a" }}>
+                            <Check size={12} color="#fff" strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <button onClick={() => toggleSelect(camp.id)}
+                            className="w-5 h-5 rounded border flex items-center justify-center transition-all"
+                            style={{ borderColor:"#ddd", background: selectedIds.includes(camp.id) ? "#e8836a" : "#fff" }}>
+                            {selectedIds.includes(camp.id) && <Check size={12} color="#fff" strokeWidth={3} />}
+                          </button>
+                        )}
+                        {camp.status === "Active" && (
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background:"#f5f5f5" }}>
+                            <Play size={12} style={{ color:"#888" }} />
+                          </div>
+                        )}
                       </div>
                     </td>
-                    <td className="px-4 py-6">
-                      <div className="space-y-0.5 max-w-[200px]">
-                        <p className="text-sm font-bold text-[var(--text)] uppercase tracking-tight group-hover:text-blue-600 transition-colors cursor-pointer line-clamp-1">{camp.name}</p>
-                        <p className="text-[10px] font-bold text-[var(--muted)] tracking-wider uppercase">Started {camp.createdAt}</p>
+
+                    <td className="px-4 py-4">
+                      <p className="text-sm font-semibold text-gray-800">{camp.name}</p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        {camp.status === "Finished" && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                            style={{ background:"#e3f5ec", color:"#4caf82" }}>Finished</span>
+                        )}
+                        <span className="text-[11px] text-gray-400">{camp.leads} prospects • {camp.createdAt}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-6">
-                      <div className="flex items-center gap-6 md:gap-8">
-                         {[
-                           { label: 'Conn', val: camp.connections },
-                           { label: 'Sent', val: camp.messages },
-                           { label: 'Reply', val: camp.replied, accent: true }
-                         ].map(m => (
-                           <div key={m.label} className="space-y-0.5 min-w-[40px]">
-                              <p className="text-[9px] font-bold text-[var(--muted)] uppercase tracking-widest">{m.label}</p>
-                              <p className={`text-xs font-black ${m.accent ? 'text-emerald-500' : 'text-[var(--text)]'}`}>{m.val}</p>
-                           </div>
-                         ))}
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-2">
+                        {user.avatar || user.linkedinAvatar ? (
+                          <div className="w-7 h-7 rounded-full overflow-hidden bg-gray-200">
+                            <img src={user.avatar ?? user.linkedinAvatar} alt="" className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0"
+                            style={{ background:"#e8836a" }}>
+                            {initials}
+                          </div>
+                        )}
+                        <span className="text-xs font-medium text-gray-600">{displayName}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-6 pr-6">
-                      <div className="flex items-center justify-end gap-4 md:gap-6">
-                         <div className="flex flex-col items-end pr-4 md:pr-6 border-r border-[var(--border)] whitespace-nowrap">
-                            <span className="text-[9px] font-bold text-[var(--muted)] uppercase tracking-widest">Conversion</span>
-                            <span className="text-sm font-black text-blue-600 tabular-nums">
-                               {((camp.accepted / (camp.connections || 1)) * 100).toFixed(0)}%
-                            </span>
-                         </div>
-                         <div className="flex items-center gap-1 md:gap-2">
-                           <button className="h-9 w-9 rounded-xl flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all">
-                              <BarChart2 size={16} />
-                           </button>
-                           <Link href={`/dashboard/campaigns/edit/${camp.id}`} className="h-9 w-9 rounded-xl flex items-center justify-center text-[var(--muted)] hover:bg-blue-600/10 hover:text-blue-600 transition-all">
-                              <Pencil size={16} />
-                           </Link>
-                         <div className="relative" >
-                            <button 
-                               onClick={() => 
-    setOpenActionId(prev => prev === camp.id ? null : camp.id)
-  }
-  className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${
-    openActionId === camp.id 
-      ? 'bg-zinc-950 text-white shadow-xl' 
-      : 'text-[var(--muted)] hover:bg-[var(--bg)]'
-  }`}
-                            >
-                              <MoreVertical size={16} />
-                            </button>
-                            <ActionDropdown 
-                              isOpen={openActionId === camp.id} 
-                              onClose={() => setOpenActionId(null)} 
-                              campaign={camp} 
-                              onDuplicate={handleDuplicate}
-                              onDelete={handleDelete}
-                            />
-                         </div>
-                         </div>
+                    {[camp.connections, camp.accepted, camp.visits, camp.likes, camp.endorse, camp.messages, camp.replied].map((val, mi) => {
+                      const linked = mi === 0 || mi === 1 || mi === 5 || mi === 6;
+                      return (
+                        <td key={mi} className="px-4 py-4 text-center">
+                          {linked
+                            ? <span className="text-sm font-semibold underline cursor-pointer" style={{ color:"#e8836a", textDecorationColor:"#e8836a" }}>{val}</span>
+                            : <span className="text-sm font-semibold text-gray-700">{val}</span>
+                          }
+                        </td>
+                      );
+                    })}
+
+                    <td className="px-4 py-4">
+                      <div className="flex items-center justify-center gap-1">
+                        <button className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100" style={{ color:"#bbb" }}>
+                          <BarChart2 size={15} />
+                        </button>
+                        <div className="relative">
+                          <button onClick={() => setOpenActionId(prev => prev === camp.id ? null : camp.id)}
+                            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100" style={{ color:"#bbb" }}>
+                            <Settings size={15} />
+                          </button>
+                          <ActionDropdown
+                            isOpen={openActionId === camp.id}
+                            onClose={() => setOpenActionId(null)}
+                            campaign={camp}
+                            onDuplicate={handleDuplicate}
+                            onDelete={handleDelete}
+                          />
+                        </div>
                       </div>
                     </td>
                   </motion.tr>
                 ))}
+                {filteredCampaigns.length === 0 && (
+                  <tr>
+                    <td colSpan={11} className="px-6 py-16 text-center text-sm text-gray-400">No campaigns found.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-
     </div>
   );
 };

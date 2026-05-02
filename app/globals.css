@@ -7,37 +7,41 @@
     --card: #f4f4f5;
     --border: #e4e4e7;
 
-    /* ✅ FONT VARIABLES */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-display: 'Outfit', sans-serif;
+    /* Fonts (linked via next/font variables) */
+    --font-sans: var(--font-sans);
+    --font-display: var(--font-display);
   }
 
-  .dark {
-    --bg: #09090b;
-    --text: #cfc1c1;
-    --card: #18181b;
-    --border: #27272a;
+ 
+
+
+  * {
+    border-color: var(--border);
   }
 
-  /* ✅ FORCE FONT EVERYWHERE */
-  html, body {
+  html {
     font-family: var(--font-sans);
   }
 
   body {
+    font-family: var(--font-sans);
     background: var(--bg);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* ✅ HEADINGS NICE FONT */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 600;
     letter-spacing: -0.02em;
   }
 
-  /* ✅ FIX SELECTION WITHOUT @apply */
+  p {
+    line-height: 1.6;
+    color: var(--text);
+  }
+
   ::selection {
     background: rgba(59, 130, 246, 0.3);
   }
@@ -57,7 +61,7 @@
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   padding: 2rem;
-  transition: all 0.5s;
+  transition: all 0.4s ease;
 }
 
 .bento-card:hover {
@@ -87,4 +91,40 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+.custom-range {
+  -webkit-appearance: none;
+  height: 6px;
+  background: #e5e5e5;
+  border-radius: 999px;
+  outline: none;
+}
+
+/* Track fill (optional advanced) */
+.custom-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+}
+
+/* 🔴 THIS IS THE DOT (THUMB) */
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #e8836a;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -6px; /* important for center */
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Firefox support */
+.custom-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #e8836a;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }

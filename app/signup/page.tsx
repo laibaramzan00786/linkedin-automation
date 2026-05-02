@@ -1,110 +1,213 @@
-'use client'
-import { motion } from 'motion/react';
-import { Command, ArrowRight,  Mail } from 'lucide-react';
-import {LinkedinLogo } from '@phosphor-icons/react';
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
-import {signIn} from 'next-auth/react';
 
+'use client'
+import { useState } from "react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Command } from "lucide-react";
+import { LinkedinLogo, GoogleLogoIcon } from "@phosphor-icons/react";
+import { setCurrentUser } from "../../hooks/useCurrentUser";
+import { signIn } from "next-auth/react";
 const Signup = () => {
-  const navigate= useRouter();
+  const router = useRouter();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName,  setLastName]  = useState("");
+  const [email,    setEmail]    = useState("");
+    const [password, setPassword] = useState("");
+    const [loading,  setLoading]  = useState(false);
+    const [liLoading, setLiLoading] = useState(false);
+    const [error,    setError]    = useState("");
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("token", "user");
-    navigate.push("/connect-linkedin");
+    setLoading(true);
+
+    
+    setCurrentUser({
+      id:                Math.random().toString(36).substring(2, 10),
+      firstName:         firstName.trim(),
+      lastName:          lastName.trim(),
+      email:             email.trim(),
+      avatar:            undefined,
+      linkedinConnected: false,
+    });
+
+    localStorage.setItem("token",      "user");
+    localStorage.setItem("user_name",  `${firstName.trim()} ${lastName.trim()}`);
+    localStorage.setItem("user_email", email.trim());
+
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/connect-linkedin");
+    }, 900);
   };
- const handleLinkedinSignup = ()=>{
-    signIn("linkedin");
- }
+    const handleLinkedinLogin = async () => {
+      setLiLoading(true);
+      try {
+        await signIn("linkedin", { callbackUrl: "/connect-linkedin" });
+      } catch {
+        setError("LinkedIn sign-in failed. Please try again.");
+        setLiLoading(false);
+      }
+    };
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
-      
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden"
+      style={{
+        background:  "#fafafa",
+        fontFamily:  "'DM Sans', 'Segoe UI', sans-serif",
+      }}
+    >
+     
+      <div className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        style={{ backgroundImage: "radial-gradient(#e8836a 1px, transparent 1px)", backgroundSize: "28px 28px" }}/>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md relative z-10"
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-[440px] relative z-10"
       >
-        <div className="text-center mb-10">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-[0_4px_12px_rgba(37,99,235,0.3)]">
-              <Command className="text-white w-6 h-6" />
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-2.5 mb-6 group">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{ background: "#111" }}>
+              <Command className="w-5 h-5" style={{ color: "#e8836a" }} />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-zinc-950">NexusFlow</span>
+            <span className="text-xl font-bold tracking-tight" style={{ color: "#111", fontFamily: "'Outfit', sans-serif" }}>
+              NexusFlow
+            </span>
           </Link>
-          <h1 className="text-3xl font-bold tracking-tight mb-2 text-zinc-950">Create an account</h1>
-          <p className="text-zinc-500">Start your 7-day free trial today</p>
+          <h1 className="text-2xl font-bold" style={{ color: "#111", fontFamily: "'Outfit', sans-serif" }}>
+            Create your account
+          </h1>
+          <p className="mt-1.5 text-sm" style={{ color: "#888" }}>
+            Start your 7-day free trial today
+          </p>
         </div>
 
-        <div className="bg-white border border-zinc-200 p-8 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-          <form onSubmit={handleSignup} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1">First Name</label>
-                <input 
-                  type="text" 
-                  placeholder="John"
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-5 py-4 text-sm text-zinc-950 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1">Last Name</label>
-                <input 
-                  type="text" 
-                  placeholder="Doe"
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-5 py-4 text-sm text-zinc-950 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                  required
-                />
-              </div>
+        <div className="bg-white border rounded-3xl p-8 shadow-sm" style={{ borderColor: "#e5e5e5" }}>
+          <form onSubmit={handleSignup} className="space-y-4">
+        
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: "First Name", value: firstName, setter: setFirstName, placeholder: "John" },
+                { label: "Last Name",  value: lastName,  setter: setLastName,  placeholder: "Doe"  },
+              ].map(f => (
+                <div key={f.label} className="space-y-1.5">
+                  <label className="text-xs font-semibold" style={{ color: "#555" }}>{f.label}</label>
+                  <input
+                    type="text"
+                    placeholder={f.placeholder}
+                    value={f.value}
+                    onChange={e => f.setter(e.target.value)}
+                    required
+                    className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
+                    style={{ background: "#f8f8f8", border: "1px solid #e5e5e5", color: "#111" }}
+                    onFocus={e  => { e.target.style.borderColor = "#e8836a"; e.target.style.background = "#fff"; }}
+                    onBlur={e   => { e.target.style.borderColor = "#e5e5e5"; e.target.style.background = "#f8f8f8"; }}
+                  />
+                </div>
+              ))}
             </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1">Email Address</label>
-              <input 
-                type="email" 
+
+         
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold" style={{ color: "#555" }}>Email Address</label>
+              <input
+                type="email"
                 placeholder="name@company.com"
-                className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-5 py-4 text-sm text-zinc-950 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 required
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
+                style={{ background: "#f8f8f8", border: "1px solid #e5e5e5", color: "#111" }}
+                onFocus={e  => { e.target.style.borderColor = "#e8836a"; e.target.style.background = "#fff"; }}
+                onBlur={e   => { e.target.style.borderColor = "#e5e5e5"; e.target.style.background = "#f8f8f8"; }}
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 ml-1">Password</label>
-              <input 
-                type="password" 
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold" style={{ color: "#555" }}>Password</label>
+              <input
+                type="password"
                 placeholder="••••••••"
-                className="w-full bg-zinc-50 border border-zinc-200 rounded-2xl px-5 py-4 text-sm text-zinc-950 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 required
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
+                style={{ background: "#f8f8f8", border: "1px solid #e5e5e5", color: "#111" }}
+                onFocus={e  => { e.target.style.borderColor = "#e8836a"; e.target.style.background = "#fff"; }}
+                onBlur={e   => { e.target.style.borderColor = "#e5e5e5"; e.target.style.background = "#f8f8f8"; }}
               />
+              <p className="text-[11px]" style={{ color: "#aaa" }}>At least 8 characters</p>
             </div>
-            <button type="submit" className="w-full bg-zinc-950 text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-blue-600 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-zinc-950/10">
-              Create Account <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 group transition-all"
+              style={{
+                background:  loading ? "#f5c5b5" : "#e8836a",
+                cursor:      loading ? "not-allowed" : "pointer",
+                boxShadow:   "0 4px 14px rgba(232,131,106,0.25)",
+              }}
+            >
+              {loading ? "Creating account…" : "Get started"}
+              {!loading && <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />}
             </button>
           </form>
 
-          <div className="relative my-8">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-zinc-100"></div>
+              <div className="w-full border-t" style={{ borderColor: "#f0f0f0" }} />
             </div>
-            <div className="relative flex justify-center text-[10px] uppercase tracking-widest font-bold">
-              <span className="bg-white px-4 text-zinc-400">Or sign up with</span>
+            <div className="relative flex justify-center">
+              <span className="bg-white px-3 text-[11px] font-medium" style={{ color: "#aaa" }}>
+                Or continue with
+              </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <button type='button' onClick={handleLinkedinSignup} className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
-              <LinkedinLogo  size={18} className="text-blue-600" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
-            </button>
-            <button className="flex items-center justify-center gap-2 bg-white border border-zinc-200 py-3 rounded-2xl hover:bg-zinc-50 transition-colors text-zinc-600">
-              <Mail size={18} className="text-red-500" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">Google</span>
-            </button>
-          </div>
+           <div className="space-y-3 mb-6">
+                      <button
+                        type="button"
+                        onClick={handleLinkedinLogin}
+                        disabled={liLoading}
+                        className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-semibold transition-all border"
+                        style={{
+                          background:   liLoading ? "#e8f0fb" : "#fff",
+                          borderColor:  "#0077B5",
+                          color:        "#0077B5",
+                          opacity:      liLoading ? 0.7 : 1,
+                          cursor:       liLoading ? "not-allowed" : "pointer",
+                        }}
+                        onMouseEnter={e => { if (!liLoading) (e.currentTarget as HTMLElement).style.background = "#e8f0fb"; }}
+                        onMouseLeave={e => { if (!liLoading) (e.currentTarget as HTMLElement).style.background = "#fff"; }}
+                      >
+                        <LinkedinLogo size={20} weight="fill" style={{ color: "#0077B5" }} />
+                        {liLoading ? "Redirecting to LinkedIn…" : "Continue with LinkedIn"}
+                      </button>
+          
+                      <button
+                        type="button"
+                        className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all border"
+                        style={{ background: "#fff", borderColor: "#e5e5e5", color: "#333" }}
+                        onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#f8f8f8"}
+                        onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#fff"}
+                      >
+                        <GoogleLogoIcon size={18} weight="bold" />
+                        Continue with Google
+                      </button>
+                    </div>
         </div>
 
-        <p className="text-center mt-8 text-sm text-zinc-500">
-          Already have an account? <Link href="/login" className="text-blue-600 font-bold hover:underline">Log in</Link>
+        <p className="text-center mt-6 text-sm" style={{ color: "#888" }}>
+          Already have an account?{" "}
+          <Link href="/login" className="font-semibold hover:underline underline-offset-4" style={{ color: "#e8836a" }}>
+            Sign in
+          </Link>
         </p>
       </motion.div>
     </div>

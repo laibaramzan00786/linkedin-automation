@@ -1,178 +1,177 @@
 'use client';
-import  { useState } from 'react';
-import { Check, Zap, Shield, Globe, ArrowRight } from 'lucide-react';
+import { Check, Zap, Shield, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const Pricing = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
-
   const plans = [
     {
-      name: "Starter",
-      description: "Perfect for individuals and solo founders.",
-      price: isAnnual ? "29" : "39",
-      features: [
-        "Up to 1,000 leads/mo",
-        "Basic Campaign Builder",
-        "Email Support",
-        "Standard Analytics",
-        "1 Active Workflow"
+      name:        'Basic',
+      description: 'Perfect for single-purpose outreach and beginners.',
+      price:       '1,500',
+      accounts:    '1 LinkedIn Account',
+      features:    [
+        '1 Active LinkedIn Account',
+        'Lead Generation Automation',
+        'Message Templates',
+        'Basic Response Tracking',
+        'Cloud Infrastructure',
+        'Standard Support',
       ],
-      icon: Zap,
-      accent: "blue"
+      icon:    Zap,
+      popular: false,
     },
     {
-      name: "Professional",
-      description: "Best for growing teams and agencies.",
-      price: isAnnual ? "79" : "99",
+      name:        'Standard',
+      description: 'Ideal for growing sales teams and professionals.',
+      price:       '2,500',
+      accounts:    '2 LinkedIn Accounts',
+      features:    [
+        '2 Active LinkedIn Accounts',
+        'Multi-Account Management',
+        'Advanced Filtering',
+        'Priority Sequence Queues',
+        'Premium Reporting Hub',
+        'Priority Human Support',
+        'Everything in Basic',
+      ],
+      icon:    Shield,
       popular: true,
-      features: [
-        "Up to 10,000 leads/mo",
-        "Advanced AI Funnels",
-        "Priority 24/7 Support",
-        "Deep Intelligence Analytics",
-        "Unlimited Workflows",
-        "Team Collaboration"
-      ],
-      icon: Shield,
-      accent: "blue"
     },
-    {
-      name: "Enterprise",
-      description: "Custom solutions for large organizations.",
-      price: "Custom",
-      features: [
-        "Unlimited leads",
-        "Custom AI Model Training",
-        "Dedicated Account Manager",
-        "SSO & Advanced Security",
-        "White-label options",
-        "API Access"
-      ],
-      icon: Globe,
-      accent: "zinc"
-    }
   ];
 
   return (
-    <section className="relative py-32 overflow-hidden bg-white">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.03)_0%,transparent_70%)] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="text-blue-600 font-bold uppercase tracking-[0.4em] text-[10px] mb-6 block">Investment</span>
-            <h2 className="text-6xl md:text-8xl font-display uppercase tracking-tighter text-zinc-950 mb-8">
-              Simple <span className="text-zinc-400">Pricing.</span>
-            </h2>
-            <p className="text-zinc-500 text-xl max-w-2xl mx-auto mb-12">
-              Choose the plan that fits your growth velocity. No hidden fees, just pure performance.
-            </p>
+    <section
+      id="pricing"
+      className="py-28 px-6 relative overflow-hidden"
+      style={{ background: '#fff', fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
+    >
+      <div className="max-w-7xl mx-auto relative z-10">
 
-            <div className="flex items-center justify-center gap-4">
-              <span className={`text-xs font-bold uppercase tracking-widest transition-colors ${!isAnnual ? 'text-zinc-950' : 'text-zinc-400'}`}>Monthly</span>
-              <button 
-                onClick={() => setIsAnnual(!isAnnual)}
-                className="w-14 h-7 bg-zinc-100 rounded-full p-1 relative border border-zinc-200"
-              >
-                <motion.div 
-                  animate={{ x: isAnnual ? 28 : 0 }}
-                  className="w-5 h-5 bg-blue-600 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]"
-                />
-              </button>
-              <span className={`text-xs font-bold uppercase tracking-widest transition-colors ${isAnnual ? 'text-zinc-950' : 'text-zinc-400'}`}>
-                Yearly <span className="text-blue-600 ml-1">(-20%)</span>
-              </span>
+        <div className="text-center mb-16">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#e8836a' }}>
+              Transparent Pricing
+            </span>
+            <h2
+              className="text-4xl md:text-6xl font-bold tracking-tight mt-3 mb-4"
+              style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
+            >
+              Simple{' '}
+              <span style={{ color: '#ccc' }}>Pricing.</span>
+            </h2>
+            <p className="text-base max-w-lg mx-auto mb-8" style={{ color: '#888' }}>
+              Choose the plan that fits your growth. Monthly billing, no long-term contracts.
+            </p>
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-[11px] font-semibold"
+              style={{ background: '#fafafa', borderColor: '#e5e5e5', color: '#888' }}
+            >
+              Monthly Billing Cycle
             </div>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {plans.map((plan, i) => {
             const Icon = plan.icon;
             return (
               <motion.div
                 key={plan.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`relative p-10 rounded-[40px] border transition-all duration-500 group ${
-                  plan.popular 
-                    ? 'bg-white border-blue-500/30 shadow-[0_40px_80px_rgba(0,0,0,0.08)]' 
-                    : 'bg-zinc-50 border-zinc-200 hover:border-zinc-300'
-                }`}
+                className="relative p-8 rounded-3xl border flex flex-col transition-all duration-300"
+                style={{
+                  background:   plan.popular ? '#fff' : '#fafafa',
+                  borderColor:  plan.popular ? '#f5d0c4' : '#e5e5e5',
+                  boxShadow:    plan.popular ? '0 8px 32px rgba(232,131,106,0.1)' : 'none',
+                }}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(37,99,235,0.3)]">
-                    Most Popular
+                  <div
+                    className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-5 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider"
+                    style={{ background: '#e8836a', boxShadow: '0 4px 12px rgba(232,131,106,0.3)' }}
+                  >
+                    Most Recommended
                   </div>
                 )}
 
-                <div className="flex flex-col h-full">
-                  <div className="mb-8">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 border ${
-                      plan.popular ? 'bg-blue-600 text-white border-blue-500 shadow-[0_10px_30px_rgba(37,99,235,0.2)]' : 'bg-white text-zinc-400 border-zinc-200 group-hover:bg-zinc-50'
-                    }`}>
-                      <Icon size={28} />
-                    </div>
-                    <h3 className="text-3xl font-display uppercase tracking-tight text-zinc-950 mb-2">{plan.name}</h3>
-                    <p className="text-zinc-500 text-sm leading-relaxed">{plan.description}</p>
-                  </div>
-
-                  <div className="mb-10">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-5xl font-display tracking-tighter text-zinc-950">
-                        {plan.price === "Custom" ? "" : "$"}
-                        {plan.price}
-                      </span>
-                      {plan.price !== "Custom" && (
-                        <span className="text-zinc-400 text-xs font-bold uppercase tracking-widest">/mo</span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex-1 space-y-5 mb-10">
-                    {plan.features.map((feature) => (
-                      <div key={feature} className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                          plan.popular ? 'bg-blue-50 text-blue-600' : 'bg-zinc-200 text-zinc-500'
-                        }`}>
-                          <Check size={12} strokeWidth={3} />
-                        </div>
-                        <span className="text-zinc-600 text-sm font-medium">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <button className={`w-full py-5 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 group/btn ${
-                    plan.popular 
-                      ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-[0_10px_30px_rgba(37,99,235,0.2)]' 
-                      : 'bg-zinc-950 text-white hover:bg-zinc-900'
-                  }`}>
-                    {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
-                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
+                <div
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 border transition-all"
+                  style={{
+                    background:  plan.popular ? '#e8836a' : '#fff',
+                    borderColor: plan.popular ? '#e8836a' : '#e5e5e5',
+                    color:       plan.popular ? '#fff' : '#aaa',
+                    boxShadow:   plan.popular ? '0 4px 12px rgba(232,131,106,0.25)' : 'none',
+                  }}
+                >
+                  <Icon size={22} />
                 </div>
+
+                <h3 className="text-2xl font-bold mb-1" style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}>
+                  {plan.name}
+                </h3>
+                <p className="text-sm mb-6" style={{ color: '#888' }}>{plan.description}</p>
+
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl font-bold" style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}>
+                    {plan.price}
+                  </span>
+                  <div>
+                    <p className="text-xs font-bold" style={{ color: '#111' }}>PKR</p>
+                    <p className="text-[10px]" style={{ color: '#aaa' }}>/ Month</p>
+                  </div>
+                </div>
+                <div
+                  className="inline-block px-3 py-1 rounded-lg text-[10px] font-semibold mb-8"
+                  style={{ background: '#f5f5f5', color: '#666' }}
+                >
+                  {plan.accounts}
+                </div>
+
+                <ul className="space-y-3 flex-1 mb-8">
+                  {plan.features.map(f => (
+                    <li key={f} className="flex items-center gap-3">
+                      <div
+                        className="w-4 h-4 rounded-full flex items-center justify-center shrink-0"
+                        style={{ background: plan.popular ? '#fdf8f7' : '#f5f5f5', color: plan.popular ? '#e8836a' : '#aaa' }}
+                      >
+                        <Check size={9} strokeWidth={3} />
+                      </div>
+                      <span className="text-[12px] font-medium" style={{ color: '#555' }}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  className="w-full py-3.5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 group transition-all active:scale-95"
+                  style={{
+                    background:  plan.popular ? '#e8836a' : '#fff',
+                    color:       plan.popular ? '#fff' : '#333',
+                    border:      plan.popular ? 'none' : '1px solid #e5e5e5',
+                    boxShadow:   plan.popular ? '0 4px 16px rgba(232,131,106,0.25)' : 'none',
+                  }}
+                >
+                  Deploy {plan.name} Plan
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </motion.div>
             );
           })}
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-32 text-center"
+          className="mt-20 text-center"
         >
-          <p className="text-zinc-400 text-xs uppercase tracking-[0.3em] font-bold mb-8">Trusted by 50,000+ high-velocity teams</p>
-          <div className="flex flex-wrap justify-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
-            {['Stripe', 'Linear', 'Vercel', 'Supabase', 'GitHub'].map(logo => (
-              <span key={logo} className="text-2xl font-display font-black tracking-tighter text-zinc-950">{logo}</span>
+          <p className="text-[10px] uppercase tracking-widest font-semibold mb-8" style={{ color: '#ccc' }}>
+            Secure Payments via International Standards
+          </p>
+          <div className="flex flex-wrap justify-center gap-12 opacity-25 grayscale">
+            {['Stripe', 'Visa', 'Mastercard', 'SafePay'].map(name => (
+              <span key={name} className="text-lg font-bold italic" style={{ color: '#333' }}>{name}</span>
             ))}
           </div>
         </motion.div>
