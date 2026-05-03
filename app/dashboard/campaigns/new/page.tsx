@@ -597,10 +597,15 @@ const NewCampaignPage = () => {
                             </div>
                             <span className="text-2xl font-bold tabular-nums" style={{ color: "#e8836a" }}>{maxLeads}</span>
                           </div>
-                          <input type="range" min="10" max="1000" step="10" value={maxLeads}
-                            onChange={e => setMaxLeads(parseInt(e.target.value))}
-                            className="w-full h-2 rounded-full cursor-pointer appearance-none"
-                            style={{ accentColor: "#e8836a" }} />
+                          <input 
+  type="range"
+  min="10"
+  max="1000"
+  step="10"
+  value={maxLeads}
+  onChange={e => setMaxLeads(parseInt(e.target.value))}
+  className="custom-range w-full"
+/>
                           <div className="flex justify-between text-[11px]" style={{ color: "#bbb" }}>
                             <span>10</span><span>1,000</span>
                           </div>
