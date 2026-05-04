@@ -14,7 +14,6 @@ import {
 type StepType =
   | "View profile" | "Connection request" | "Message"
   | "Like post"    | "Endorse skills"      | "If connected"
-  | "Find emails"  | "Send email"          | "If email found" | "If email opened";
 
 type DelayUnit = "day" | "days" | "hour" | "hours";
 
@@ -38,16 +37,12 @@ const STEP_CONFIG: Record<string, { color: string; bg: string; icon: React.Eleme
   "Like post":          { color: "#10b981", bg: "#ecfdf5",  icon: ThumbsUp },
   "Endorse skills":     { color: "#f59e0b", bg: "#fffbeb",  icon: Award },
   "If connected":       { color: "#e8836a", bg: "#e8836a",  icon: GitBranch },
-  "Find emails":        { color: "#aaa",    bg: "#f5f5f5",  icon: Search },
-  "Send email":         { color: "#aaa",    bg: "#f5f5f5",  icon: Send },
-  "If email found":     { color: "#aaa",    bg: "#f5f5f5",  icon: Mail },
-  "If email opened":    { color: "#aaa",    bg: "#f5f5f5",  icon: Mail },
+
 };
 
 const ACTION_LI:   StepType[] = ["Connection request", "Message", "View profile", "Like post", "Endorse skills"];
-const ACTION_EM:   StepType[] = ["Find emails", "Send email"];
+
 const COND_LI:     StepType[] = ["If connected"];
-const COND_EM:     StepType[] = ["If email found", "If email opened"];
 const CONTACT_VARS = ["{first_name}", "{last_name}", "{job_title}", "{company_name}"];
 const SENDER_VARS  = ["{my_first_name}", "{my_last_name}", "{my_job_title}", "{my_company_name}"];
 
@@ -166,7 +161,6 @@ const AddStepModal = ({ onSelect, onClose }: { onSelect: (t: StepType) => void; 
           <div className="grid grid-cols-2 gap-3">
             {[
               { title: "LinkedIn", types: ACTION_LI, disabled: false },
-              { title: "Email",    types: ACTION_EM,  disabled: true  },
             ].map(col => (
               <div key={col.title}>
                 <p className="text-xs font-semibold mb-2" style={{ color: "#aaa" }}>{col.title}</p>
@@ -198,7 +192,6 @@ const AddStepModal = ({ onSelect, onClose }: { onSelect: (t: StepType) => void; 
           <div className="grid grid-cols-2 gap-3">
             {[
               { title: "LinkedIn", types: COND_LI, disabled: false },
-              { title: "Email",    types: COND_EM,  disabled: true  },
             ].map(col => (
               <div key={col.title}>
                 <p className="text-xs font-semibold mb-2" style={{ color: "#aaa" }}>{col.title}</p>
