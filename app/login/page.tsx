@@ -184,7 +184,7 @@ const Login = () => {
               {liLoading ? "Redirecting to LinkedIn…" : "Continue with LinkedIn"}
             </button>
 
-            <button
+            {/* <button
               type="button"
               className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all border"
               style={{ background: "#fff", borderColor: "#e5e5e5", color: "#333" }}
@@ -193,7 +193,7 @@ const Login = () => {
             >
               <GoogleLogoIcon size={18} weight="bold" />
               Continue with Google
-            </button>
+            </button> */}
           </div>
           </form>
         </div>
