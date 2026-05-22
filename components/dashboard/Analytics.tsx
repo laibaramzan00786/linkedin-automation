@@ -1,4 +1,5 @@
 
+
 'use client';
 import React from "react";
 import { TrendingUp, Send, MessageSquare, Users } from "lucide-react";
@@ -7,7 +8,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer,
 } from "recharts";
-import { useTheme } from "next-themes";
+import { label } from "framer-motion/client";
 
 const analyticsStats = [
   { title: "Profile Views",  value: "3,420", change: "+14%", icon: Users },
@@ -25,9 +26,6 @@ const engagementData = [
 ];
 
 const Analytics = () => {
-  const { theme } = useTheme();
-  const axisColor = theme === 'dark' ? '#94a3b8' : '#9ca3af';
-  const gridColor = theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
 
   return (
     <div className="space-y-8" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
@@ -43,14 +41,14 @@ const Analytics = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {analyticsStats.map((item, i) => {
+        {analyticsStats.map((item, index) => {
           const Icon = item.icon;
           return (
             <motion.div
-              key={i}
+              key={index}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
+              transition={{ delay: index * 0.08 }}
               className="rounded-2xl p-6 border group hover:shadow-md transition-all duration-300"
               style={{ background: "var(--card)", borderColor: "var(--border)" }}
             >
@@ -133,11 +131,26 @@ const Analytics = () => {
                 </linearGradient>
               </defs>
 
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-              <XAxis dataKey="name" axisLine={false} tickLine={false}
-                tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} dy={8} />
-              <YAxis axisLine={false} tickLine={false}
-                tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke="rgba(0,0,0,0.05)"
+              />
+
+              <XAxis
+                dataKey="name"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 11, fontWeight: 600, fill: '#9ca3af' }}
+                dy={8}
+              />
+
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 11, fontWeight: 600, fill: '#9ca3af' }}
+              />
+
               <Tooltip
                 contentStyle={{
                   backgroundColor: "var(--card)",
@@ -151,12 +164,35 @@ const Analytics = () => {
                 itemStyle={{ color: "var(--text)" }}
               />
 
-              <Area type="monotone" dataKey="views" stroke="#e8836a" strokeWidth={2.5}
-                fillOpacity={1} fill="url(#colorViews)" animationDuration={1200} />
-              <Area type="monotone" dataKey="messages" stroke="#6366f1" strokeWidth={2.5}
-                fillOpacity={1} fill="url(#colorMessages)" animationDuration={1400} />
-              <Area type="monotone" dataKey="replies" stroke="#10b981" strokeWidth={2.5}
-                fillOpacity={1} fill="url(#colorReplies)" animationDuration={1600} />
+              <Area
+                type="monotone"
+                dataKey="views"
+                stroke="#e8836a"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#colorViews)"
+                animationDuration={1200}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="messages"
+                stroke="#6366f1"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#colorMessages)"
+                animationDuration={1400}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="replies"
+                stroke="#10b981"
+                strokeWidth={2.5}
+                fillOpacity={1}
+                fill="url(#colorReplies)"
+                animationDuration={1600}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -169,13 +205,22 @@ const Analytics = () => {
           { label: "Top Campaign",     value: "Recruiter Outreach", sub: "Highest conversion" },
           { label: "Open Rate",        value: "68%",     sub: "LinkedIn messages opened" },
         ].map((item, i) => (
-          <div key={i}
+          <div
+            key={i}
             className="rounded-2xl p-5 border"
             style={{ background: "var(--card)", borderColor: "var(--border)" }}
           >
-            <p className="text-xs font-semibold mb-2" style={{ color: "var(--muted)" }}>{item.label}</p>
-            <p className="text-lg font-bold truncate" style={{ color: "var(--text)" }}>{item.value}</p>
-            <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>{item.sub}</p>
+            <p className="text-xs font-semibold mb-2" style={{ color: "var(--muted)" }}>
+              {item.label}
+            </p>
+
+            <p className="text-lg font-bold truncate" style={{ color: "var(--text)" }}>
+              {item.value}
+            </p>
+
+            <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
+              {item.sub}
+            </p>
           </div>
         ))}
       </div>

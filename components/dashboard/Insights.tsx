@@ -1,11 +1,21 @@
-
 'use client';
+
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, AreaChart, Area, BarChart, Bar, Cell,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  Cell,
 } from "recharts";
-import { motion } from "motion/react";
-import { useTheme } from "next-themes";
+
+import { motion } from "framer-motion";
 
 const data = [
   { name: "Mon", sent: 400, replies: 24 },
@@ -26,63 +36,140 @@ const barData = [
 ];
 
 const tooltipStyle = {
-  backgroundColor: "var(--card)",
-  border: "1px solid var(--border)",
+  backgroundColor: "#ffffff",
+  border: "1px solid #e8e8e8",
   borderRadius: 12,
   fontSize: 12,
   fontWeight: 600,
-  color: "var(--text)",
+  color: "#1a1a1a",
   boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
 };
 
 const InsightsPage = () => {
-  const { theme }  = useTheme();
-  const axisColor  = theme === 'dark' ? '#94a3b8' : '#9ca3af';
-  const gridColor  = theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const axisColor = "#9ca3af";
+  const gridColor = "rgba(0,0,0,0.05)";
 
   return (
-    <div className="space-y-8" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
-
-
+    <div
+      className="space-y-8"
+      style={{
+        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+      }}
+    >
       <div>
-        <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: "#e8836a" }}>
+        <p
+          className="text-xs font-semibold tracking-widest uppercase mb-1"
+          style={{ color: "#e8836a" }}
+        >
           Insights · 2026
         </p>
-        <h2 className="text-2xl font-bold" style={{ color: "var(--text)" }}>Data Visualized</h2>
-        <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
+
+        <h2
+          className="text-2xl font-bold"
+          style={{ color: "#1a1a1a" }}
+        >
+          Data Visualized
+        </h2>
+
+        <p
+          className="text-sm mt-1"
+          style={{ color: "#888" }}
+        >
           Detailed breakdowns of your outreach performance.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl p-6 border"
-          style={{ background: "var(--card)", borderColor: "var(--border)" }}
+          style={{
+            background: "#ffffff",
+            borderColor: "#e8e8e8",
+          }}
         >
           <div className="mb-1">
-            <p className="text-base font-bold" style={{ color: "var(--text)" }}>Outreach Velocity</p>
-            <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Messages sent per day</p>
+            <p
+              className="text-base font-bold"
+              style={{ color: "#1a1a1a" }}
+            >
+              Outreach Velocity
+            </p>
+
+            <p
+              className="text-xs mt-0.5"
+              style={{ color: "#888" }}
+            >
+              Messages sent per day
+            </p>
           </div>
+
           <div className="h-[280px] mt-6 -ml-2">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data}>
                 <defs>
-                  <linearGradient id="colorSent" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#e8836a" stopOpacity={0.25} />
-                    <stop offset="95%" stopColor="#e8836a" stopOpacity={0} />
+                  <linearGradient
+                    id="colorSent"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="5%"
+                      stopColor="#e8836a"
+                      stopOpacity={0.25}
+                    />
+
+                    <stop
+                      offset="95%"
+                      stopColor="#e8836a"
+                      stopOpacity={0}
+                    />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false}
-                  tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} dy={8} />
-                <YAxis axisLine={false} tickLine={false}
-                  tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} />
-                <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: "var(--text)" }} />
-                <Area type="monotone" dataKey="sent" stroke="#e8836a"
-                  strokeWidth={3} fill="url(#colorSent)" />
+
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke={gridColor}
+                />
+
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    fill: axisColor,
+                  }}
+                  dy={8}
+                />
+
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    fill: axisColor,
+                  }}
+                />
+
+                <Tooltip
+                  contentStyle={tooltipStyle}
+                  itemStyle={{ color: "#1a1a1a" }}
+                />
+
+                <Area
+                  type="monotone"
+                  dataKey="sent"
+                  stroke="#e8836a"
+                  strokeWidth={3}
+                  fill="url(#colorSent)"
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -93,29 +180,77 @@ const InsightsPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="rounded-2xl p-6 border"
-          style={{ background: "var(--card)", borderColor: "var(--border)" }}
+          style={{
+            background: "#ffffff",
+            borderColor: "#e8e8e8",
+          }}
         >
           <div className="mb-1">
-            <p className="text-base font-bold" style={{ color: "var(--text)" }}>Campaign Conversion</p>
-            <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>Leads converted per campaign</p>
+            <p
+              className="text-base font-bold"
+              style={{ color: "#1a1a1a" }}
+            >
+              Campaign Conversion
+            </p>
+
+            <p
+              className="text-xs mt-0.5"
+              style={{ color: "#888" }}
+            >
+              Leads converted per campaign
+            </p>
           </div>
+
           <div className="h-[280px] mt-6 -ml-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false}
-                  tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} dy={8} />
-                <YAxis axisLine={false} tickLine={false}
-                  tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke={gridColor}
+                />
+
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    fill: axisColor,
+                  }}
+                  dy={8}
+                />
+
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    fill: axisColor,
+                  }}
+                />
+
                 <Tooltip
                   cursor={{ fill: "rgba(232,131,106,0.06)" }}
                   contentStyle={tooltipStyle}
-                  itemStyle={{ color: "var(--text)" }}
+                  itemStyle={{ color: "#1a1a1a" }}
                 />
-                <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+
+                <Bar
+                  dataKey="value"
+                  radius={[6, 6, 0, 0]}
+                >
                   {barData.map((_, index) => (
-                    <Cell key={`cell-${index}`}
-                      fill={index % 2 === 0 ? "#e8836a" : "#c96f58"} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={
+                        index % 2 === 0
+                          ? "#e8836a"
+                          : "#c96f58"
+                      }
+                    />
                   ))}
                 </Bar>
               </BarChart>
@@ -123,39 +258,86 @@ const InsightsPage = () => {
           </div>
         </motion.div>
       </div>
+
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         className="rounded-2xl p-6 border"
-        style={{ background: "var(--card)", borderColor: "var(--border)" }}
+        style={{
+          background: "#ffffff",
+          borderColor: "#e8e8e8",
+        }}
       >
         <div className="mb-1">
-          <p className="text-base font-bold" style={{ color: "var(--text)" }}>Weekly Reply Rate</p>
-          <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>How many replies you received per day</p>
+          <p
+            className="text-base font-bold"
+            style={{ color: "#1a1a1a" }}
+          >
+            Weekly Reply Rate
+          </p>
+
+          <p
+            className="text-xs mt-0.5"
+            style={{ color: "#888" }}
+          >
+            How many replies you received per day
+          </p>
         </div>
+
         <div className="h-[320px] mt-6 -ml-2">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
-              <XAxis dataKey="name" axisLine={false} tickLine={false}
-                tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} dy={8} />
-              <YAxis axisLine={false} tickLine={false}
-                tick={{ fontSize: 11, fontWeight: 600, fill: axisColor }} />
-              <Tooltip contentStyle={tooltipStyle} itemStyle={{ color: "var(--text)" }} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                vertical={false}
+                stroke={gridColor}
+              />
+
+              <XAxis
+                dataKey="name"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  fill: axisColor,
+                }}
+                dy={8}
+              />
+
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  fill: axisColor,
+                }}
+              />
+
+              <Tooltip
+                contentStyle={tooltipStyle}
+                itemStyle={{ color: "#1a1a1a" }}
+              />
+
               <Line
                 type="monotone"
                 dataKey="replies"
                 stroke="#e8836a"
                 strokeWidth={3}
-                dot={{ r: 4, fill: "#e8836a", strokeWidth: 2, stroke: "var(--card)" }}
+                dot={{
+                  r: 4,
+                  fill: "#e8836a",
+                  strokeWidth: 2,
+                  stroke: "#ffffff",
+                }}
                 activeDot={{ r: 6 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </motion.div>
-
     </div>
   );
 };
