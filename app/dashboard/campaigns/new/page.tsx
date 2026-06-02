@@ -93,7 +93,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: 
 
   return (
     <div className="flex flex-col items-center w-full" style={{ maxWidth: 320 }}>
-      {/* Delay badge */}
+ 
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg mb-2 text-xs font-medium"
         style={{ background: "#fff", border: "1px solid #e5e5e5", color: "#888" }}>
         <Clock size={12}/>
@@ -115,7 +115,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: 
         <ChevronDown size={11}/>
       </div>
 
-      {/* Card */}
+
       <div
         onClick={() => canEdit && onEdit(step.id)}
         onMouseEnter={() => setHovered(true)}
@@ -130,7 +130,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: 
           padding:     "12px 16px",
         }}
       >
-        {/* Delete button */}
+      
         <AnimatePresence>
           {hovered && (
             <motion.button
@@ -168,7 +168,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: 
         )}
       </div>
 
-      {/* Add after */}
+  
       {!step.isCondition && (
         <button onClick={() => onAddAfter(step.id)}
           className="mt-2 w-7 h-7 rounded-full flex items-center justify-center transition-all"
@@ -578,11 +578,9 @@ const NewCampaignPage = () => {
     <div className="flex flex-col h-screen overflow-hidden"
       style={{ background:"#f0f0f0", fontFamily:"'DM Sans','Segoe UI',sans-serif" }}>
 
-      {/* ── HEADER ── */}
       <header className="shrink-0 flex items-center justify-between px-4 md:px-6 border-b"
         style={{ height:56, background:"#fff", borderColor:"#e5e5e5" }}>
 
-        {/* Left: close + name */}
         <div className="flex items-center gap-3 min-w-0">
           <button onClick={() => router.push("/dashboard/campaigns")}
             className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 shrink-0"
@@ -595,7 +593,6 @@ const NewCampaignPage = () => {
           </span>
         </div>
 
-        {/* Center: step pills */}
         <div className="hidden md:flex items-center gap-1">
           {WIZARD_STEPS.map((s, i) => {
             const status = wizardStep === s.id ? "active" : currentIdx > i ? "done" : "pending";
@@ -623,7 +620,7 @@ const NewCampaignPage = () => {
           })}
         </div>
 
-        {/* Right: back + continue */}
+        
         <div className="flex items-center gap-2">
           {wizardStep !== "audience" && (
             <button onClick={() => setWizardStep(orderList[currentIdx-1])}
@@ -644,11 +641,11 @@ const NewCampaignPage = () => {
         </div>
       </header>
 
-      {/* ── MAIN ── */}
+  
       <main className="flex-1 overflow-hidden flex">
         <AnimatePresence mode="wait">
 
-          {/* ── STEP 1: AUDIENCE ── */}
+
           {wizardStep === "audience" && (
             <motion.div key="audience"
               initial={{ opacity:0, x:24 }} animate={{ opacity:1, x:0 }} exit={{ opacity:0, x:-24 }}
@@ -660,7 +657,7 @@ const NewCampaignPage = () => {
                   <p className="text-sm mt-1" style={{ color:"#888" }}>Define who you want to reach.</p>
                 </div>
 
-                {/* LinkedIn Account */}
+           
                 <div className="rounded-2xl p-5 space-y-3" style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
                   <h3 className="text-sm font-semibold" style={{ color:"#333" }}>LinkedIn Account</h3>
                   <div className="flex items-center justify-between px-4 py-3 rounded-xl"
@@ -679,7 +676,7 @@ const NewCampaignPage = () => {
                   </div>
                 </div>
 
-                {/* Search URL */}
+         
                 <div className="rounded-2xl p-5 space-y-4" style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
                   <div className="flex items-start justify-between">
                     <div>
@@ -706,7 +703,7 @@ const NewCampaignPage = () => {
                   )}
                 </div>
 
-                {/* Volume */}
+        
                 <div className="rounded-2xl p-5 space-y-4" style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
                   <div className="flex items-center justify-between">
                     <div>
@@ -729,7 +726,7 @@ const NewCampaignPage = () => {
                   </div>
                 </div>
 
-                {/* Filters */}
+          
                 <div className="rounded-2xl p-5 space-y-3" style={{ background:"#fff", border:"1px solid #e5e5e5" }}>
                   <h3 className="text-sm font-semibold mb-1" style={{ color:"#333" }}>Filters</h3>
                   {[
@@ -761,16 +758,12 @@ const NewCampaignPage = () => {
             </motion.div>
           )}
 
-          {/* ── STEP 2: SEQUENCE (flow builder) ── */}
           {wizardStep === "sequence" && (
             <motion.div key="sequence"
               initial={{ opacity:0, x:24 }} animate={{ opacity:1, x:0 }} exit={{ opacity:0, x:-24 }}
               transition={{ duration:0.22 }} className="flex-1 overflow-hidden flex">
 
-              {/* Left sidebar — step palette */}
              
-
-              {/* Right — FLOW CANVAS (same as edit campaign) */}
               <div className="flex-1 overflow-auto relative"
                 style={{
                   backgroundColor:"#f5f5f5",
@@ -822,7 +815,7 @@ const NewCampaignPage = () => {
             </motion.div>
           )}
 
-          {/* ── STEP 3: REVIEW ── */}
+          
           {wizardStep === "review" && (
             <motion.div key="review"
               initial={{ opacity:0, x:24 }} animate={{ opacity:1, x:0 }} exit={{ opacity:0, x:-24 }}
@@ -886,7 +879,6 @@ const NewCampaignPage = () => {
             </motion.div>
           )}
 
-          {/* ── STEP 4: LAUNCH ── */}
           {wizardStep === "finalize" && (
             <motion.div key="finalize"
               initial={{ opacity:0, x:24 }} animate={{ opacity:1, x:0 }} exit={{ opacity:0, x:-24 }}
@@ -942,7 +934,6 @@ const NewCampaignPage = () => {
         </AnimatePresence>
       </main>
 
-      {/* ── MODALS ── */}
       <AnimatePresence>
         {showAddPanel && (
           <div className="fixed inset-0 z-[200] flex items-start justify-end"
@@ -1029,7 +1020,7 @@ const NewCampaignPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Mobile bottom bar */}
+  
       <div className="md:hidden shrink-0 flex items-center justify-between px-4 py-3 border-t"
         style={{ background:"#fff", borderColor:"#e5e5e5" }}>
         <div className="flex gap-1">

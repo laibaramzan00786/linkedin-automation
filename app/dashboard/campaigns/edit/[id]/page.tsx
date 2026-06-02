@@ -60,7 +60,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete }: {
 
   return (
     <div className="flex flex-col items-center w-full" style={{ maxWidth: 280 }}>
-      {/* Delay badge */}
+
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg mb-2 text-xs font-medium cursor-pointer"
         style={{ background: "#fff", border: "1px solid #e5e5e5", color: "#888" }}>
         <Clock size={12} />
@@ -70,7 +70,6 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete }: {
         <ChevronDown size={11} />
       </div>
 
-      {/* Card */}
       <div
         onClick={() => (step.type === "Message" || step.type === "Connection request") && onEdit(step.id)}
         onMouseEnter={() => setHovered(true)}
@@ -84,7 +83,6 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete }: {
           cursor:       (step.type === "Message" || step.type === "Connection request") ? "pointer" : "default",
         }}
       >
-        {/* ✅ Delete button — only visible on hover */}
         <AnimatePresence>
           {hovered && (
             <motion.button
@@ -129,7 +127,6 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete }: {
         {step.content && <p className="text-xs mt-1.5 line-clamp-1 opacity-60">{step.content}</p>}
       </div>
 
-      {/* Add after button */}
       {!step.isCondition && (
         <button onClick={() => onAddAfter(step.id)}
           className="mt-2 w-7 h-7 rounded-full flex items-center justify-center transition-all"
@@ -536,7 +533,6 @@ const EditCampaignPage = () => {
               onAddAfter={aid => setAddAfter({ id: aid })}
               onDelete={handleDeleteStep} />
           </div>
-          {/* Branches — stack on mobile, side-by-side on desktop */}
           <div className="flex flex-col md:flex-row gap-6 mt-4 items-start w-full justify-center">
             <BranchColumn label="Yes" isEmpty={yesList.length === 0}
               onAddStep={() => setAddAfter({ id: sid, branch: "yes" })}>
@@ -582,7 +578,6 @@ const EditCampaignPage = () => {
     <div className="flex flex-col h-screen overflow-hidden"
       style={{ background: "#f0f0f0", fontFamily: "'DM Sans','Segoe UI',sans-serif" }}>
 
-      {/* Toast */}
       <AnimatePresence>
         {saved && (
           <motion.div initial={{ opacity: 0, y: -40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -40 }}
@@ -593,7 +588,6 @@ const EditCampaignPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Header */}
       <header className="shrink-0 flex items-center justify-between px-4 md:px-6"
         style={{ height: 52, background: "#fff", borderBottom: "1px solid #e5e5e5" }}>
         <div className="flex items-center gap-2 overflow-hidden">
@@ -625,7 +619,6 @@ const EditCampaignPage = () => {
         </div>
       </header>
 
-      {/* Canvas */}
       <main className="flex-1 overflow-auto relative"
         style={{
           backgroundColor: "#f5f5f5",
@@ -675,7 +668,7 @@ const EditCampaignPage = () => {
         </div>
       </main>
 
-      {/* Modals */}
+     
       <AnimatePresence>
         {(showAddRoot || addAfter !== null) && (
           <AddStepModal
