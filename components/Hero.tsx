@@ -1,5 +1,6 @@
+
 'use client'
-import { ArrowRight, CheckCircle2, ChevronRight, Sparkles, Bot, Play } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Play, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
@@ -10,9 +11,10 @@ const Hero = () => {
       className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 overflow-hidden"
       style={{ background: '#fff', fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
     >
-     
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,131,106,0.07), transparent)' }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,131,106,0.07), transparent)' }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
         <motion.div
@@ -20,29 +22,30 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-         
+          {/* BADGE — updated */}
           <div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold mb-8 border"
             style={{ background: '#fdf8f7', borderColor: '#f5d0c4', color: '#e8836a' }}
           >
             <Sparkles size={12} />
-            Next-Gen LinkedIn Automation
+            <span>The LinkedIn Automation Tool Built for Results</span>
           </div>
 
-     
+          {/* H1 — updated */}
           <h1
             className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05]"
             style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
           >
-            Automate Your LinkedIn<br />
-            Growth{' '}
-            <span style={{ color: '#e8836a', fontStyle: 'italic' }}>Effortlessly.</span>
+            Turn LinkedIn Into Your<br />
+            <span style={{ color: '#e8836a', fontStyle: 'italic' }}>#1 Lead Generation Machine.</span>
           </h1>
 
-          <p className="text-lg text-zinc-500 mb-10 max-w-xl mx-auto leading-relaxed font-medium">
-            NexusFlow handles the outreach complexity so you can focus on closing deals and building real relationships.
+          {/* Subheadline — updated */}
+          <p className="text-lg text-zinc-500 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+            NexusFlow automates your LinkedIn connection requests, follow-up sequences, and lead nurturing campaigns — so you spend zero time prospecting and 100% of your time closing.
           </p>
 
+          {/* CTAs — updated */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
@@ -51,7 +54,7 @@ const Hero = () => {
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e8836a'}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#111'}
             >
-              Start Building
+              Start Free Trial
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <button
@@ -60,11 +63,18 @@ const Hero = () => {
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#111'}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#888'}
             >
-              View Showcase <ChevronRight size={15} />
+              <Play size={14} className="fill-current" />
+              Watch 2-Min Demo
             </button>
           </div>
+
+          {/* Trust line — newly added */}
+          <p className="mt-5 text-xs font-medium" style={{ color: '#757575' }}>
+            ✓ No credit card required &nbsp;&nbsp; ✓ Free trial included &nbsp;&nbsp; ✓ Cancel anytime
+          </p>
         </motion.div>
 
+        {/* Dashboard mockup */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,8 +91,8 @@ const Hero = () => {
               <CheckCircle2 size={16} style={{ color: '#10b981' }} />
             </div>
             <div className="text-left">
-              <p className="text-xs font-bold" style={{ color: '#111' }}>Workflow Active</p>
-              <p className="text-[10px]" style={{ color: '#aaa' }}>99.9% Success Rate</p>
+              <p className="text-xs font-bold" style={{ color: '#111' }}>Campaign Active</p>
+              <p className="text-[10px]" style={{ color: '#aaa' }}>38% avg reply rate</p>
             </div>
           </motion.div>
 
@@ -93,15 +103,14 @@ const Hero = () => {
             style={{ borderColor: '#e5e5e5' }}
           >
             <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#fdf8f7' }}>
-              <Bot size={16} style={{ color: '#e8836a' }} />
+              <span style={{ color: '#e8836a', fontSize: 14 }}>🛡</span>
             </div>
             <div className="text-left">
-              <p className="text-xs font-bold" style={{ color: '#111' }}>AI Assistant</p>
-              <p className="text-[10px]" style={{ color: '#aaa' }}>Optimizing sequences…</p>
+              <p className="text-xs font-bold" style={{ color: '#111' }}>Account Safe</p>
+              <p className="text-[10px]" style={{ color: '#aaa' }}>Smart daily limits active</p>
             </div>
           </motion.div>
 
-    
           <div
             className="relative rounded-3xl border p-3 group cursor-pointer"
             style={{ background: 'rgba(255,255,255,0.85)', borderColor: '#e5e5e5', boxShadow: '0 24px 64px rgba(0,0,0,0.07)' }}
@@ -109,7 +118,7 @@ const Hero = () => {
             <div className="relative overflow-hidden rounded-2xl bg-zinc-100" style={{ aspectRatio: '16/9' }}>
               <img
                 src="/dashboard.png"
-                alt="NexusFlow Dashboard"
+                alt="NexusFlow LinkedIn Automation Tool dashboard"
                 className="w-full h-full object-cover rounded-2xl"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
@@ -123,7 +132,7 @@ const Hero = () => {
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
                     <Play className="fill-white w-3.5 h-3.5" />
                   </div>
-                  Try a demo now
+                  Watch 2-Min Demo
                 </motion.button>
               </div>
             </div>

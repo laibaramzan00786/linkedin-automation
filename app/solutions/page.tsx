@@ -1,4 +1,3 @@
-
 'use client';
 import { useState } from "react";
 import { 
@@ -11,7 +10,9 @@ import {
   Search, 
   Check, 
   ChevronRight,
-  LineChart
+  LineChart,
+  Clock,
+  BarChart3
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Navbar from "@/components/Navbar";
@@ -25,55 +26,115 @@ const SolutionsPage = () => {
       id: "sales",
       label: "Sales Teams",
       icon: <Target size={22} />,
-      title: "Accelerate your pipeline.",
-      desc: "Empower your sales team with automated outreach that feels personal and books more high-quality meetings.",
+      title: "Close More Deals. Spend Less Time Prospecting on LinkedIn.",
+      desc: "NexusFlow automates your entire LinkedIn sales workflow — from finding prospects to sending connection requests, follow-ups, and meeting invites. Your team focuses on closing. NexusFlow handles everything before that.",
       features: [
-        "Lead generation automation",
-        "Meeting booking system",
-        "Pipeline acceleration",
-        "Team collaboration",
+        "Automated LinkedIn Prospecting",
+        "Multi-Step Follow-Up Sequences",
+        "Smart Reply Detection",
+        "Team Collision Prevention",
       ],
+      statsLabel: "WHAT SALES TEAMS ACHIEVE WITH NEXUSFLOW:",
       stats: [
-        { label: "Meetings Booked", value: "+240%", color: "text-[#e8836a]" },
-        { label: "Reply Rate", value: "41%", color: "text-zinc-900" },
-        { label: "Pipeline Value", value: "$1.2M", color: "text-[#e8836a]" }
-      ]
+        { 
+          label: "Average Reply Rate", 
+          value: "↑ 38%", 
+          sub: "vs 2–3% industry average for cold outreach",
+          color: "text-[#e8836a]",
+          icon: <TrendingUp className="text-[#e8836a]" />
+        },
+        { 
+          label: "Time Saved Per Week", 
+          value: "⏱ 12 Hrs", 
+          sub: "reclaimed from manual LinkedIn prospecting",
+          color: "text-zinc-900",
+          icon: <Clock className="text-[#e8836a]" />
+        },
+        { 
+          label: "Pipeline Growth", 
+          value: "↑ 3.2x", 
+          sub: "more qualified conversations per month",
+          color: "text-[#e8836a]",
+          icon: <BarChart3 className="text-[#e8836a]" />
+        }
+      ],
+      cta: "Start Automating Sales"
     },
     {
       id: "agencies",
       label: "Growth Agencies",
       icon: <Building2 size={22} />,
-      title: "Scale your client results.",
-      desc: "Manage multiple client campaigns from a single powerful dashboard with white-labeled reporting.",
+      title: "Manage Every Client's LinkedIn Outreach From One Dashboard.",
+      desc: "NexusFlow lets agencies run separate LinkedIn automation campaigns for every client — with individual analytics, separate account controls, and white-label ready reporting. Scale your agency's output without scaling your headcount.",
       features: [
-        "Multi-client management",
-        "White-label reporting",
-        "Campaign scaling",
-        "ROI tracking",
+        "Multi-Account Client Management",
+        "Per-Client Campaign Analytics",
+        "Bulk Campaign Templates",
+        "Client Performance Reports",
       ],
+      statsLabel: "AGENCY RESULTS WITH NEXUSFLOW:",
       stats: [
-        { label: "Managed Accounts", value: "50+", color: "text-[#e8836a]" },
-        { label: "Churn Rate", value: "2%", color: "text-emerald-500" },
-        { label: "Time Saved", value: "85%", color: "text-[#e8836a]" }
-      ]
+        { 
+          label: "Client Capacity", 
+          value: "↑ 3x", 
+          sub: "more clients managed per team member",
+          color: "text-[#e8836a]",
+          icon: <TrendingUp className="text-[#e8836a]" />
+        },
+        { 
+          label: "Campaign Setup", 
+          value: "⏱ 80% faster", 
+          sub: "than building manual outreach workflows",
+          color: "text-zinc-900",
+          icon: <Clock className="text-[#e8836a]" />
+        },
+        { 
+          label: "Client Retention", 
+          value: "↑ Higher", 
+          sub: "when results are consistent and visible",
+          color: "text-[#e8836a]",
+          icon: <LineChart className="text-[#e8836a]" />
+        }
+      ],
+      cta: "Scale Your Agency"
     },
     {
       id: "recruiters",
-      label: "Talent Sourcing",
+      label: "Recruiters & HR",
       icon: <Users size={22} />,
-      title: "Find top talent faster.",
-      desc: "Automate candidate sourcing and outreach to reach the best talent before your competitors do.",
+      title: "Source Top Talent on LinkedIn Faster Than Your Competition.",
+      desc: "NexusFlow automates candidate outreach, follow-up sequences, and profile visits — so your recruitment team spends time interviewing qualified candidates, not chasing cold profiles one by one.",
       features: [
-        "Candidate sourcing",
-        "Automated follow-ups",
-        "Talent pool building",
-        "Response management",
+        "Automated Candidate Outreach",
+        "Job Opportunity Drip Sequences",
+        "Candidate Pipeline Tracking",
+        "Profile Visit Automation",
       ],
+      statsLabel: "RECRUITER RESULTS WITH NEXUSFLOW:",
       stats: [
-        { label: "Response Rate", value: "68%", color: "text-[#e8836a]" },
-        { label: "Hire Time", value: "-40%", color: "text-emerald-500" },
-        { label: "Candidates", value: "10k+", color: "text-[#e8836a]" }
-      ]
+        { 
+          label: "Candidate Response Rate", 
+          value: "↑ 2.5x", 
+          sub: "more replies vs manual InMail outreach",
+          color: "text-[#e8836a]",
+          icon: <TrendingUp className="text-[#e8836a]" />
+        },
+        { 
+          label: "Time to First Response", 
+          value: "⏱ 48 Hrs", 
+          sub: "average first candidate reply time",
+          color: "text-zinc-900",
+          icon: <Clock className="text-[#e8836a]" />
+        },
+        { 
+          label: "Profiles Reached Daily", 
+          value: "↑ 50+", 
+          sub: "automated visits and connection requests",
+          color: "text-[#e8836a]",
+          icon: <BarChart3 className="text-[#e8836a]" />
+        }
+      ],
+      cta: "Start Sourcing Faster"
     },
   ];
 
@@ -84,6 +145,7 @@ const SolutionsPage = () => {
       <Navbar />
 
       <main>
+        {/* HERO SECTION */}
         <section className="relative pt-48 pb-20 px-6 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
             <div className="absolute top-[0%] right-[0%] w-[40%] h-[40%] bg-[#e8836a]/5 rounded-full blur-[100px]" />
@@ -96,26 +158,30 @@ const SolutionsPage = () => {
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fdf2f0] text-[#e8836a] text-[10px] font-bold uppercase tracking-widest mb-10 border border-[#feedea]"
             >
               <Zap size={12} />
-              Scaling Solution Engines
+              Solutions
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 mb-8 leading-[1.1]">
-              Built for every <span className="text-[#e8836a]">industry.</span>
+              LinkedIn Automation Built for the Way Your Team{" "}
+              <span className="text-[#e8836a]">Actually Works.</span>
             </h1>
 
             <p className="text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed font-medium">
-              NexusFlow adapts to your unique business model and helps your team scale outreach, engagement, and revenue across any platform.
+              Whether you are a sales team closing enterprise deals, a growth agency managing multiple clients, or a recruiter sourcing top talent — NexusFlow automates your entire LinkedIn outreach workflow from first connection to booked meeting.
             </p>
           </div>
         </section>
 
+        {/* TABS + CONTENT SECTION */}
         <section className="px-6 pb-32">
           <div className="max-w-7xl mx-auto">
           
+            {/* Tab Buttons */}
             <div className="flex flex-wrap justify-center gap-4 mb-20">
               {solutions.map((s) => (
                 <button
                   key={s.id}
+                  id={s.id === "sales" ? "sales-teams" : s.id === "agencies" ? "growth-agencies" : "recruiters"}
                   onClick={() => setActiveSolution(s.id)}
                   className={`flex items-center gap-3 px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest transition-all
                   ${
@@ -130,9 +196,11 @@ const SolutionsPage = () => {
               ))}
             </div>
 
+            {/* Tab Content Card */}
             <div className="rounded-[48px] border border-zinc-200 bg-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden">
               <div className="grid lg:grid-cols-2">
     
+                {/* Left — Text Content */}
                 <div className="p-12 lg:p-20">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -171,16 +239,19 @@ const SolutionsPage = () => {
                       </div>
 
                       <button className="flex items-center gap-3 px-10 py-5 rounded-full bg-zinc-950 text-white font-bold text-sm uppercase tracking-widest hover:bg-[#e8836a] transition-all shadow-xl">
-                        Deploy Solution
+                        {active?.cta}
                         <ArrowRight size={18} />
                       </button>
                     </motion.div>
                   </AnimatePresence>
                 </div>
 
+                {/* Right — Metrics Panel */}
                 <div className="bg-zinc-50 p-12 lg:p-20 flex flex-col justify-center">
                   <div className="space-y-6 w-full max-w-md mx-auto">
-                    <p className="text-[10px] font-bold text-[#e8836a] uppercase tracking-[0.4em] mb-4 text-center">Performance Metrics</p>
+                    <p className="text-[10px] font-bold text-[#e8836a] uppercase tracking-[0.4em] mb-4 text-center">
+                      {active?.statsLabel}
+                    </p>
                     {active?.stats.map((stat, i) => (
                       <motion.div
                         key={`${activeSolution}-stat-${i}`}
@@ -188,15 +259,22 @@ const SolutionsPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                         whileHover={{ y: -5 }}
-                        className="bg-white border border-zinc-200 rounded-[24px] p-8 shadow-sm flex items-center justify-between"
+                        className="bg-white border border-zinc-200 rounded-[24px] p-8 shadow-sm"
                       >
-                        <div>
-                          <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">{stat.label}</p>
-                          <h3 className={`text-4xl font-bold ${stat.color}`}>{stat.value}</h3>
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">
+                              {stat.label}
+                            </p>
+                            <h3 className={`text-3xl font-bold ${stat.color}`}>
+                              {stat.value}
+                            </h3>
+                          </div>
+                          <div className="w-12 h-12 bg-zinc-50 rounded-full flex items-center justify-center flex-shrink-0">
+                            {stat.icon}
+                          </div>
                         </div>
-                        <div className="w-12 h-12 bg-zinc-50 rounded-full flex items-center justify-center">
-                          {i === 2 ? <LineChart className="text-[#e8836a]" /> : <TrendingUp className="text-[#e8836a]" />}
-                        </div>
+                        <p className="text-xs text-zinc-400 font-medium mt-1">{stat.sub}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -206,30 +284,36 @@ const SolutionsPage = () => {
           </div>
         </section>
 
+        {/* DARK FEATURE SECTION */}
         <section className="bg-zinc-950 py-32 px-6 overflow-hidden relative">
           <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-[#e8836a]/10 rounded-full blur-[100px] pointer-events-none" />
           
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-24 max-w-2xl mx-auto">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Built for speed. <br /><span className="text-[#e8836a]">Refined by data.</span></h2>
-              <p className="text-zinc-400 font-medium">A surgical approach to growth, refined through thousands of successful campaigns across the globe.</p>
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+                The Smarter Way to Run <br />
+                <span className="text-[#e8836a]">LinkedIn Outreach at Scale.</span>
+              </h2>
+              <p className="text-zinc-400 font-medium">
+                NexusFlow combines intelligent prospect targeting, personalized message sequencing, and real-time performance data — so every campaign gets smarter the longer it runs.
+              </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: "Intelligence",
-                  desc: "We map your industry market signals to find the leads that are ready to buy now.",
+                  title: "Smart Prospect Targeting",
+                  desc: "NexusFlow identifies your ideal LinkedIn prospects using advanced filters — job title, industry, company size, seniority, and location. You define who matters. NexusFlow finds them automatically.",
                   icon: <Search size={28} />,
                 },
                 {
-                  title: "Engagement",
-                  desc: "Sophisticated outreach sequences that maintain your personal voice at scale.",
+                  title: "Sequences That Sound Human",
+                  desc: "Multi-step LinkedIn outreach sequences with dynamic personalization variables. Every message includes your prospect's name, company, and role — sent at the optimal time for maximum reply rates.",
                   icon: <Zap size={28} />,
                 },
                 {
-                  title: "Optimization",
-                  desc: "Real-time AI behavioral analytics that refine your strategy every single minute.",
+                  title: "Campaigns That Learn and Improve",
+                  desc: "Real-time analytics show you exactly which messages convert, which sequences underperform, and where to optimize next. Every campaign gets measurably better over time.",
                   icon: <TrendingUp size={28} />,
                 },
               ].map((step, i) => (
@@ -248,13 +332,22 @@ const SolutionsPage = () => {
           </div>
         </section>
 
+        {/* FINAL CTA SECTION */}
         <section className="py-32 px-6">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-5xl md:text-7xl font-bold text-zinc-900 tracking-tight mb-8">Ready to transform?</h2>
-            <p className="text-zinc-500 text-lg mb-12 font-medium max-w-xl mx-auto">Join the most ambitious teams already capturing the market with NexusFlow intelligence.</p>
+            <h2 className="text-5xl md:text-7xl font-bold text-zinc-900 tracking-tight mb-8">
+              Start Automating Your LinkedIn Outreach in Under 5 Minutes.
+            </h2>
+            <p className="text-zinc-500 text-lg mb-12 font-medium max-w-xl mx-auto">
+              Join hundreds of sales teams, recruiters, and agencies already running automated LinkedIn campaigns with NexusFlow. No credit card required. Cancel anytime.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-14 py-6 bg-zinc-950 text-white rounded-full font-bold text-lg hover:bg-[#e8836a] transition-all shadow-2xl active:scale-95">Start Scaling Free</button>
-              <button className="px-14 py-6 border border-zinc-200 rounded-full font-bold text-lg hover:bg-zinc-50 transition-all flex items-center gap-2 justify-center">Talk to a Strategist <ChevronRight size={20}/></button>
+              <button className="px-14 py-6 bg-zinc-950 text-white rounded-full font-bold text-lg hover:bg-[#e8836a] transition-all shadow-2xl active:scale-95">
+                Start Free Trial →
+              </button>
+              <button className="px-14 py-6 border border-zinc-200 rounded-full font-bold text-lg hover:bg-zinc-50 transition-all flex items-center gap-2 justify-center">
+                Talk to Our Team <ChevronRight size={20}/>
+              </button>
             </div>
           </div>
         </section>

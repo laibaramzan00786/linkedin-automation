@@ -1,7 +1,7 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { Command, Menu, X, ChevronDown, BookOpen, HelpCircle, FileText, Code, Users } from 'lucide-react';
+import { Command, Menu, X, ChevronDown, BookOpen, HelpCircle, FileText, Code, Users, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 
@@ -135,14 +135,15 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            href="/signup"
-            className="text-[12px] font-semibold px-5 py-2.5 rounded-xl text-white transition-all active:scale-95"
-            style={{ background: '#111', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e8836a'}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#111'}
-          >
-            Start Free
-          </Link>
+              href="/signup"
+              className="group flex items-center gap-2 px-6 py-2 rounded-2xl text-sm font-semibold text-white transition-all active:scale-95"
+              style={{ background: '#111', boxShadow: '0 4px 20px rgba(0,0,0,0.12)' }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e8836a'}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#111'}
+            >
+              Start Free Trial
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
           <button
             className="md:hidden p-2 rounded-xl transition-all"
             style={{ color: '#555' }}
