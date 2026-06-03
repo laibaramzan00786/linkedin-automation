@@ -1,8 +1,14 @@
-
 'use client'
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
+
+const compareTools = [
+  { name: 'vs Dripify', saving: 'Save $600/yr', href: '/compare/vs-dripify' },
+  { name: 'vs Linked Helper', saving: 'Save $432/yr', href: '/compare/vs-linked-helper' },
+  { name: 'vs Meet Alfred', saving: 'Save $960/yr', href: '/compare/vs-meet-alfred' },
+  { name: 'vs Manual Outreach', saving: 'Save 50+ hrs/mo', href: '/compare/vs-manual-outreach' },
+];
 
 const CTA = () => {
   return (
@@ -23,12 +29,10 @@ const CTA = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          {/* Section label — kept as-is (works well) */}
           <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#e8836a' }}>
             Get Started Today
           </span>
 
-          {/* H2 — updated */}
           <h2
             className="text-5xl md:text-7xl font-bold tracking-tight mt-4 mb-6 leading-tight"
             style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
@@ -37,16 +41,14 @@ const CTA = () => {
             <span style={{ color: '#e8836a', fontStyle: 'italic' }}>Already on LinkedIn.</span>
           </h2>
 
-          {/* Subheadline — updated */}
-          <p className="text-lg mb-4 max-w-xl mx-auto" style={{ color: '#888' }}>
+          <p className="text-lg mb-4 max-w-xl mx-auto" style={{ color: '#616060' }}>
             Stop reaching them one at a time.
           </p>
-          <p className="text-base mb-12 max-w-xl mx-auto" style={{ color: '#aaa' }}>
+          <p className="text-base mb-12 max-w-xl mx-auto" style={{ color: '#616060' }}>
             Join hundreds of sales teams, recruiters, and agencies already running automated LinkedIn campaigns with NexusFlow.{' '}
             No credit card required. Cancel anytime.
           </p>
 
-          {/* CTAs — updated */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <Link
               href="/signup"
@@ -68,19 +70,12 @@ const CTA = () => {
             </button>
           </div>
 
-          {/* Trust line */}
-          <p className="text-xs font-medium mb-16" style={{ color: '#aaa' }}>
+          <p className="text-xs font-medium mb-16" style={{ color: '#616060' }}>
             ✓ Free trial included &nbsp;&nbsp; ✓ Setup in 5 minutes &nbsp;&nbsp; ✓ Cancel anytime
           </p>
 
-          {/*
-            HubSpot / Google / LinkedIn / Microsoft logos REMOVED.
-            Reason: Displaying recognizable enterprise logos implies they are customers/partners.
-            They are not — and LinkedIn may issue a cease-and-desist if they notice.
-            Replaced with honest, text-based social proof below.
-          */}
-          <div className="flex flex-col items-center gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#ccc' }}>
+          <div className="flex flex-col items-center gap-3 mb-20">
+            <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#6d6d6d' }}>
               Trusted by sales teams and recruiters across 20+ countries
             </p>
             <div className="flex flex-wrap justify-center gap-6 mt-2">
@@ -96,6 +91,9 @@ const CTA = () => {
             </div>
           </div>
         </motion.div>
+
+        
+
       </div>
     </section>
   );

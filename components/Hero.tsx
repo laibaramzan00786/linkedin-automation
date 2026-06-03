@@ -22,7 +22,6 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* BADGE — updated */}
           <div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold mb-8 border"
             style={{ background: '#fdf8f7', borderColor: '#f5d0c4', color: '#e8836a' }}
@@ -31,7 +30,6 @@ const Hero = () => {
             <span>The LinkedIn Automation Tool Built for Results</span>
           </div>
 
-          {/* H1 — updated */}
           <h1
             className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05]"
             style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
@@ -40,12 +38,10 @@ const Hero = () => {
             <span style={{ color: '#e8836a', fontStyle: 'italic' }}>#1 Lead Generation Machine.</span>
           </h1>
 
-          {/* Subheadline — updated */}
           <p className="text-lg text-zinc-500 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
             NexusFlow automates your LinkedIn connection requests, follow-up sequences, and lead nurturing campaigns — so you spend zero time prospecting and 100% of your time closing.
           </p>
 
-          {/* CTAs — updated */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
@@ -67,14 +63,11 @@ const Hero = () => {
               Watch 2-Min Demo
             </button>
           </div>
-
-          {/* Trust line — newly added */}
           <p className="mt-5 text-xs font-medium" style={{ color: '#757575' }}>
             ✓ No credit card required &nbsp;&nbsp; ✓ Free trial included &nbsp;&nbsp; ✓ Cancel anytime
           </p>
         </motion.div>
 
-        {/* Dashboard mockup */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}

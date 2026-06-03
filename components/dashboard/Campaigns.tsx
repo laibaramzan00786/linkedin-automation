@@ -108,7 +108,6 @@ const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDe
     <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }}
       className="bg-white rounded-2xl border p-4 space-y-3" style={{ borderColor:"#e8e8e8" }}>
 
-      {/* Top row: name + menu */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -134,7 +133,6 @@ const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDe
         </div>
       </div>
 
-      {/* Account */}
       <div className="flex items-center gap-2">
         {userAvatar ? (
           <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 bg-gray-200">
@@ -147,7 +145,6 @@ const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDe
         <span className="text-xs font-medium truncate" style={{ color:"#555" }}>{displayName}</span>
       </div>
 
-      {/* Stats grid 2x4 */}
       <div className="grid grid-cols-4 gap-2">
         {[
           { label:"Connections", val: camp.connections, accent: true  },
@@ -166,7 +163,6 @@ const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDe
         ))}
       </div>
 
-      {/* Actions */}
       <div className="flex gap-2 pt-1">
         <Link href={`/dashboard/campaigns/edit/${camp.id}`}
           className="flex-1 py-2 rounded-xl text-xs font-semibold text-center border transition-all"
@@ -356,11 +352,10 @@ const CampaignsPage = () => {
   return (
     <div className="min-h-screen" style={{ background:"#f0f0f0", fontFamily:"'DM Sans','Segoe UI',sans-serif" }}>
 
-      {/* ── TOP BAR ── */}
       <div className="flex items-center justify-between px-4 md:px-5 py-2.5 border-b flex-wrap gap-2"
         style={{ background:"#f0f0f0", borderColor:"#ddd" }}>
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Account pill */}
+      ]
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer hover:shadow-sm transition-all"
             style={{ background:"#fff", borderColor:"#ddd" }}>
             {userAvatar ? (
@@ -388,7 +383,6 @@ const CampaignsPage = () => {
 
       <div className="px-4 md:px-5 pt-4 pb-8 space-y-4">
 
-        {/* ── TABS + ACTIONS ── */}
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-1 flex-wrap">
             {(["active","drafts"] as const).map(tab => (
@@ -426,8 +420,6 @@ const CampaignsPage = () => {
           </div>
         </div>
 
-        {/* ── KPI CARDS ── */}
-        {/* Mobile: 2 cols, then last card full width; md+: 5 cols */}
         <div className="grid grid-cols-2 md:hidden gap-3">
           {kpis.slice(0,4).map((s,i) => (
             <div key={i} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl"
@@ -440,7 +432,6 @@ const CampaignsPage = () => {
               </div>
             </div>
           ))}
-          {/* Last KPI full width on mobile */}
           <div className="col-span-2 flex items-center gap-3 px-4 py-3.5 rounded-2xl"
             style={{ background:"#fff", border:"1px solid #e8e8e8" }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
@@ -452,7 +443,6 @@ const CampaignsPage = () => {
           </div>
         </div>
 
-        {/* Desktop KPI row */}
         <div className="hidden md:grid md:grid-cols-5 rounded-2xl overflow-hidden"
           style={{ background:"#fff", border:"1px solid #e8e8e8" }}>
           {kpis.map((s,i) => (
@@ -468,7 +458,6 @@ const CampaignsPage = () => {
           ))}
         </div>
 
-        {/* ── MOBILE CARDS ── */}
         <div className="flex flex-col gap-3 md:hidden">
           {filtered.map(camp => (
             <MobileCard key={camp.id} camp={camp} displayName={displayName}
@@ -482,7 +471,6 @@ const CampaignsPage = () => {
           )}
         </div>
 
-        {/* ── DESKTOP TABLE ── */}
         <div className="hidden md:block rounded-2xl overflow-hidden" style={{ background:"#fff", border:"1px solid #e8e8e8" }}>
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse" style={{ minWidth:860 }}>

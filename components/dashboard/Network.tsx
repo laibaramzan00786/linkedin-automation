@@ -289,7 +289,6 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
   return (
     <div className="flex flex-col gap-5 pb-20" style={{ fontFamily: "'DM Sans','Segoe UI',sans-serif" }}>
 
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b"
         style={{ borderColor: "var(--border)" }}>
         <div>
@@ -311,7 +310,6 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
         </div>
       </div>
 
-      {/* Mobile filter toggle */}
       <button onClick={() => setShowFilters(!showFilters)}
         className="lg:hidden h-10 flex items-center justify-center gap-2 rounded-xl border text-xs font-semibold"
         style={{ background: "var(--card)", borderColor: "var(--border)", color: "var(--text)" }}>
@@ -337,16 +335,13 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
       </AnimatePresence>
 
       <div className="flex gap-5 items-start">
-
-        {/* Desktop filter sidebar */}
+\
         <div className="hidden lg:block w-64 shrink-0">
           <FilterPanel />
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
 
-          {/* Mobile cards */}
           <div className="flex flex-col gap-3 lg:hidden">
             {filtered.map((contact, i) => (
               <motion.div key={contact.id}
@@ -421,7 +416,6 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
             )}
           </div>
 
-          {/* Desktop table */}
           <div className="hidden lg:block rounded-2xl overflow-hidden" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse" style={{ minWidth: 680 }}>
@@ -520,7 +514,6 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
               </table>
             </div>
 
-            {/* Pagination */}
             <div className="px-5 py-3 flex flex-col sm:flex-row items-center justify-between gap-2"
               style={{ borderTop: "1px solid var(--border)", background: "var(--bg)" }}>
               <div className="flex items-center gap-4 text-xs" style={{ color: "var(--muted)" }}>

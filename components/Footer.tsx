@@ -7,34 +7,70 @@ const Footer = () => {
     {
       title: "What's Included",
       links: [
-        'LinkedIn Lead Generation', 'Twitter Engagement', 'Multichannel Sequences',
-        'LinkedIn Inbox Manager', 'Team Collaboration', 'AI-Personalization',
-        'LinkedIn Message Templates',
+        { label: 'LinkedIn Lead Generation', href: '/product' },
+        { label: 'Twitter Engagement', href: '/product' },
+        { label: 'Multichannel Sequences', href: '/product' },
+        { label: 'LinkedIn Inbox Manager', href: '/product' },
+        { label: 'Team Collaboration', href: '/product' },
+        { label: 'AI-Personalization', href: '/product' },
+        { label: 'LinkedIn Message Templates', href: '/product' },
       ],
     },
     {
       title: 'More Features',
       links: [
-        'Email Outreach', 'Lead Finder', 'LinkedIn CRM',
-        'Reporting & Tracking', 'Social Media Posting', 'Integrations',
-        'Customizable AI Settings',
+        { label: 'Email Outreach', href: '/product' },
+        { label: 'Lead Finder', href: '/product' },
+        { label: 'LinkedIn CRM', href: '/product' },
+        { label: 'Reporting & Tracking', href: '/product' },
+        { label: 'Social Media Posting', href: '/product' },
+        { label: 'Integrations', href: '/product' },
+        { label: 'Customizable AI Settings', href: '/product' },
       ],
     },
     {
       title: 'Compare',
-      links: ['Skylead.io', 'Linked Helper', 'Dripify', 'ProspectIn', 'Waalaxy', 'Zopto'],
+      links: [
+        { label: 'NexusFlow vs Dripify', href: '/compare/vs-dripify' },
+        { label: 'NexusFlow vs Linked Helper', href: '/compare/vs-linked-helper' },
+        { label: 'NexusFlow vs Meet Alfred', href: '/compare/vs-meet-alfred' },
+        { label: 'NexusFlow vs Manual Outreach', href: '/compare/vs-manual-outreach' },
+        { label: 'ProspectIn', href: '#' },
+        { label: 'Waalaxy', href: '#' },
+        { label: 'Zopto', href: '#' },
+      ],
     },
     {
       title: 'Company',
-      links: ['Our Story', 'Meet the Team', 'Blog', 'Help Articles', 'Pricing', 'Agencies'],
+      links: [
+        { label: 'Our Story', href: '#' },
+        { label: 'Meet the Team', href: '#' },
+        { label: 'Blog', href: '#' },
+        { label: 'Help Articles', href: '#' },
+        { label: 'Pricing', href: '/pricing' },
+        { label: 'Agencies', href: '/solutions#growth-agencies' },
+      ],
     },
     {
       title: 'Resources',
-      links: ['Guides', 'Blog', 'Articles', 'Videos', 'YouTube', 'Watch Demo', 'Sitemap'],
+      links: [
+        { label: 'Guides', href: '#' },
+        { label: 'Blog', href: '#' },
+        { label: 'Articles', href: '#' },
+        { label: 'Videos', href: '#' },
+        { label: 'YouTube', href: '#' },
+        { label: 'Watch Demo', href: '#' },
+        { label: 'Sitemap', href: '#' },
+      ],
     },
   ];
 
-  const legal = ['Terms', 'Privacy', 'Cookie Policy', 'Fair Billing'];
+  const legal = [
+    { label: 'Terms', href: '#' },
+    { label: 'Privacy', href: '#' },
+    { label: 'Cookie Policy', href: '#' },
+    { label: 'Fair Billing', href: '#' },
+  ];
 
   return (
     <footer
@@ -43,10 +79,8 @@ const Footer = () => {
     >
       <div className="max-w-7xl mx-auto px-6">
 
-       
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
 
-      
           <div className="lg:col-span-3">
             <div className="flex items-center gap-2.5 mb-5">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: '#e8836a' }}>
@@ -87,15 +121,15 @@ const Footer = () => {
                 </h4>
                 <ul className="space-y-3">
                   {col.links.map(link => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <Link
-                        href="#"
+                        href={link.href}
                         className="text-[12px] font-medium transition-colors"
                         style={{ color: '#888' }}
                         onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#e8836a'}
                         onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#888'}
                       >
-                        {link}
+                        {link.label}
                       </Link>
                     </li>
                   ))}
@@ -104,19 +138,18 @@ const Footer = () => {
             ))}
           </div>
         </div>
-
         <div className="pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderColor: '#e5e5e5' }}>
           <div className="flex flex-wrap gap-6">
             {legal.map(item => (
               <Link
-                key={item}
-                href="#"
+                key={item.label}
+                href={item.href}
                 className="text-[11px] font-semibold uppercase tracking-wider transition-colors"
                 style={{ color: '#bbb' }}
                 onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#555'}
                 onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#bbb'}
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </div>
@@ -124,6 +157,7 @@ const Footer = () => {
             © 2026 NexusFlow Inc.
           </p>
         </div>
+
       </div>
     </footer>
   );

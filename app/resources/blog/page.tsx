@@ -8,10 +8,10 @@ import Footer from '@/components/Footer';
 const blogPosts = [
   {
     id: 1,
-    title: "How to Scale Your LinkedIn Outreach in 2024",
+    title: "How to Scale Your LinkedIn Outreach in 2026",
     excerpt: "Discover the latest strategies for scaling your LinkedIn outreach without compromising on personalization.",
     author: "Sarah Jenkins",
-    date: "March 10, 2024",
+    date: "March 10, 2026",
     category: "Strategy",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2340&auto=format&fit=crop"
   },
@@ -20,7 +20,7 @@ const blogPosts = [
     title: "The Future of AI in Sales Automation",
     excerpt: "AI is changing the sales landscape. Learn how to leverage new tools to stay ahead of the curve.",
     author: "Peter Sutherland",
-    date: "March 05, 2024",
+    date: "March 05, 2026",
     category: "Technology",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2340&auto=format&fit=crop"
   },
@@ -29,7 +29,7 @@ const blogPosts = [
     title: "5 Common Mistakes in Cold Messaging",
     excerpt: "Avoid these common pitfalls that could be hurting your conversion rates and brand reputation.",
     author: "David Wilson",
-    date: "February 28, 2024",
+    date: "February 28, 2026",
     category: "Tips",
     image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2340&auto=format&fit=crop"
   }

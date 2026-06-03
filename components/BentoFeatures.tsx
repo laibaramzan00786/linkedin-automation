@@ -12,7 +12,6 @@ const BentoFeatures = () => {
     >
       <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* Section header */}
         <div className="mb-20 flex flex-col lg:flex-row items-end justify-between gap-10">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
@@ -20,12 +19,10 @@ const BentoFeatures = () => {
             viewport={{ once: true }}
             className="max-w-2xl"
           >
-            {/* Section label — updated */}
             <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#e8836a' }}>
               What NexusFlow Does
             </span>
 
-            {/* H2 — updated */}
             <h2
               className="text-4xl md:text-6xl font-bold tracking-tight mt-3 mb-4 leading-tight"
               style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
@@ -34,18 +31,14 @@ const BentoFeatures = () => {
               <span style={{ color: '#e8836a', fontStyle: 'italic' }}>Dominate</span> LinkedIn Outreach.
             </h2>
 
-            {/* Subheadline — updated */}
             <p className="text-lg font-medium" style={{ color: '#888' }}>
               Six powerful LinkedIn automation features. One clean dashboard. Zero manual work. Built for sales teams, recruiters, and agencies who want results — not complexity.
             </p>
           </motion.div>
-          {/* Badges removed as per document */}
         </div>
 
-        {/* Feature cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
 
-          {/* Feature 1 — Automated Connection Requests (was Global Infrastructure) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -78,7 +71,6 @@ const BentoFeatures = () => {
               style={{ background: '#e8836a' }} />
           </motion.div>
 
-          {/* Feature 2 — Live in Under 5 Minutes (was Instant Setup) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +95,6 @@ const BentoFeatures = () => {
               style={{ background: 'rgba(255,255,255,0.08)' }} />
           </motion.div>
 
-          {/* Feature 3 — Multi-Step Drip Campaigns (was Smart Inbox) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -132,7 +123,6 @@ const BentoFeatures = () => {
             </div>
           </motion.div>
 
-          {/* Feature 4 — Real-Time Campaign Analytics (was Deep Intelligence) + updated stats card */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +144,6 @@ const BentoFeatures = () => {
               </p>
             </div>
 
-            {/* Stats card — replaced fake % bars with honest outcome stats */}
             <div className="rounded-2xl p-6 border" style={{ background: '#fafafa', borderColor: '#e5e5e5' }}>
               <p className="text-[10px] font-bold uppercase tracking-widest mb-5" style={{ color: '#aaa' }}>
                 What Our Users Achieve
@@ -179,7 +168,6 @@ const BentoFeatures = () => {
             </div>
           </motion.div>
 
-          {/* Feature 5 — Profile Visit Automation (new) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -200,7 +188,6 @@ const BentoFeatures = () => {
             </p>
           </motion.div>
 
-          {/* Feature 6 — Safe Automation (new) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

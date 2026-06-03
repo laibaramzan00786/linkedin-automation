@@ -240,12 +240,10 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
         fontFamily: "'DM Sans','Segoe UI',sans-serif",
       }}
     >
-      {/* ── SIDEBAR ── */}
       <div
         className={`flex flex-col border-r shrink-0 transition-all duration-300 w-full md:w-[280px] lg:w-[300px] ${selectedId ? 'hidden md:flex' : 'flex'}`}
         style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
       >
-        {/* Header */}
         <div className="px-4 pt-4 pb-0">
           <div className="flex items-center justify-between mb-3">
             <div>
@@ -259,7 +257,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
             )}
           </div>
 
-          {/* Search */}
           <div className="flex items-center gap-2 mb-3">
             <div className="relative flex-1">
               <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }} />
@@ -276,7 +273,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
             </button>
           </div>
 
-          {/* Tabs */}
           <div className="flex border-b" style={{ borderColor: 'var(--border)' }}>
             {(['all', 'unread', 'archived'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
@@ -293,7 +289,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
           </div>
         </div>
 
-        {/* Conversation list */}
         <div className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
           {filteredConvs.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-40 text-center px-4">
@@ -350,13 +345,11 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
         </div>
       </div>
 
-      {/* ── CHAT AREA ── */}
       <div className={`flex-1 flex flex-col relative min-w-0 ${!selectedId ? 'hidden md:flex' : 'flex'}`}
         style={{ background: 'var(--card)' }}>
 
         {selected ? (
           <>
-            {/* Chat header */}
             <div className="px-4 py-3 border-b flex items-center justify-between"
               style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
               <div className="flex items-center gap-3 min-w-0">
@@ -394,7 +387,7 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
             </div>
 
             <div className="flex-1 flex overflow-hidden">
-              {/* Messages */}
+        
               <div className="flex-1 flex flex-col min-w-0" style={{ background: 'var(--bg)' }}>
                 <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4">
                   {selected.messages.length === 0 ? (
@@ -448,7 +441,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
                   )}
                 </div>
 
-                {/* Input */}
                 <div className="p-3 border-t" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
                   <form onSubmit={handleSend} className="relative">
                     <textarea
@@ -486,7 +478,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
                 </div>
               </div>
 
-              {/* Details panel */}
               <AnimatePresence>
                 {showDetails && (
                   <motion.div

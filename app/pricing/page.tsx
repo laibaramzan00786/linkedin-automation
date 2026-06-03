@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 
 const PricingPage = () => {
   return (
-    <main className="min-h-screen bg-[#050505]">
+    <main className="min-h-screen ">
       <Navbar />
       <div className="pt-20">
         <Pricing />

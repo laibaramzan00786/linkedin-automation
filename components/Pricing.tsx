@@ -1,6 +1,34 @@
 'use client';
-import { Check, Zap, Shield, ArrowRight } from 'lucide-react';
+import { Check, Zap, Shield, ArrowRight, ChevronRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import Link from 'next/link';
+
+const compareTools = [
+  {
+    name: 'NexusFlow vs Dripify',
+    saving: 'Save $600/year',
+    desc: 'Same features. 8x cheaper.',
+    href: '/compare/vs-dripify',
+  },
+  {
+    name: 'NexusFlow vs Linked Helper',
+    saving: 'Save $432/year',
+    desc: 'Cloud vs desktop. No contest.',
+    href: '/compare/vs-linked-helper',
+  },
+  {
+    name: 'NexusFlow vs Meet Alfred',
+    saving: 'Save $960/year',
+    desc: 'LinkedIn-only pricing. No bloat.',
+    href: '/compare/vs-meet-alfred',
+  },
+  {
+    name: 'NexusFlow vs Manual Outreach',
+    saving: 'Save 50+ hrs/month',
+    desc: 'Automate everything. Close more.',
+    href: '/compare/vs-manual-outreach',
+  },
+];
 
 const Pricing = () => {
   const plans = [
@@ -57,7 +85,7 @@ const Pricing = () => {
               style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}
             >
               Simple{' '}
-              <span style={{ color: '#ccc' }}>Pricing.</span>
+              <span style={{ color: '#a0a0a0' }}>Pricing.</span>
             </h2>
             <p className="text-base max-w-lg mx-auto mb-8" style={{ color: '#888' }}>
               Choose the plan that fits your growth. Monthly billing, no long-term contracts.
@@ -143,6 +171,7 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
+
                 <button
                   className="w-full py-3.5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2 group transition-all active:scale-95"
                   style={{
@@ -152,7 +181,7 @@ const Pricing = () => {
                     boxShadow:   plan.popular ? '0 4px 16px rgba(232,131,106,0.25)' : 'none',
                   }}
                 >
-                  Deploy {plan.name} Plan
+                  Get Started — {plan.name}
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </motion.div>
@@ -161,20 +190,57 @@ const Pricing = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className="mt-24 max-w-3xl mx-auto"
         >
-          <p className="text-[10px] uppercase tracking-widest font-semibold mb-8" style={{ color: '#ccc' }}>
-            Secure Payments via International Standards
-          </p>
-          <div className="flex flex-wrap justify-center gap-12 opacity-25 grayscale">
-            {['Stripe', 'Visa', 'Mastercard', 'SafePay'].map(name => (
-              <span key={name} className="text-lg font-bold italic" style={{ color: '#333' }}>{name}</span>
+          <div className="text-center mb-8">
+            <p className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: '#e8836a' }}>
+              Not sure yet?
+            </p>
+            <h3 className="text-2xl font-bold" style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}>
+              See How NexusFlow Compares
+            </h3>
+            <p className="text-sm mt-2" style={{ color: '#888' }}>
+              We're cheaper, faster, and more focused than every major alternative.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {compareTools.map((tool, i) => (
+              <motion.div
+                key={tool.name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+              >
+                <Link
+                  href={tool.href}
+                  className="flex items-center justify-between p-5 rounded-2xl border transition-all group hover:border-[#f5d0c4] hover:shadow-md"
+                  style={{ background: '#fafafa', borderColor: '#e5e5e5' }}
+                >
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: '#111' }}>{tool.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: '#888' }}>{tool.desc}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="text-[10px] font-bold px-3 py-1 rounded-full"
+                      style={{ background: '#fdf2f0', color: '#e8836a' }}
+                    >
+                      {tool.saving}
+                    </span>
+                    <ChevronRight size={16} className="text-zinc-300 group-hover:text-[#e8836a] transition-colors" />
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </motion.div>
+
+
       </div>
     </section>
   );
