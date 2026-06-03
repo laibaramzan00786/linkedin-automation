@@ -1,3 +1,4 @@
+'use client';
 import { Target, Layers, Shield, DollarSign,Check, X, ArrowRight, ChevronRight, Zap, Star, Clock, TrendingUp, BarChart3, Users } from "lucide-react";
 import {motion} from "motion/react";
 import Footer from "@/components/Footer";
