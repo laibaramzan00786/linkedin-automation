@@ -34,7 +34,7 @@ export default function VsMeetAlfred() {
                 Switch to NexusFlow — Start Free <ArrowRight size={16} />
               </button>
                 <Link
-                href="/compare/vs-linked-helper/difference"
+                href="/compare/vs-meet-alfred/compare-features"
                 className="px-10 py-5 border border-zinc-200 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-zinc-50 transition-all flex items-center gap-2 justify-center"
               >
                 Compare Features
