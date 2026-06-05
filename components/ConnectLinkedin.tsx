@@ -19,7 +19,6 @@ const ConnectPage = () => {
 
   const handleConnect = () => {
     setIsConnecting(true);
-    // Simulate a brief connection process then navigate
     setTimeout(() => {
       setIsConnecting(false);
       router.push('/dashboard');

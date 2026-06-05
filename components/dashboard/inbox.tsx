@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { Contact } from './Network';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 export interface Message {
   id: string;
   senderId: 'me' | string;
@@ -33,7 +32,6 @@ export interface Conversation {
   tags?: string[];
 }
 
-// ─── localStorage helpers ─────────────────────────────────────────────────────
 const STORAGE_KEY = 'nexusflow_conversations';
 
 const DEFAULT_CONVERSATIONS: Conversation[] = [
@@ -79,7 +77,6 @@ function loadFromStorage(): Conversation[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      // First time — seed with defaults and save
       localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_CONVERSATIONS));
       return DEFAULT_CONVERSATIONS;
     }
@@ -96,7 +93,6 @@ function saveToStorage(convs: Conversation[]) {
   } catch { /* quota exceeded etc. */ }
 }
 
-// ─── Module-level reactive store ──────────────────────────────────────────────
 let globalConversations: Conversation[] = loadFromStorage();
 let listeners: Array<() => void> = [];
 
@@ -113,7 +109,7 @@ function notify() {
 }
 
 export function addOrOpenConversation(contact: Contact): string {
-  // Re-load from storage first so we have the latest state
+
   globalConversations = loadFromStorage();
   const existing = globalConversations.find(c => c.contactId === contact.id);
   if (existing) {
@@ -155,11 +151,9 @@ function sendMessageToStore(convId: string, content: string): Message {
   return msg;
 }
 
-// ─── Hook ─────────────────────────────────────────────────────────────────────
 function useConversations() {
   const [convs, setConvs] = useState<Conversation[]>(() => loadFromStorage());
   useEffect(() => {
-    // Sync global with latest storage on mount
     globalConversations = loadFromStorage();
     setConvs([...globalConversations]);
     return subscribe(() => setConvs([...getConversations()]));
@@ -167,7 +161,6 @@ function useConversations() {
   return convs;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
 interface InboxPageProps {
   openContactId?: string | null;
   onClearOpenContact?: () => void;
@@ -182,14 +175,12 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-select first conversation on mount (so chat is always visible)
   useEffect(() => {
     if (!selectedId && conversations.length > 0) {
       setSelectedId(conversations[0].id);
     }
   }, [conversations]);
 
-  // Auto-open when coming from NetworkPage
   useEffect(() => {
     if (openContactId) {
       const conv = getConversations().find(c => c.contactId === openContactId);
@@ -200,7 +191,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
     }
   }, [openContactId]);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [selectedId, conversations]);
@@ -562,7 +552,6 @@ const InboxPage = ({ openContactId, onClearOpenContact }: InboxPageProps) => {
             </div>
           </>
         ) : (
-          // Empty state (only shown if zero conversations exist)
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4"
             style={{ background: 'var(--bg)' }}>
             <div className="h-20 w-20 rounded-2xl flex items-center justify-center border"

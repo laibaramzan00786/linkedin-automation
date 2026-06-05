@@ -32,7 +32,7 @@ const BentoFeatures = () => {
             </h2>
 
             <p className="text-lg font-medium" style={{ color: '#888' }}>
-              Six powerful LinkedIn automation features. One clean dashboard. Zero manual work. Built for sales teams, recruiters, and agencies who want results — not complexity.
+              Six powerful LinkedIn automation features. One clean dashboard. Zero manual work. Built for sales teams, recruiters, and agencies who want results not complexity.
             </p>
           </motion.div>
         </div>
@@ -60,7 +60,7 @@ const BentoFeatures = () => {
                 Automated Connection Requests
               </h3>
               <p className="text-base leading-relaxed max-w-sm" style={{ color: '#888' }}>
-                Send up to 50 personalized LinkedIn connection requests per day — completely on autopilot. Filter prospects by job title, industry, company size, and seniority level. Build your network while you sleep.
+                Send up to 50 personalized LinkedIn connection requests per day completely on autopilot. Filter prospects by job title, industry, company size, and seniority level. Build your network while you sleep.
               </p>
             </div>
             <div
@@ -111,7 +111,7 @@ const BentoFeatures = () => {
               Multi-Step Drip Campaigns
             </h3>
             <p className="text-sm leading-relaxed mb-6" style={{ color: '#888' }}>
-              Build intelligent outreach sequences — connect, wait, follow up, branch based on reply or no reply. NexusFlow's campaign builder automates the entire LinkedIn sales conversation from first touch to booked meeting.
+              Build intelligent outreach sequences connect, wait, follow up, branch based on reply or no reply. NexusFlow's campaign builder automates the entire LinkedIn sales conversation from first touch to booked meeting.
             </p>
             <div className="mt-auto space-y-2 opacity-40 group-hover:opacity-100 transition-opacity duration-400">
               {['Step 1 → Connect', 'Step 2 → Wait 2 days', 'Step 3 → Follow up'].map((step) => (
@@ -140,7 +140,7 @@ const BentoFeatures = () => {
                 Real-Time Campaign Analytics
               </h3>
               <p className="text-sm leading-relaxed" style={{ color: '#888' }}>
-                Track connection acceptance rates, reply rates, and full campaign funnel performance — updated in real time. Know exactly which messages are working and where to optimize next.
+                Track connection acceptance rates, reply rates, and full campaign funnel performance updated in real time. Know exactly which messages are working and where to optimize next.
               </p>
             </div>
 
@@ -184,7 +184,7 @@ const BentoFeatures = () => {
               Profile Visit Automation
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: '#888' }}>
-              Automatically visit your target prospects' profiles before connecting — triggering curiosity and a reciprocal visit in return. A simple action that warms up cold prospects and increases connection acceptance rates by up to 40%.
+              Automatically visit your target prospects' profiles before connecting triggering curiosity and a reciprocal visit in return. A simple action that warms up cold prospects and increases connection acceptance rates by up to 40%.
             </p>
           </motion.div>
 
@@ -201,10 +201,10 @@ const BentoFeatures = () => {
               <ShieldCheck size={22} style={{ color: '#10b981' }} />
             </div>
             <h3 className="text-xl font-bold mb-3" style={{ color: '#111', fontFamily: "'Outfit', sans-serif" }}>
-              Safe Automation — Account Protected
+              Safe Automation Account Protected
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: '#888' }}>
-              NexusFlow operates within LinkedIn's safe activity thresholds. Smart daily limits, human-speed execution, and randomized action delays keep your account healthy and restriction-free — for the long term.
+              NexusFlow operates within LinkedIn's safe activity thresholds. Smart daily limits, human-speed execution, and randomized action delays keep your account healthy and restriction-free for the long term.
             </p>
           </motion.div>
 

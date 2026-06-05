@@ -4,6 +4,7 @@ import BentoFeatures from "@/components/BentoFeatures";
 import WhiteSection from "@/components/WhiteSection";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import ComparisonTable from '@/components/ComparisonTable';
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <ComparisonTable />
         <BentoFeatures />
         <WhiteSection />
         <CTA />

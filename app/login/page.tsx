@@ -24,19 +24,16 @@ const Login = () => {
     setError("");
 
     try {
-      // Check if user was previously signed up
       const raw = localStorage.getItem("current_user");
       if (raw) {
         const stored = JSON.parse(raw);
         if (stored.email === email.trim()) {
-          // Existing user — use stored data
           localStorage.setItem("token", "user");
           setTimeout(() => { setLoading(false); router.push("/dashboard"); }, 900);
           return;
         }
       }
 
-      // New / unknown user — save from email
       const emailName = email.split("@")[0] || "User";
       setCurrentUser({
         id:                emailName + "_" + Math.random().toString(36).substring(2, 6),
@@ -57,7 +54,6 @@ const Login = () => {
     }
   };
 
-    // LinkedIn OAuth handler
   const handleLinkedinLogin = async () => {
     setLiLoading(true);
     try {

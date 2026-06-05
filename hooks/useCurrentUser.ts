@@ -5,7 +5,7 @@
 // BACKEND INTEGRATION (future):
 //   Replace localStorage.getItem("current_user") with your API call, e.g.:
 //   const { data } = useQuery('/api/me')  OR  useSession() from next-auth
-// 
+
 
 import { useState, useEffect } from "react";
 
@@ -20,7 +20,6 @@ export interface CurrentUser {
   linkedinAvatar?: string;
 }
 
-/** Default / guest user — shown before any login */
 const GUEST: CurrentUser = {
   id: "guest",
   firstName: "Guest",
@@ -30,7 +29,6 @@ const GUEST: CurrentUser = {
   linkedinConnected: false,
 };
 
-// ── Read / Write helpers ──────────────────────────────────────────────────────
 
 export const getCurrentUser = (): CurrentUser => {
   try {
@@ -51,7 +49,6 @@ export const clearCurrentUser = () => {
   localStorage.removeItem("token");
 };
 
-// ── Hook ──────────────────────────────────────────────────────────────────────
 
 export const useCurrentUser = () => {
   const [user, setUser] = useState<CurrentUser>(GUEST);
@@ -71,11 +68,9 @@ export const useCurrentUser = () => {
     setUser(GUEST);
   };
 
-  /** Full display name */
     const displayName =
   (user.linkedinName ?? `${user.firstName} ${user.lastName}`.trim()) || "Guest";
 
-  /** Initials for avatar fallback */
   const initials = displayName
     .split(" ")
     .map((w) => w[0])

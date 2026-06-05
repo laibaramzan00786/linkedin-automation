@@ -181,7 +181,7 @@ const Pricing = () => {
                     boxShadow:   plan.popular ? '0 4px 16px rgba(232,131,106,0.25)' : 'none',
                   }}
                 >
-                  Get Started — {plan.name}
+                  Get Started {plan.name}
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </motion.div>

@@ -39,7 +39,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg text-zinc-500 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
-            NexusFlow automates your LinkedIn connection requests, follow-up sequences, and lead nurturing campaigns — so you spend zero time prospecting and 100% of your time closing.
+            NexusFlow automates your LinkedIn connection requests, follow-up sequences, and lead nurturing campaigns so you spend zero time prospecting and 100% of your time closing.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

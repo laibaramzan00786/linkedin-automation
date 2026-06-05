@@ -17,7 +17,6 @@ const analyticsStats = [
   { title: "Reply Rate",     value: "3.7%",  change: "+1.2%",icon: TrendingUp },
 ];
 
-// Sample data for the engagement chart
 const engagementData = [
   { name: "Week 1", views: 1200, messages: 400, replies: 28 },
   { name: "Week 2", views: 1800, messages: 620, replies: 44 },

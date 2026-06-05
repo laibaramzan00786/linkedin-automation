@@ -5,10 +5,10 @@ import { motion } from "motion/react";
 
 const WhiteSection = () => {
   const points = [
-    "Personalized messages using {first_name}, {company}, and {job_title} variables — automatically",
+    "Personalized messages using {first_name}, {company}, and {job_title} variables automatically",
     "Smart send timing based on when your prospects are most active on LinkedIn",
-    "Multi-step follow-up sequences that read naturally — never pushy, never repetitive",
-    "Reply detection that pauses campaigns the moment a prospect responds — no awkward double messages",
+    "Multi-step follow-up sequences that read naturally never pushy, never repetitive",
+    "Reply detection that pauses campaigns the moment a prospect responds no awkward double messages",
   ];
 
   return (
@@ -97,7 +97,7 @@ const WhiteSection = () => {
             >
               Most LinkedIn automation tools send the same message to everyone.
               NexusFlow personalizes every touchpoint using your prospect's
-              name, company, role, and activity — so every message reads like
+              name, company, role, and activity so every message reads like
               you spent 10 minutes writing it personally.
             </p>
             

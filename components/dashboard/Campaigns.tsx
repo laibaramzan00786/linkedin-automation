@@ -24,7 +24,6 @@ const initialCampaigns: Campaign[] = [
   { id:"4", name:"Growth Strategy",    status:"Active",   createdAt:"5 Mar",  leads:1250, connections:450, accepted:310, visits:900, likes:240, endorse:112, messages:180, replied:65  },
 ];
 
-// ─── Action Dropdown ──────────────────────────────────────────────────────────
 type DropdownPos = { top?: number; bottom?: number; right: number };
 
 const ActionDropdown = ({ isOpen, onClose, campaign, onDuplicate, onDelete, triggerRef }: {
@@ -92,7 +91,6 @@ const ActionDropdown = ({ isOpen, onClose, campaign, onDuplicate, onDelete, trig
   );
 };
 
-// ─── Mobile Campaign Card ─────────────────────────────────────────────────────
 const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDelete }: {
   camp: Campaign; displayName: string; initials: string; userAvatar?: string;
   onDuplicate: (c: Campaign) => void; onDelete: (id: string) => void;
@@ -182,7 +180,6 @@ const MobileCard = ({ camp, displayName, initials, userAvatar, onDuplicate, onDe
   );
 };
 
-// ─── Desktop Table Row ────────────────────────────────────────────────────────
 const CampaignRow = ({ camp, index, total, isSelected, onToggleSelect, onDuplicate, onDelete,
   openActionId, setOpenActionId, displayName, userAvatar, initials }: {
   camp: Campaign; index: number; total: number; isSelected: boolean;
@@ -284,7 +281,6 @@ const CampaignRow = ({ camp, index, total, isSelected, onToggleSelect, onDuplica
   );
 };
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
 const CampaignsPage = () => {
   const { displayName, initials, user } = useCurrentUser();
 
@@ -355,7 +351,7 @@ const CampaignsPage = () => {
       <div className="flex items-center justify-between px-4 md:px-5 py-2.5 border-b flex-wrap gap-2"
         style={{ background:"#f0f0f0", borderColor:"#ddd" }}>
         <div className="flex items-center gap-2 flex-wrap">
-      ]
+      
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer hover:shadow-sm transition-all"
             style={{ background:"#fff", borderColor:"#ddd" }}>
             {userAvatar ? (

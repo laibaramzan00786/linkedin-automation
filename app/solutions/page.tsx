@@ -59,7 +59,7 @@ const SolutionsPage = () => {
       label: "Sales Teams",
       icon: <Target size={16} />,
       title: "Close More Deals. Spend Less Time Prospecting on LinkedIn.",
-      desc: "NexusFlow automates your entire LinkedIn sales workflow — from finding prospects to sending connection requests, follow-ups, and meeting invites. Your team focuses on closing. NexusFlow handles everything before that.",
+      desc: "NexusFlow automates your entire LinkedIn sales workflow from finding prospects to sending connection requests, follow-ups, and meeting invites. Your team focuses on closing. NexusFlow handles everything before that.",
       features: [
         "Automated LinkedIn Prospecting",
         "Multi-Step Follow-Up Sequences",
@@ -97,7 +97,7 @@ const SolutionsPage = () => {
       label: "Growth Agencies",
       icon: <Building2 size={16} />,
       title: "Manage Every Client's LinkedIn Outreach From One Dashboard.",
-      desc: "NexusFlow lets agencies run separate LinkedIn automation campaigns for every client — with individual analytics, separate account controls, and white-label ready reporting. Scale your agency's output without scaling your headcount.",
+      desc: "NexusFlow lets agencies run separate LinkedIn automation campaigns for every client with individual analytics, separate account controls, and white-label ready reporting. Scale your agency's output without scaling your headcount.",
       features: [
         "Multi-Account Client Management",
         "Per-Client Campaign Analytics",
@@ -135,7 +135,7 @@ const SolutionsPage = () => {
       label: "Recruiters & HR",
       icon: <Users size={16} />,
       title: "Source Top Talent on LinkedIn Faster Than Your Competition.",
-      desc: "NexusFlow automates candidate outreach, follow-up sequences, and profile visits — so your recruitment team spends time interviewing qualified candidates, not chasing cold profiles one by one.",
+      desc: "NexusFlow automates candidate outreach, follow-up sequences, and profile visits so your recruitment team spends time interviewing qualified candidates, not chasing cold profiles one by one.",
       features: [
         "Automated Candidate Outreach",
         "Job Opportunity Drip Sequences",
@@ -204,7 +204,7 @@ const SolutionsPage = () => {
               </h1>
 
               <p className="text-base text-zinc-500 max-w-xl mx-auto leading-relaxed">
-                Whether you're a sales team closing enterprise deals, a growth agency managing multiple clients, or a recruiter sourcing top talent — NexusFlow automates your entire LinkedIn outreach workflow from first connection to booked meeting.
+                Whether you're a sales team closing enterprise deals, a growth agency managing multiple clients, or a recruiter sourcing top talent NexusFlow automates your entire LinkedIn outreach workflow from first connection to booked meeting.
               </p>
             </motion.div>
           </div>
@@ -344,7 +344,7 @@ const SolutionsPage = () => {
                 <span style={{ color: "#e8836a" }}>at Scale.</span>
               </h2>
               <p className="text-sm text-zinc-400 leading-relaxed">
-                NexusFlow combines intelligent prospect targeting, personalized message sequencing, and real-time performance data — so every campaign gets smarter the longer it runs.
+                NexusFlow combines intelligent prospect targeting, personalized message sequencing, and real-time performance data so every campaign gets smarter the longer it runs.
               </p>
             </div>
 
@@ -352,12 +352,12 @@ const SolutionsPage = () => {
               {[
                 {
                   title: "Smart Prospect Targeting",
-                  desc: "Identify your ideal LinkedIn prospects using advanced filters — job title, industry, company size, seniority, and location. You define who matters. NexusFlow finds them automatically.",
+                  desc: "Identify your ideal LinkedIn prospects using advanced filters job title, industry, company size, seniority, and location. You define who matters. NexusFlow finds them automatically.",
                   icon: <Search size={20} />,
                 },
                 {
                   title: "Sequences That Sound Human",
-                  desc: "Multi-step LinkedIn outreach sequences with dynamic personalization variables. Every message includes your prospect's name, company, and role — sent at the optimal time for maximum reply rates.",
+                  desc: "Multi-step LinkedIn outreach sequences with dynamic personalization variables. Every message includes your prospect's name, company, and role sent at the optimal time for maximum reply rates.",
                   icon: <Zap size={20} />,
                 },
                 {
@@ -444,15 +444,15 @@ const SolutionsPage = () => {
               {[
                 {
                   q: "Is NexusFlow good for agencies?",
-                  a: "Yes — NexusFlow is built specifically for growth agencies managing multiple clients. You get a single dashboard to run separate LinkedIn automation campaigns for every client, with individual analytics, per-client reporting, and bulk campaign templates. Agencies using NexusFlow manage up to 3× more clients per team member without adding headcount.",
+                  a: "Yes NexusFlow is built specifically for growth agencies managing multiple clients. You get a single dashboard to run separate LinkedIn automation campaigns for every client, with individual analytics, per-client reporting, and bulk campaign templates. Agencies using NexusFlow manage up to 3× more clients per team member without adding headcount.",
                 },
                 {
                   q: "Can recruiters use NexusFlow?",
-                  a: "Absolutely. NexusFlow automates the entire LinkedIn recruitment workflow — from candidate outreach and follow-up sequences to profile visits and pipeline tracking. Recruitment teams using NexusFlow see 2.5× more candidate replies compared to manual InMail outreach, with an average first response within 48 hours.",
+                  a: "Absolutely. NexusFlow automates the entire LinkedIn recruitment workflow from candidate outreach and follow-up sequences to profile visits and pipeline tracking. Recruitment teams using NexusFlow see 2.5× more candidate replies compared to manual InMail outreach, with an average first response within 48 hours.",
                 },
                 {
                   q: "How does NexusFlow work for sales teams?",
-                  a: "NexusFlow automates your entire LinkedIn sales workflow — finding the right prospects, sending connection requests, running multi-step follow-up sequences, and detecting replies. Your sales team focuses on closing deals. NexusFlow handles everything before that. Most teams reclaim 12+ hours per week from manual LinkedIn prospecting.",
+                  a: "NexusFlow automates your entire LinkedIn sales workflow finding the right prospects, sending connection requests, running multi-step follow-up sequences, and detecting replies. Your sales team focuses on closing deals. NexusFlow handles everything before that. Most teams reclaim 12+ hours per week from manual LinkedIn prospecting.",
                 },
                 {
                   q: "Is LinkedIn automation safe to use?",
