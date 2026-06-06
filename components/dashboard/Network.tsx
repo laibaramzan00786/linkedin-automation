@@ -253,7 +253,6 @@ const NetworkPage = ({ onOpenInbox }: NetworkPageProps) => {
     </div>
   );
 
-  // Action buttons: Mail, Inbox (replaces LinkedIn), More
   const ActionButtons = ({ contact }: { contact: Contact }) => (
     <>
       {[

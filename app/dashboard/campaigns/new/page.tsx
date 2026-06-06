@@ -6,8 +6,9 @@ import {
   CheckCircle2, X, Trash2, Link as LinkIcon, Plus, ArrowRight,
   Clock, Zap, MousePointer2, MessageSquare, Users, ThumbsUp,
   Award, ChevronDown, Check, Info, GitBranch, Eye,
-  FileText, Upload, Download, AlertCircle,
+  FileText, Upload, Download, AlertCircle, SlidersHorizontal,
 } from "lucide-react";
+import { LinkedInFilterPanel, defaultLIFilters, totalCount, LIFilters } from "./LinkedInFilterPanel";
 
 type WizardStep   = "audience" | "sequence" | "review" | "finalize";
 type AudienceMode = "url" | "csv";
@@ -114,7 +115,6 @@ const createStep = (type: FlowStepType, immediate = false): FlowStep => ({
   yesChildren: type === "If connected" ? [] : undefined,
   noChildren:  type === "If connected" ? [] : undefined,
 });
-
 const DelayDropdown = ({ delay, delayUnit, immediate, onChange }: {
   delay: number; delayUnit: DelayUnit; immediate: boolean;
   onChange: (delay: number, unit: DelayUnit, immediate: boolean) => void;
@@ -200,7 +200,6 @@ const DelayDropdown = ({ delay, delayUnit, immediate, onChange }: {
     </div>
   );
 };
-
 const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: {
   step: FlowStep; index: number;
   onEdit: (id: string) => void;
@@ -218,9 +217,7 @@ const StepCard = ({ step, index, onEdit, onAddAfter, onDelete, onDelayChange }: 
     <div className="flex flex-col items-center w-full" style={{ maxWidth: 320 }}>
       <div className="mb-2">
         <DelayDropdown
-          delay={step.delay}
-          delayUnit={step.delayUnit}
-          immediate={step.immediate}
+          delay={step.delay} delayUnit={step.delayUnit} immediate={step.immediate}
           onChange={(d, u, imm) => onDelayChange(step.id, d, u, imm)}
         />
       </div>
@@ -293,11 +290,7 @@ const BranchColumn = ({ label, children, onAddStep, isEmpty }: {
     <div className="flex items-center gap-2 mb-3">
       <div className="h-px w-8" style={{ background: "#ef4444" }} />
       <span className="text-xs font-bold px-3 py-1 rounded-full"
-        style={{
-          background: "#fef2f2",
-          color: "#ef4444",
-          border: "1px solid #fecaca",
-        }}>
+        style={{ background: "#fef2f2", color: "#ef4444", border: "1px solid #fecaca" }}>
         {label}
       </span>
       <div className="h-px w-8" style={{ background: "#e5e5e5" }} />
@@ -317,6 +310,7 @@ const BranchColumn = ({ label, children, onAddStep, isEmpty }: {
     )}
   </div>
 );
+
 const MessageModal = ({ step, onSave, onClose }: {
   step: FlowStep;
   onSave: (id: string, content: string, withdrawAfter?: number) => void;
@@ -335,7 +329,6 @@ const MessageModal = ({ step, onSave, onClose }: {
         onClick={e => e.stopPropagation()}
         className="absolute top-0 right-0 h-full overflow-y-auto flex flex-col"
         style={{ width: "min(720px,100vw)", background: "#fff", borderLeft: "1px solid #e5e5e5" }}>
-
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: "#f0f0f0" }}>
           <h2 className="text-base font-bold" style={{ color: "#111" }}>
             {isConn ? "Connection message" : "Message"}
@@ -344,7 +337,6 @@ const MessageModal = ({ step, onSave, onClose }: {
             <X size={18} />
           </button>
         </div>
-
         <div className="px-6 py-5 space-y-4 flex-1">
           {[
             { label: "Contact variables:", vars: CONTACT_VARS },
@@ -365,7 +357,6 @@ const MessageModal = ({ step, onSave, onClose }: {
               </div>
             </div>
           ))}
-
           <div className="rounded-xl overflow-hidden" style={{ border: "1px solid #e5e5e5" }}>
             <textarea value={content}
               onChange={e => setContent(e.target.value.slice(0, maxChars))}
@@ -383,7 +374,6 @@ const MessageModal = ({ step, onSave, onClose }: {
               )}
             </div>
           </div>
-
           {content && (
             <div className="rounded-xl px-5 py-4" style={{ background: "#f8f8f8", border: "1px solid #e5e5e5" }}>
               <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: "#aaa" }}>Preview</p>
@@ -394,7 +384,6 @@ const MessageModal = ({ step, onSave, onClose }: {
                 }} />
             </div>
           )}
-
           {isConn && (
             <div className="flex flex-wrap items-center gap-3 px-4 py-3 rounded-xl"
               style={{ background: "#f8f8f8", border: "1px solid #e5e5e5" }}>
@@ -414,7 +403,6 @@ const MessageModal = ({ step, onSave, onClose }: {
             </div>
           )}
         </div>
-
         <div className="px-6 py-4 border-t" style={{ borderColor: "#f0f0f0" }}>
           <button onClick={() => onSave(step.id, content, isConn ? withdrawAfter : undefined)}
             className="px-8 py-2.5 rounded-xl text-sm font-bold text-white transition-all"
@@ -490,7 +478,6 @@ const CsvUpload = ({ csvData, onCsvChange }: {
             <X size={14} />
           </button>
         </div>
-
         <div className="px-1">
           <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: "#aaa" }}>Detected columns</p>
           <div className="flex flex-wrap gap-1.5">
@@ -510,7 +497,6 @@ const CsvUpload = ({ csvData, onCsvChange }: {
             })}
           </div>
         </div>
-
         {csvData.hasRequiredCol ? (
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium"
             style={{ background: "#ecfdf5", color: "#10b981" }}>
@@ -550,26 +536,25 @@ const CsvUpload = ({ csvData, onCsvChange }: {
           or <span style={{ color: "#e8836a", fontWeight: 600 }}>click to browse</span> — .csv files only
         </p>
       </div>
-
-<div className="flex items-start gap-2.5 px-3 py-3 rounded-xl"
-  style={{ background: "#fafafa", border: "1px solid #e5e5e5" }}>
-  <Info size={13} style={{ color: "#aaa", marginTop: 1, flexShrink: 0 }} />
-  <div className="flex-1">
-    <p className="text-xs leading-relaxed" style={{ color: "#888" }}>
-      CSV must include a <strong style={{ color: "#555" }}>linkedin_url</strong> or{" "}
-      <strong style={{ color: "#555" }}>profile_url</strong> column. Columns like{" "}
-      <strong style={{ color: "#555" }}>first_name</strong>,{" "}
-      <strong style={{ color: "#555" }}>last_name</strong>,{" "}
-      <strong style={{ color: "#555" }}>email</strong>,{" "}
-      <strong style={{ color: "#555" }}>company</strong> are optional.
-    </p>
-    <button onClick={downloadTemplate}
-      className="flex items-center gap-1.5 mt-2 text-xs font-semibold"
-      style={{ color: "#e8836a" }}>
-      <Download size={11} /> Download template CSV
-    </button>
-  </div>
-</div>
+      <div className="flex items-start gap-2.5 px-3 py-3 rounded-xl"
+        style={{ background: "#fafafa", border: "1px solid #e5e5e5" }}>
+        <Info size={13} style={{ color: "#aaa", marginTop: 1, flexShrink: 0 }} />
+        <div className="flex-1">
+          <p className="text-xs leading-relaxed" style={{ color: "#888" }}>
+            CSV must include a <strong style={{ color: "#555" }}>linkedin_url</strong> or{" "}
+            <strong style={{ color: "#555" }}>profile_url</strong> column. Columns like{" "}
+            <strong style={{ color: "#555" }}>first_name</strong>,{" "}
+            <strong style={{ color: "#555" }}>last_name</strong>,{" "}
+            <strong style={{ color: "#555" }}>email</strong>,{" "}
+            <strong style={{ color: "#555" }}>company</strong> are optional.
+          </p>
+          <button onClick={downloadTemplate}
+            className="flex items-center gap-1.5 mt-2 text-xs font-semibold"
+            style={{ color: "#e8836a" }}>
+            <Download size={11} /> Download template CSV
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -581,6 +566,10 @@ const NewCampaignPage = () => {
 
   const [currentUserName,  setCurrentUserName]  = useState("User");
   const [currentUserEmail, setCurrentUserEmail] = useState("");
+
+  const [liFilters,        setLiFilters]        = useState<LIFilters>(defaultLIFilters());
+  const [filterPanelOpen,  setFilterPanelOpen]  = useState(false);
+  const liFilterCount = totalCount(liFilters);
 
   useEffect(() => {
     const raw = localStorage.getItem("current_user");
@@ -601,10 +590,6 @@ const NewCampaignPage = () => {
   const [csvData,      setCsvData]      = useState<CsvData | null>(null);
   const [maxLeads,     setMaxLeads]     = useState(500);
   const [campaignName, setCampaignName] = useState("");
-  const [options, setOptions] = useState({
-    excludeNoPhoto: true, excludeFirstDegree: true,
-    premiumOnly: false,   openProfiles: false,
-  });
 
   const [flowSteps,      setFlowSteps]      = useState<Record<string, FlowStep>>({});
   const [rootSequence,   setRootSequence]   = useState<string[]>([]);
@@ -625,7 +610,7 @@ const NewCampaignPage = () => {
 
   const canContinue = () => {
     if (wizardStep === "audience") {
-      if (audienceMode === "url") return searchUrl.trim().length > 0;
+      if (audienceMode === "url") return searchUrl.trim().length > 0 || liFilterCount > 0;
       return csvData !== null && csvData.hasRequiredCol;
     }
     if (wizardStep === "sequence")  return rootSequence.length > 0;
@@ -652,17 +637,8 @@ const NewCampaignPage = () => {
 
     if (isConnReq) {
       const condStep = createStep("If connected", false);
-      setFlowSteps(prev => ({
-        ...prev,
-        [newStep.id]: newStep,
-        [condStep.id]: condStep,
-      }));
-      setPendingConnReq({
-        newStepId:   newStep.id,
-        condStepId:  condStep.id,
-        addAfter:    addAfter,
-        showAddRoot: showAddRoot,
-      });
+      setFlowSteps(prev => ({ ...prev, [newStep.id]: newStep, [condStep.id]: condStep }));
+      setPendingConnReq({ newStepId: newStep.id, condStepId: condStep.id, addAfter, showAddRoot });
       setShowAddRoot(false);
       setAddAfter(null);
       setShowAddPanel(false);
@@ -701,9 +677,7 @@ const NewCampaignPage = () => {
     setAddAfter(null);
     setShowAddPanel(false);
 
-    if (newStep.type === "Message") {
-      setEditingStep(newStep.id);
-    }
+    if (newStep.type === "Message") setEditingStep(newStep.id);
   };
 
   const openAddPanel = (afterId?: string, branch?: "yes" | "no") => {
@@ -775,10 +749,7 @@ const NewCampaignPage = () => {
   };
 
   const handleDelayChange = (sid: string, delay: number, unit: DelayUnit, immediate: boolean) => {
-    setFlowSteps(prev => ({
-      ...prev,
-      [sid]: { ...prev[sid], delay, delayUnit: unit, immediate },
-    }));
+    setFlowSteps(prev => ({ ...prev, [sid]: { ...prev[sid], delay, delayUnit: unit, immediate } }));
   };
 
   const handleLaunch = () => {
@@ -798,6 +769,7 @@ const NewCampaignPage = () => {
       csvRows: audienceMode === "csv" ? csvData?.rows : null,
       linkedinAccount: currentUserName,
       linkedinEmail:   currentUserEmail,
+      liFilters,
       flowSteps,
       flowRoot: rootSequence,
     };
@@ -817,34 +789,26 @@ const NewCampaignPage = () => {
         <div key={sid} className="flex flex-col items-center w-full">
           <div className="w-px" style={{ height: 24, background: "#e8836a" }} />
           <StepCard step={step} index={index}
-            onEdit={setEditingStep}
-            onAddAfter={aid => openAddPanel(aid)}
-            onDelete={handleDeleteStep}
-            onDelayChange={handleDelayChange} />
+            onEdit={setEditingStep} onAddAfter={aid => openAddPanel(aid)}
+            onDelete={handleDeleteStep} onDelayChange={handleDelayChange} />
           <div className="flex flex-col md:flex-row gap-6 mt-4 items-start w-full justify-center">
-            <BranchColumn label="Yes" isEmpty={yesList.length === 0}
-              onAddStep={() => openAddPanel(sid, "yes")}>
+            <BranchColumn label="Yes" isEmpty={yesList.length === 0} onAddStep={() => openAddPanel(sid, "yes")}>
               {yesList.map((cid, ci) => (
                 <div key={cid} className="flex flex-col items-center">
                   {ci > 0 && <div className="w-px" style={{ height: 16, background: "#e5e5e5" }} />}
                   <StepCard step={flowSteps[cid]} index={index + ci + 1}
-                    onEdit={setEditingStep}
-                    onAddAfter={() => openAddPanel(sid, "yes")}
-                    onDelete={handleDeleteStep}
-                    onDelayChange={handleDelayChange} />
+                    onEdit={setEditingStep} onAddAfter={() => openAddPanel(sid, "yes")}
+                    onDelete={handleDeleteStep} onDelayChange={handleDelayChange} />
                 </div>
               ))}
             </BranchColumn>
-            <BranchColumn label="No" isEmpty={noList.length === 0}
-              onAddStep={() => openAddPanel(sid, "no")}>
+            <BranchColumn label="No" isEmpty={noList.length === 0} onAddStep={() => openAddPanel(sid, "no")}>
               {noList.map((cid, ci) => (
                 <div key={cid} className="flex flex-col items-center">
                   {ci > 0 && <div className="w-px" style={{ height: 16, background: "#e5e5e5" }} />}
                   <StepCard step={flowSteps[cid]} index={index + ci + 1}
-                    onEdit={setEditingStep}
-                    onAddAfter={() => openAddPanel(sid, "no")}
-                    onDelete={handleDeleteStep}
-                    onDelayChange={handleDelayChange} />
+                    onEdit={setEditingStep} onAddAfter={() => openAddPanel(sid, "no")}
+                    onDelete={handleDeleteStep} onDelayChange={handleDelayChange} />
                 </div>
               ))}
             </BranchColumn>
@@ -857,16 +821,23 @@ const NewCampaignPage = () => {
       <div key={sid} className="flex flex-col items-center w-full">
         {index > 0 && <div className="w-px" style={{ height: 24, background: "#e8836a" }} />}
         <StepCard step={step} index={index}
-          onEdit={setEditingStep}
-          onAddAfter={aid => openAddPanel(aid)}
-          onDelete={handleDeleteStep}
-          onDelayChange={handleDelayChange} />
+          onEdit={setEditingStep} onAddAfter={aid => openAddPanel(aid)}
+          onDelete={handleDeleteStep} onDelayChange={handleDelayChange} />
       </div>
     );
   };
 
   const stepCount = rootSequence.length;
   const duration  = rootSequence.reduce((s, sid) => s + (flowSteps[sid]?.delay ?? 0), 0);
+
+  const filterChips: string[] = [];
+  Object.entries(liFilters).forEach(([key, val]) => {
+    if (key === "keywords") {
+      Object.values(val as Record<string, string>).forEach(v => { if (v.trim()) filterChips.push(v.trim()); });
+    } else {
+      (val as string[]).forEach(v => filterChips.push(v));
+    }
+  });
 
   return (
     <div className="flex flex-col h-screen overflow-hidden"
@@ -969,13 +940,10 @@ const NewCampaignPage = () => {
                     <ChevronDown size={16} style={{ color: "#888" }} />
                   </div>
                 </div>
-
                 <div className="rounded-2xl p-5 space-y-4" style={{ background: "#fff", border: "1px solid #e5e5e5" }}>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-sm font-semibold" style={{ color: "#333" }}>Audience Source</h3>
-                      <p className="text-xs mt-0.5" style={{ color: "#888" }}>Choose how to import your leads</p>
-                    </div>
+                  <div>
+                    <h3 className="text-sm font-semibold" style={{ color: "#333" }}>Audience Source</h3>
+                    <p className="text-xs mt-0.5" style={{ color: "#888" }}>Choose how to import your leads</p>
                   </div>
 
                   <div className="flex gap-2 p-1 rounded-xl" style={{ background: "#f5f5f5" }}>
@@ -999,7 +967,7 @@ const NewCampaignPage = () => {
                         <p className="text-xs" style={{ color: "#888" }}>Paste a LinkedIn People Search or Sales Navigator URL</p>
                         <div className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold ml-2 shrink-0"
                           style={{ background: "#fef3f0", color: "#e8836a" }}>
-                          <Info size={11} /> Required
+                          <Info size={11} /> Optional
                         </div>
                       </div>
                       <div className="relative">
@@ -1013,6 +981,94 @@ const NewCampaignPage = () => {
                         <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium"
                           style={{ background: "#ecfdf5", color: "#10b981" }}>
                           <CheckCircle2 size={13} /> URL looks valid
+                        </div>
+                      )}
+
+                      <div className="flex items-center gap-3 my-1">
+                        <div className="flex-1 h-px" style={{ background: "#e5e5e5" }} />
+                        <span className="text-xs font-semibold" style={{ color: "#7e7e7e" }}>OR</span>
+                        <div className="flex-1 h-px" style={{ background: "#e5e5e5" }} />
+                      </div>
+
+                      <button
+                        onClick={() => setFilterPanelOpen(true)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all"
+                        style={{
+                          background: liFilterCount > 0 ? "#f8fbff" : "#fff",
+                          border: liFilterCount > 0 ? "1.5px solid #e8836a" : "1px solid #e0ddd8",
+                          cursor: "pointer",
+                        }}
+                        onMouseEnter={e => {
+                          if (liFilterCount === 0) (e.currentTarget as HTMLElement).style.borderColor = "#e8836a";
+                          (e.currentTarget as HTMLElement).style.background = "#fff5f2";
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLElement).style.borderColor = liFilterCount > 0 ? "#e8836a" : "#e0ddd8";
+                          (e.currentTarget as HTMLElement).style.background = liFilterCount > 0 ? "#f8fbff" : "#fff";
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div style={{
+                            width: 34, height: 34, borderRadius: 8,
+                            background: liFilterCount > 0 ? "#e8836a" : "#f0f0f0",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            transition: "background 0.2s", flexShrink: 0,
+                          }}>
+                            <SlidersHorizontal size={16} color={liFilterCount > 0 ? "#fff" : "#555"} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-left" style={{ color: liFilterCount > 0 ? "#e8836a" : "#222" }}>
+                              Search from LinkedIn Filters
+                            </p>
+                            <p className="text-[11px]" style={{ color: "#888" }}>
+                              {liFilterCount > 0
+                                ? `${liFilterCount} filter${liFilterCount > 1 ? "s" : ""} active`
+                                : "Connections, location, company & more"}
+                            </p>
+                          </div>
+                        </div>
+                        {liFilterCount > 0 ? (
+                          <span style={{
+                            fontSize: 10, fontWeight: 700, padding: "3px 9px",
+                            borderRadius: 12, background: "#e8836a", color: "#fff",
+                            flexShrink: 0,
+                          }}>
+                            {liFilterCount} active
+                          </span>
+                        ) : (
+                          <div style={{
+                            fontSize: 11, fontWeight: 600, color: "#e8836a",
+                            display: "flex", alignItems: "center", gap: 3, flexShrink: 0,
+                          }}>
+                            All filters <ChevronDown size={13} />
+                          </div>
+                        )}
+                      </button>
+
+                      {filterChips.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {filterChips.map((chip, i) => (
+                            <span key={i} style={{
+                              display: "inline-flex", alignItems: "center", gap: 4,
+                              padding: "3px 10px", borderRadius: 12,
+                              background: "#fff5f2", border: "1px solid #fff5f2",
+                              fontSize: 11, color: "#e8836a", fontWeight: 500,
+                            }}>
+                              {chip}
+                            </span>
+                          ))}
+                          <button
+                            onClick={() => setLiFilters(defaultLIFilters())}
+                            style={{
+                              fontSize: 11, color: "#888", background: "none",
+                              border: "none", cursor: "pointer", padding: "3px 8px",
+                              borderRadius: 12, fontWeight: 500,
+                            }}
+                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#ef4444"}
+                            onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#888"}
+                          >
+                            Clear all
+                          </button>
                         </div>
                       )}
                     </div>
@@ -1041,37 +1097,10 @@ const NewCampaignPage = () => {
                     <span>{audienceMode === "csv" && csvData ? Math.min(csvData.rows, 1000).toLocaleString() : "1,000"}</span>
                   </div>
                 </div>
-
-                <div className="rounded-2xl p-5 space-y-3" style={{ background: "#fff", border: "1px solid #e5e5e5" }}>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: "#333" }}>Filters</h3>
-                  {[
-                    { id: "excludeNoPhoto",     label: "Profiles with photos only",   sub: "Skip profiles without a photo"        },
-                    { id: "excludeFirstDegree", label: "1st degree connections",       sub: "Only target your connected people"    },
-                    { id: "premiumOnly",        label: "2nd Degree Connections",       sub: "Target people with mutual connections" },
-                    { id: "openProfiles",       label: "3rd Degree Connections",       sub: "Expand outreach beyond your network"  },
-                  ].map(opt => {
-                    const val = options[opt.id as keyof typeof options];
-                    return (
-                      <div key={opt.id}
-                        className="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition-all"
-                        style={{ background: val ? "#fef3f0" : "#f8f8f8", border: val ? "1px solid #f5c5b5" : "1px solid #e5e5e5" }}
-                        onClick={() => setOptions(prev => ({ ...prev, [opt.id]: !prev[opt.id as keyof typeof options] }))}>
-                        <div>
-                          <p className="text-xs font-semibold" style={{ color: val ? "#e8836a" : "#555" }}>{opt.label}</p>
-                          <p className="text-[11px] mt-0.5" style={{ color: "#aaa" }}>{opt.sub}</p>
-                        </div>
-                        <div className="w-10 h-6 rounded-full relative shrink-0 transition-all duration-300"
-                          style={{ background: val ? "#e8836a" : "#ddd" }}>
-                          <div className="absolute top-1 w-4 h-4 rounded-full bg-white shadow-sm transition-all duration-300"
-                            style={{ left: val ? 22 : 4 }} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </motion.div>
           )}
+
           {wizardStep === "sequence" && (
             <motion.div key="sequence"
               initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
@@ -1094,16 +1123,13 @@ const NewCampaignPage = () => {
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#e8836a"; }}>
                     <Plus size={14} />
                   </button>
-
                   {rootSequence.length === 0 && (
                     <div className="mt-8 flex flex-col items-center gap-3 text-center" style={{ color: "#bbb" }}>
                       <p className="text-sm font-medium">Click + to add your first step</p>
                       <p className="text-xs" style={{ color: "#ddd" }}>Tip: Start with a Connection Request</p>
                     </div>
                   )}
-
                   {rootSequence.map((sid, i) => renderStep(sid, i))}
-
                   {rootSequence.length > 0 && (
                     <div className="flex flex-col items-center mt-2">
                       <div className="w-px" style={{ height: 20, background: "#e5e5e5" }} />
@@ -1121,6 +1147,7 @@ const NewCampaignPage = () => {
               </div>
             </motion.div>
           )}
+
           {wizardStep === "review" && (
             <motion.div key="review"
               initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
@@ -1136,12 +1163,12 @@ const NewCampaignPage = () => {
                   <h3 className="text-sm font-semibold" style={{ color: "#333" }}>Audience</h3>
                   {[
                     { label: "LinkedIn account", value: currentUserName },
-                    { label: "Source",           value: audienceMode === "url" ? "LinkedIn Search URL" : "CSV Upload" },
-                    { label: audienceMode === "url" ? "Search URL" : "CSV File",
-                      value: audienceMode === "url" ? (searchUrl || "—") : (csvData?.file.name || "—") },
-                    ...(audienceMode === "csv" ? [{ label: "Total rows", value: csvData?.rows.toLocaleString() + " leads" || "—" }] : []),
-                    { label: "Max prospects",    value: maxLeads.toString() },
-                    { label: "Active filters",   value: Object.values(options).filter(Boolean).length + " enabled" },
+                    { label: "Source", value: audienceMode === "url" ? "LinkedIn Search URL" : "CSV Upload" },
+                    ...(audienceMode === "url"
+                      ? [{ label: "Search URL", value: searchUrl || "—" }]
+                      : [{ label: "CSV File", value: csvData?.file.name || "—" }, { label: "Total rows", value: (csvData?.rows.toLocaleString() ?? "—") + " leads" }]),
+                    { label: "Max prospects", value: maxLeads.toString() },
+                    ...(liFilterCount > 0 ? [{ label: "LinkedIn filters", value: `${liFilterCount} filter${liFilterCount > 1 ? "s" : ""} applied` }] : []),
                   ].map(row => (
                     <div key={row.label} className="flex justify-between text-sm">
                       <span style={{ color: "#888" }}>{row.label}</span>
@@ -1259,7 +1286,6 @@ const NewCampaignPage = () => {
                   <X size={18} />
                 </button>
               </div>
-
               <div className="px-5 py-4 space-y-6">
                 <div>
                   <h3 className="text-sm font-bold mb-3" style={{ color: "#111" }}>Actions</h3>
@@ -1285,7 +1311,6 @@ const NewCampaignPage = () => {
                     })}
                   </div>
                 </div>
-
                 <div>
                   <h3 className="text-sm font-bold mb-3" style={{ color: "#111" }}>Conditions</h3>
                   <div className="space-y-2">
@@ -1323,6 +1348,16 @@ const NewCampaignPage = () => {
         )}
       </AnimatePresence>
 
+      <LinkedInFilterPanel
+        open={filterPanelOpen}
+        filters={liFilters}
+        onClose={() => setFilterPanelOpen(false)}
+        onChange={setLiFilters}
+        onApply={(f) => {
+          setLiFilters(f);
+          setFilterPanelOpen(false);
+        }}
+      />
       <div className="md:hidden shrink-0 flex items-center justify-between px-4 py-3 border-t"
         style={{ background: "#fff", borderColor: "#e5e5e5" }}>
         <div className="flex gap-1">
